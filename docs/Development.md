@@ -45,4 +45,4 @@ By default, the logger will output the logs to the console. If you want to enabl
 
 To generate a new release of the application ,cd into `cli` and use the command `npm run pack`. This would generate executables in the `cli/executables` folder.
 Test the cli by using `./executables/dt-automation-cli-linux -h`.
-To generate a new docker container use the command first run `npm run pack` and then `npm run docker`.This would copy the Linux executable file and put it in a docker container.
+To generate a new docker container use the command first run `npm run pack` and then `npm run docker`. This would copy the Linux executable file and put it in a docker container.
