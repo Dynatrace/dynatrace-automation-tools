@@ -10,6 +10,7 @@ To run the solution as development mode:
 To use VS Code debugger:
 
 - Check the `.vscode/launch.json`. This file contains the settings to execute a CLI command and set ENV variables in debug mode. You can run the command by using VS Code Debug option and choose the command you want to run.
+- To enable automatic compilation for typescript use the VSCode Command Palette and search for `Configure Default Build Task` select the option that points to the tsc:watch. Once this is enabled it would automatically start watching for file changes and recompile the JS files every time you save a file. You can now set breakpoints in the code and inspect a live execution.
 
 ## Folder structure
 

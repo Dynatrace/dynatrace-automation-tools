@@ -22,6 +22,28 @@
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "dt srg configure",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cli/dist/index.js",
+            "args": [
+                "srg",
+                "configure",
+                "simplenode"
+            ],
+            "outputCapture": "std",
+            "env": {
+                "LOG_LEVEL": "verbose",
+            },
+            "envFile": "${workspaceFolder}/cli/.env",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
         }
     ]
 }
