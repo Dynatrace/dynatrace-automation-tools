@@ -1,0 +1,7 @@
+cli/node_modules/**
+cli/dist/**
+cli/executables/**
+cli/pre-executable/**
+cli/logs/**
+cli/.envLocal
+logs/**
