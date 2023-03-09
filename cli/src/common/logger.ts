@@ -44,7 +44,7 @@ const format = winston.format.combine(
 // In this example, we are using three different transports
 
 const getTransports = () => {
-  let transports = [];
+  const transports = [];
   if (process.env.LOG_FILE === "true") {
     transports.push(
       new winston.transports.File({

@@ -1,7 +1,6 @@
 import figlet from "figlet";
-import { Command, Option } from "commander";
-import SRGCommand from "./use-case-srg/SRGCommand";
-import { loggers } from "winston";
+import { Command } from "commander";
+import SRGCommand from "./SRGAutomation/SRGCommand";
 
 const program = new Command();
 program
@@ -11,6 +10,6 @@ program
 console.log(figlet.textSync("DT automation"));
 //Register the commands here
 
-let srgManager = new SRGCommand(program);
+new SRGCommand(program);
 
 program.parseAsync(process.argv);
