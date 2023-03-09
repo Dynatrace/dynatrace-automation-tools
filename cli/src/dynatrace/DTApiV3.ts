@@ -25,28 +25,16 @@ class DTApiV3 {
       "application/json";
   };
   private getScopedRequest = async (scope: string) => {
+    Logger.debug("DTApiV3: Requesting scoped token for " + scope);
     const token = await this.OauthClient.GetScopedToken(scope);
     this.setTokenHeader(token);
     return this.axiosApiInstance;
   };
 
-  CreateSRGProject = async (SRGTemplate: string) => {
-    const api = await this.getScopedRequest("settings:objects:write");
-
-    const res = await api.post(
-      this.DynatraceUrl +
-        "/platform/classic/environment-api/v2/settings/objects?validateOnly=false",
-      SRGTemplate
-    );
-    if (res.status != 200) {
-      Logger.error("Failed create SRG project");
-      Logger.verbose(res);
-      throw new Error("Failed create SRG project");
-    }
-    return res.data;
-  };
-  CreateWorkflow = async (workflow: string): Promise<boolean> => {
+  CreateWorkflow = async (workflow: object): Promise<boolean> => {
     const api = await this.getScopedRequest("automation:workflows:write");
+
+    Logger.debug("Creating workflow from template");
     const res = await api.post(
       this.DynatraceUrl + "/platform/automation/v0.2/workflows",
       workflow

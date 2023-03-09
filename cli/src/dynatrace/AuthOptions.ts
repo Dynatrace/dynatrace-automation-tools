@@ -2,19 +2,7 @@ import { Command, Option } from "commander";
 
 //Abstracts the authentication options for the CLI. Common class since all Dynatrace API interactions would use the same authentication options.
 class AuthOptions {
-  constructor(
-    program: Command,
-    requireOauth: boolean,
-    requireClassicToken: boolean
-  ) {
-    if (requireOauth) {
-      this.addOathOptions(program);
-    }
-    if (requireClassicToken) {
-      this.addClassicTokenOptions(program);
-    }
-  }
-  addClassicTokenOptions(mainCommand: Command) {
+  addClassicTokenOptions(mainCommand: Command): Command {
     mainCommand
       .addOption(
         new Option(
@@ -29,8 +17,9 @@ class AuthOptions {
           .env("DYNATRACE_TOKEN")
           .makeOptionMandatory()
       );
+    return mainCommand;
   }
-  addOathOptions(mainCommand: Command) {
+  addOathOptions(mainCommand: Command): Command {
     mainCommand
       .addOption(
         new Option(
@@ -72,6 +61,7 @@ class AuthOptions {
           .env("DYNATRACE_SSO_URL")
           .default("https://sso.dynatrace.com/sso/oauth2/token")
       );
+    return mainCommand;
   }
 }
 
