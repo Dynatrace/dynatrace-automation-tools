@@ -1,6 +1,8 @@
 import { Command } from "commander";
 import { BaseCommand } from "../common/interfaces";
 
+import SRGCommandConfigure from "./configure/SRGCommandConfigure";
+
 class SRGCommand implements BaseCommand {
   constructor(program: Command) {
     this.init(program);
@@ -11,6 +13,8 @@ class SRGCommand implements BaseCommand {
     const srg = program
       .command("srg")
       .description("Site Reliability Guardian commands.");
+
+    new SRGCommandConfigure(srg);
   }
 }
 
