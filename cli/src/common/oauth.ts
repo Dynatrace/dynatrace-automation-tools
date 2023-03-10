@@ -22,9 +22,9 @@ class DTOAuth {
   }
   async GetScopedToken(scope: string): Promise<string> {
     const data = {
-      grant_type: "client_credentials",
-      client_id: this.ClientId,
-      client_secret: this.ClientSecret,
+      grantType: "client_credentials",
+      clientId: this.ClientId,
+      clientSecret: this.ClientSecret,
       scope: scope,
       resource: this.AccountUUID,
     };

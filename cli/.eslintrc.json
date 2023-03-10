@@ -20,6 +20,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "camelcase": "warn",
         "prettier/prettier": "error"
     }
 }

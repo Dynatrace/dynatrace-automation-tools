@@ -31,6 +31,7 @@ async function configureEvaluation(
   options: { [key: string]: string }
 ): Promise<boolean> {
   let res = false;
+
   try {
     Logger.info("Configuring SRG evaluation");
     const manager = new SRGConfigure();

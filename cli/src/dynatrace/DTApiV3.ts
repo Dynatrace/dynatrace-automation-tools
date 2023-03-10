@@ -9,13 +9,13 @@ class DTApiV3 {
   constructor(
     dynatraceUrl: string,
     ssoUrl: string,
-    account_urn: string,
-    client_id: string,
-    secret: string
+    accountUrn: string,
+    clientId: string,
+    clientSecret: string
   ) {
     Logger.debug("Creating DTApi instance");
     this.DynatraceUrl = dynatraceUrl;
-    this.OauthClient = new DTOAuth(ssoUrl, client_id, secret, account_urn);
+    this.OauthClient = new DTOAuth(ssoUrl, clientId, clientSecret, accountUrn);
     this.axiosApiInstance = axios.create();
   }
   private setTokenHeader = (token: string) => {
