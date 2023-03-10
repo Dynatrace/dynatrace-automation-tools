@@ -43,6 +43,7 @@ class DTOAuth {
       Logger.verbose(res);
       throw new Error("Failed to get token");
     }
+
     return res.data.access_token;
   }
 }

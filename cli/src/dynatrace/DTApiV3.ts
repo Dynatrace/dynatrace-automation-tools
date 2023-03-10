@@ -44,11 +44,13 @@ class DTApiV3 {
       this.DynatraceUrl + "/platform/automation/v0.2/workflows",
       workflow
     );
+
     if (res.status != 201) {
       Logger.error("Failed create workflow");
       Logger.verbose(res);
       throw new Error("Failed create workflow");
     }
+
     return true;
   };
 }
