@@ -28,17 +28,16 @@ class DTOAuth {
       scope: scope,
       resource: this.AccountUUID,
     };
-      const res = await this.axiosApiInstance.post(this.SSOUrl, data, {
-        headers: { "content-type": "application/x-www-form-urlencoded" },
-      });
+    const res = await this.axiosApiInstance.post(this.SSOUrl, data, {
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+    });
 
-      if (res.status != 200) {
-        Logger.error("Failed to get token");
-        Logger.verbose(res);
-        throw new Error("Failed to get token");
-      }
-      return res.data.access_token;
-  
+    if (res.status != 200) {
+      Logger.error("Failed to get token");
+      Logger.verbose(res);
+      throw new Error("Failed to get token");
+    }
+    return res.data.access_token;
   }
 }
 export default DTOAuth;

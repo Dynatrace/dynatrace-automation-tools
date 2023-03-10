@@ -28,7 +28,7 @@ class SRGCommandConfigure implements BaseCommand {
 }
 async function configureEvaluation(
   appId: string,
-  options: any
+  options: { [key: string]: string }
 ): Promise<boolean> {
   let res = false;
   try {
