@@ -25,22 +25,41 @@ The main objective of *dynatrace-automation-tools* is to provide a simplified, y
 
 To allow for ease of use of the multiple issues and features each automation should have it's own project.
 
-Main CLI: Tracks progress of tasks related to the general CLI architecture or documentation. i.e. cicd automation, security linting, logging, etc.
-SRG Automation: Tracks the progress of SRG CLI tasks including configuration, execution and templating.
+**Main CLI**: Tracks progress of tasks related to the general CLI architecture or documentation. i.e. cicd automation, security linting, logging, etc.
+
+**SRG Automation**: Tracks the progress of SRG CLI tasks including configuration, execution and templating.
 
 ## Milestones
 
-Milestones should be defined to stablish release dates and features to be included in the CLI. We will use the Github Milestones functionality for this. https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones.
+Milestones should be defined to approximate release dates and features to be included in the CLI. We will use the [Github Milestones](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones) functionality for this.
 
 ## Contributing
 
-### How to contribute
+### Branching & Commits
 
-- TBD: Branching & Commits
-- TBD: Testing
-- TBD: Linting
-- TBD: Pre-commit secret detection
-- ...
+Before implementing a feature, please make sure to understand this contribution guide. Every new implementation HAS to be based on a requirement described in an issue (feature or bug). Based on an issue a new branch should be created in the format of `[feature/bug]/[issue number]/[friendly name]`, e.g. *feature/1/client-authentication*.
+
+> **Attention**: Although there is no hard requirement, we highly recommend complying to this format for automation purposes.
+
+There is no enforced convention for commits and commit messages. However, following best practices such as small and atomic commits, imperative messages, etc. is highly appreciated. For a refresher, take a look at this (recently published) [Github blog](https://github.blog/2022-06-30-write-better-commits-build-better-projects/)
+
+### Testing
+To be defined.
+
+### Linting
+
+[Eslint](https://eslint.org) and [prettier](https://prettier.io) are enabled for the project.
+
+Before every commit, make sure your code complies to all rules:
+
+```
+npm run lint
+```
+
+Please resolve any highlighted errors and warnings.
+
+### Pre-commit hooks
+To be defined.
 
 ### How to add a Automation
 
