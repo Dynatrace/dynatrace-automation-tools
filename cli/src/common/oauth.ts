@@ -3,10 +3,15 @@ import Logger from "./logger";
 
 class DTOAuth {
   SSOUrl: string;
+
   ClientId: string;
+
   ClientSecret: string;
+
   AccountUUID: string;
+
   axiosApiInstance: AxiosInstance;
+
   constructor(
     ssoUrl: string,
     clientId: string,
@@ -20,6 +25,7 @@ class DTOAuth {
 
     this.axiosApiInstance = axios.create();
   }
+
   async GetScopedToken(scope: string): Promise<string> {
     const data = {
       grantType: "client_credentials",

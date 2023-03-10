@@ -4,8 +4,11 @@ import DTOAuth from "../common/oauth";
 //Dynatrace API v3 for gen3 endpoints
 class DTApiV3 {
   DynatraceUrl: string;
+
   axiosApiInstance: AxiosInstance;
+
   OauthClient: DTOAuth;
+
   constructor(
     dynatraceUrl: string,
     ssoUrl: string,
@@ -18,12 +21,14 @@ class DTApiV3 {
     this.OauthClient = new DTOAuth(ssoUrl, clientId, clientSecret, accountUrn);
     this.axiosApiInstance = axios.create();
   }
+
   private setTokenHeader = (token: string) => {
     this.axiosApiInstance.defaults.headers.common["Authorization"] =
       "Bearer " + token;
     this.axiosApiInstance.defaults.headers.common["Content-Type"] =
       "application/json";
   };
+
   private getScopedRequest = async (scope: string) => {
     Logger.debug("DTApiV3: Requesting scoped token for " + scope);
     const token = await this.OauthClient.GetScopedToken(scope);
