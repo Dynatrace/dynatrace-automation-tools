@@ -19,6 +19,7 @@ class AuthOptions {
       );
     return mainCommand;
   }
+
   addOathOptions(mainCommand: Command): Command {
     mainCommand
       .addOption(

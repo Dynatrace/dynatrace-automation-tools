@@ -17,6 +17,7 @@ class SRGCommandConfigure implements BaseCommand {
       .description("Configures a new SRG evaluation")
       .action(async (appId, options) => {
         const success = await configureEvaluation(appId, options);
+
         if (!success) {
           mainCommand.error("Execution stop", {
             exitCode: 1,
@@ -26,11 +27,13 @@ class SRGCommandConfigure implements BaseCommand {
       });
   }
 }
+
 async function configureEvaluation(
   appId: string,
-  options: any
+  options: { [key: string]: string }
 ): Promise<boolean> {
   let res = false;
+
   try {
     Logger.info("Configuring SRG evaluation");
     const manager = new SRGConfigure();
@@ -46,6 +49,8 @@ async function configureEvaluation(
   } catch (err) {
     Logger.error("Error configuring SRG evaluation ", err);
   }
+
   return res;
 }
+
 export default SRGCommandConfigure;

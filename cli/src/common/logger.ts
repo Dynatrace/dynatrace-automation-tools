@@ -45,6 +45,7 @@ const format = winston.format.combine(
 
 const getTransports = () => {
   const transports = [];
+
   if (process.env.LOG_FILE === "true") {
     transports.push(
       new winston.transports.File({
@@ -53,9 +54,11 @@ const getTransports = () => {
       })
     );
   }
+
   transports.push(new winston.transports.Console());
   return transports;
 };
+
 const transports = getTransports();
 
 const Logger = winston.createLogger({
