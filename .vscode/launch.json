@@ -34,11 +34,33 @@
             "args": [
                 "srg",
                 "configure",
-                "simplenode"
+                "-h"
             ],
             "outputCapture": "std",
             "env": {
                 "LOG_LEVEL": "debug",
+            },
+            "envFile": "${workspaceFolder}/cli/.env",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "dt srg configure --template",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cli/dist/index.js",
+            "args": [
+                "srg",
+                "configure",
+                "--template=performance",
+            ],
+            "outputCapture": "std",
+            "env": {
+                "LOG_LEVEL": "verbose",
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [

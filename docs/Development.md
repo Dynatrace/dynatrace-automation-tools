@@ -6,7 +6,7 @@ To run the solution as development mode:
 - Run `npm install` to get the libraries.
 - Run `npm run build` to build the solution
 - To execute the CLI use `node dist/index.js`
-- To start the automatic compilation mode when something changes run `npm run dev`
+- To start the automatic compilation mode that detects when something changes run the command `npm run dev`
 
 ## Using VS Code
 
@@ -18,7 +18,7 @@ To run the solution as development mode:
 The folder `cli/src/common/` contains common functions that could be shared across multiple use cases like OAuth access and Logging functionality.
 The folder `cli/src/dynatrace` contains the Dynatrace specific information to interact with the API's. Some of these functions can later be replaced by the Dynatrace SDK libraries as those libraries start getting support for the different endpoints.
 
-- AuthOptions: A class that wraps the logic to access tokens from gen3 (oauth2) or classic tokens. Check the reference usage in the SRG command. This class is shared to avoid requiring the same properties for each command but it should be added to each automation since requirements might differ (i.e. some automations might only require gen3 access).
+- AuthOptions: A class that wraps the logic to access tokens from gen3 (oauth2) or classic tokens. Check the reference usage in the SRG command. This class is shared to avoid requiring the same properties for each command, but it should be added to each automation since requirements might differ (i.e. some automations might only require gen3 access).
   The folder `cli/dist` contains the automatically compiled code from typescript to javascript.
   The folder `cli/executables` contains the automatically compiled executables.
   The folder `cli/logs` contains the logs generated when running a local execution. (folder skipped using .gitignore)

@@ -7,14 +7,18 @@
     "scripts": {
         "dev": "tsc --watch",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-        "build": "npx tsc",
+        "build": "npx tsc && npm run copy-assets",
+        "copy-assets": "rm -rf ./dist/SRGAutomation/configure/templates/ && cp -r ./src/SRGAutomation/configure/templates ./dist/SRGAutomation/configure/templates/",
         "help": "npm run build && node dist/index.js -h",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
         "docker": "docker build -t dt-automation-cli . && docker run -it dt-automation-cli bash"
     },
     "pkg": {
         "scripts": "executables/**/*.js",
-        "assets": "executables/fonts/*",
+        "assets": [
+            "executables/fonts/*",
+            "executables/**/*.json"
+        ],
         "targets": [
             "linux",
             "macos",

@@ -1,0 +1,18 @@
+[
+    {
+        "schemaId": "app:dynatrace.site.reliability.guardian:guardians",
+        "scope": "tenant",
+        "value": {
+            "name": "{{.appname}}",
+            "objectives": [
+                {
+                    "name": "obj1",
+                    "dqlQuery": "fetch logs\n| filter contains(dt.process.name, \"simplenodeservice.simplenode-gitlab-staging\")\n| filter contains (k8s.namespace.name, \"simplenode-gitlab-staging\")\n| filter not contains (content, \"/healtz\") AND not contains (content, \"/healthz\")\n| filter contains (content, \"/api/invoke\")\n| parse content, \"DATA 'rt:' SPACE? FLOAT:responsetime \"\n| filter isNotNull(responsetime)\n| summarize avg(responsetime), alias:response_time",
+                    "comparisonOperator": "GREATER_THAN_OR_EQUAL",
+                    "target": 1,
+                    "warning": "{{.warning_target}}"
+                }
+            ]
+        }
+    }
+]

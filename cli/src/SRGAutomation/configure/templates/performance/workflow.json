@@ -1,5 +1,5 @@
 {
-    "title": "demo5",
+    "title": "{{.appname}}",
     "tasks": {},
     "isPrivate": false,
     "eventTrigger": {

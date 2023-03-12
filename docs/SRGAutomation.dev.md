@@ -14,3 +14,5 @@ DYNATRACE_CLIENT_ID=dtxx.xxxxxx
 DYNATRACE_SECRET=dtxx.xxxxxxxxxxxxxx
 DYNATRACE_SSO_URL=https://sso-xxxx.dynatrace.com/sso/oauth2/token # this variable depends on your environment stage (sprint,dev or production)
 ```
+
+To update th template files before debugging run `npm run copy-assets`

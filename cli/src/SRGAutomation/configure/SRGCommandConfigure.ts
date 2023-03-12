@@ -1,23 +1,40 @@
-import { Command } from "commander";
+import { Command, Option } from "commander";
 import { BaseCommand } from "../../common/interfaces";
 import Logger from "../../common/logger";
 import SRGConfigure from "./SRGConfigure";
-import AuthOptions from "../../dynatrace/AuthOptions";
+import AuthManager from "../../dynatrace/AuthOptions";
+import ApiManager from "../../dynatrace/ApiManager";
 class SRGCommandConfigure implements BaseCommand {
   constructor(mainCommand: Command) {
     this.init(mainCommand);
   }
 
   init(mainCommand: Command) {
-    const subcommand = mainCommand.command("configure");
-    const options = new AuthOptions();
-    options.addOathOptions(subcommand);
+    const subcommand = mainCommand
+      .command("configure")
+      .description(
+        "Select a template (i.e --template=performance) and provide the required values to configure a new SRG evaluation or use a custom template with --template-path option."
+      );
+    const apiManager = new ApiManager();
+    //adds the options for oauth authentication
+    apiManager.auth.addOathOptions(subcommand);
     subcommand
-      .argument("<application>", "application name")
-      .description("Configures a new SRG evaluation")
-      .action(async (appId, options) => {
-        const success = await configureEvaluation(appId, options);
-
+      .addOption(
+        new Option("--template <template>", "Default template type")
+          .choices(["performance", "security", "cost"])
+          .env("SRG_TEMPLATE")
+          .conflicts("template-path")
+      )
+      .addOption(
+        new Option(
+          "--template-path <templatePath>",
+          "For custom templates provide the local path"
+        )
+          .conflicts("template")
+          .env("SRG_TEMPLATE_PATH")
+      )
+      .action(async (options) => {
+        const success = await configureEvaluation(options, apiManager);
         if (!success) {
           mainCommand.error("Execution stop", {
             exitCode: 1,
@@ -29,25 +46,20 @@ class SRGCommandConfigure implements BaseCommand {
 }
 
 async function configureEvaluation(
-  appId: string,
-  options: { [key: string]: string }
+  options: { [key: string]: string },
+  apiManager: ApiManager
 ): Promise<boolean> {
   let res = false;
 
   try {
-    Logger.info("Configuring SRG evaluation");
-    const manager = new SRGConfigure();
-    await manager.configureEvaluation(
-      options.dynatraceUrlGen3,
-      options.accountUrn,
-      options.clientId,
-      options.secret,
-      options.ssoUrl,
-      appId
-    );
+    Logger.info("Configuring SRG evaluation with template " + options);
+    //sets the options values for authentication that the user provided
+    apiManager.auth.setOptionsValuesForAuth(options);
+    const manager = new SRGConfigure(apiManager);
+    await manager.configureEvaluation(options);
     res = true;
   } catch (err) {
-    Logger.error("Error configuring SRG evaluation ", err);
+    Logger.error("While configuring SRG evaluation ", err);
   }
 
   return res;

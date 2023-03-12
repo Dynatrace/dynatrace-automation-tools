@@ -1,27 +1,35 @@
-import DTApiV3 from "../../dynatrace/DTApiV3";
 import Logger from "../../common/logger";
-import baseWorkflow from "./templates/baseWorkflow.json";
+import ApiManager from "../../dynatrace/ApiManager";
+import SRGTemplateManager, { SRGTemplate } from "./SRGTemplateManager";
+
+//Executes the SRG template configuration
+//Steps:
+//1. Validate or request template values
+//1. Create SRG project
+//2. Create SRG workflow
 class SRGConfigure {
-  async configureEvaluation(
-    dynatraceUrl: string,
-    accountUrn: string,
-    clientId: string,
-    clientSecret: string,
-    ssoUrl: string,
-    appId: string
-  ) {
-    const dtApi = new DTApiV3(
-      dynatraceUrl,
-      ssoUrl,
-      accountUrn,
-      clientId,
-      clientSecret
+  private api: ApiManager;
+  constructor(apiManager: ApiManager) {
+    this.api = apiManager;
+  }
+
+  async configureEvaluation(options: { [key: string]: string }) {
+    const templateManager = new SRGTemplateManager(options);
+    const srgTemplate = await templateManager.GetParsedSRGTemplate();
+    await this.createSRGEntities(srgTemplate);
+  }
+  private async createSRGEntities(srgTemplate: SRGTemplate) {
+    Logger.debug("Creating SRG evaluation project");
+    //Logger.verbose(srgAppDefinition);
+    let srgProject = await this.api.gen3?.SRGProjectCreate(
+      srgTemplate.srgAppDefinition
     );
-    Logger.debug("Creating SRG evaluation Workflow for app " + appId);
-    await dtApi.CreateWorkflow(baseWorkflow);
-    Logger.info(
-      "SRG evaluation Workflow for " + appId + " created successfully "
+    Logger.info("SRG evaluation app created successfully");
+    Logger.debug("Creating SRG evaluation Workflow");
+    let srgWorkflow = await this.api.gen3?.WorkflowCreate(
+      srgTemplate.workflowDefinition
     );
+    Logger.info("SRG evaluation Workflow created successfully ");
   }
 }
 

@@ -1,19 +1,21 @@
 import { Command, Option } from "commander";
-
+import DTOAuth from "../common/oauth";
+import Logger from "../common/logger";
+import axios, { AxiosInstance } from "axios";
 //Abstracts the authentication options for the CLI. Common class since all Dynatrace API interactions would use the same authentication options.
+
 class AuthOptions {
+  private options: any;
+
   addClassicTokenOptions(mainCommand: Command): Command {
     mainCommand
       .addOption(
-        new Option(
-          "-u, --dynatrace-url [dynatrace-url]",
-          "dynatrace environment URL"
-        )
+        new Option("dynatrace-url", "dynatrace environment URL")
           .env("DYNATRACE_URL")
           .makeOptionMandatory()
       )
       .addOption(
-        new Option("-t, --dynatrace-token [dynatrace-token]", "dynatrace token")
+        new Option("dynatrace-token", "dynatrace token")
           .env("DYNATRACE_TOKEN")
           .makeOptionMandatory()
       );
@@ -24,46 +26,62 @@ class AuthOptions {
     mainCommand
       .addOption(
         new Option(
-          "-a, --account-urn [account_urn]",
-          "Account URN i.e. urn:dtaccount:xxxx-xxxx-xxxx-xxx. Environment variable ACCOUNT_URN"
+          "account_urn",
+          "Account URN i.e. urn:dtaccount:xxxx-xxxx-xxxx-xxx"
         )
           .env("ACCOUNT_URN")
           .makeOptionMandatory()
       )
       .addOption(
-        new Option(
-          "-u3, --dynatrace-url-gen3 [dynatrace_url_gen3]",
-          "dynatrace environment URL. Environment variable DYNATRACE_URL_GEN3"
-        )
+        new Option("dynatrace_url_gen3", "dynatrace environment URL")
           .env("DYNATRACE_URL_GEN3")
           .makeOptionMandatory()
       )
       .addOption(
-        new Option(
-          "-c, --client-id [client_id]",
-          "Dynatrace Client ID i.e dt0s02.xxx. Environment variable DYNATRACE_CLIENT_ID"
-        )
+        new Option("client_id", "Dynatrace Client ID i.e dt0s02.xxx")
           .env("DYNATRACE_CLIENT_ID")
           .makeOptionMandatory()
       )
       .addOption(
         new Option(
-          "-s, --secret [secret]",
-          "Dynatrace Oauth secret i.e. dt0s02.xxxxxxxx. Environment variable DYNATRACE_SECRET"
+          "client_secret",
+          "Dynatrace Oauth secret i.e. dt0s02.xxxxxxxx"
         )
           .env("DYNATRACE_SECRET")
           .makeOptionMandatory()
       )
       .addOption(
         new Option(
-          "--ssoUrl [sso_url]",
-          "Dynatrace SSO Oauth URL. Defaults to https://sso.dynatrace.com/sso/oauth2/token. Environment variable DYNATRACE_SSO_URL"
+          "sso_url",
+          "Dynatrace SSO Oauth URL. Defaults to https://sso.dynatrace.com/sso/oauth2/token"
         )
           .env("DYNATRACE_SSO_URL")
           .default("https://sso.dynatrace.com/sso/oauth2/token")
       );
     return mainCommand;
   }
+  setOptionsValuesForAuth(options: any) {
+    this.options = options;
+  }
+
+  getGen3ClientWithScopeRequest = async (scope: string) => {
+    const oauth = new DTOAuth(
+      this.options.ssoUrl,
+      this.options.clientId,
+      this.options.clientSecret,
+      this.options.accountUrn
+    );
+
+    Logger.debug("DTApiV3: Requesting scoped token for " + scope);
+    const token = await oauth.GetScopedToken(scope);
+    const axiosApiInstance: AxiosInstance = axios.create();
+    axiosApiInstance.defaults.headers.common["Authorization"] =
+      "Bearer " + token;
+    axiosApiInstance.defaults.headers.common["Content-Type"] =
+      "application/json";
+    axiosApiInstance.defaults.baseURL = this.options.dynatraceUrlGen3;
+    return axiosApiInstance;
+  };
 }
 
 export default AuthOptions;

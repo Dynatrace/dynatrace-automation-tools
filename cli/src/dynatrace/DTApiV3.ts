@@ -1,47 +1,39 @@
 import Logger from "../common/logger";
 import axios, { AxiosInstance } from "axios";
 import DTOAuth from "../common/oauth";
+import AuthOptions from "./AuthOptions";
 //Dynatrace API v3 for gen3 endpoints
 class DTApiV3 {
-  DynatraceUrl: string;
+  Auth: AuthOptions;
 
-  axiosApiInstance: AxiosInstance;
-
-  OauthClient: DTOAuth;
-
-  constructor(
-    dynatraceUrl: string,
-    ssoUrl: string,
-    accountUrn: string,
-    clientId: string,
-    clientSecret: string
-  ) {
+  constructor(auth: AuthOptions) {
     Logger.debug("Creating DTApi instance");
-    this.DynatraceUrl = dynatraceUrl;
-    this.OauthClient = new DTOAuth(ssoUrl, clientId, clientSecret, accountUrn);
-    this.axiosApiInstance = axios.create();
+    this.Auth = auth;
   }
 
-  private setTokenHeader = (token: string) => {
-    this.axiosApiInstance.defaults.headers.common["Authorization"] =
-      "Bearer " + token;
-    this.axiosApiInstance.defaults.headers.common["Content-Type"] =
-      "application/json";
+  SRGProjectCreate = async (SRGTemplate: any) => {
+    let client = await this.Auth.getGen3ClientWithScopeRequest(
+      "settings:objects:write"
+    );
+    let res = await client.post(
+      "/platform/classic/environment-api/v2/settings/objects?validateOnly=false",
+      SRGTemplate
+    );
+    if (res.status != 200) {
+      Logger.error("Failed create SRG project");
+      Logger.verbose(res);
+      throw new Error("Failed create SRG project");
+    }
+    return res.data;
   };
-
-  private getScopedRequest = async (scope: string) => {
-    Logger.debug("DTApiV3: Requesting scoped token for " + scope);
-    const token = await this.OauthClient.GetScopedToken(scope);
-    this.setTokenHeader(token);
-    return this.axiosApiInstance;
-  };
-
-  CreateWorkflow = async (workflow: object): Promise<boolean> => {
-    const api = await this.getScopedRequest("automation:workflows:write");
+  WorkflowCreate = async (workflow: object): Promise<boolean> => {
+    const client = await this.Auth.getGen3ClientWithScopeRequest(
+      "automation:workflows:write"
+    );
 
     Logger.debug("Creating workflow from template");
-    const res = await api.post(
-      this.DynatraceUrl + "/platform/automation/v0.2/workflows",
+    const res = await client.post(
+      "/platform/automation/v0.2/workflows",
       workflow
     );
 
