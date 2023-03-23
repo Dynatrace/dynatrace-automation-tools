@@ -26,25 +26,25 @@ class AuthOptions {
     mainCommand
       .addOption(
         new Option(
-          "account_urn",
+          "<account_urn>",
           "Account URN i.e. urn:dtaccount:xxxx-xxxx-xxxx-xxx"
         )
           .env("ACCOUNT_URN")
           .makeOptionMandatory()
       )
       .addOption(
-        new Option("dynatrace_url_gen3", "dynatrace environment URL")
+        new Option("<dynatrace_url_gen3>", "dynatrace environment URL")
           .env("DYNATRACE_URL_GEN3")
           .makeOptionMandatory()
       )
       .addOption(
-        new Option("client_id", "Dynatrace Client ID i.e dt0s02.xxx")
+        new Option("<client_id>", "Dynatrace Client ID i.e dt0s02.xxx")
           .env("DYNATRACE_CLIENT_ID")
           .makeOptionMandatory()
       )
       .addOption(
         new Option(
-          "client_secret",
+          "<client_secret>",
           "Dynatrace Oauth secret i.e. dt0s02.xxxxxxxx"
         )
           .env("DYNATRACE_SECRET")
@@ -52,7 +52,7 @@ class AuthOptions {
       )
       .addOption(
         new Option(
-          "sso_url",
+          "<sso_url>",
           "Dynatrace SSO Oauth URL. Defaults to https://sso.dynatrace.com/sso/oauth2/token"
         )
           .env("DYNATRACE_SSO_URL")
@@ -60,16 +60,17 @@ class AuthOptions {
       );
     return mainCommand;
   }
-  setOptionsValuesForAuth(options: any) {
+
+  setOptionsValuesForAuth(options: { [key: string]: string }) {
     this.options = options;
   }
 
   getGen3ClientWithScopeRequest = async (scope: string) => {
     const oauth = new DTOAuth(
-      this.options.ssoUrl,
-      this.options.clientId,
-      this.options.clientSecret,
-      this.options.accountUrn
+      this.options["<sso_url>"],
+      this.options["<client_id>"],
+      this.options["<client_secret>"],
+      this.options["<account_urn>"]
     );
 
     Logger.debug("DTApiV3: Requesting scoped token for " + scope);
@@ -79,7 +80,7 @@ class AuthOptions {
       "Bearer " + token;
     axiosApiInstance.defaults.headers.common["Content-Type"] =
       "application/json";
-    axiosApiInstance.defaults.baseURL = this.options.dynatraceUrlGen3;
+    axiosApiInstance.defaults.baseURL = this.options["<dynatrace_url_gen3>"];
     return axiosApiInstance;
   };
 }

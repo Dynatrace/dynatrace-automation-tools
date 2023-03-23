@@ -2,8 +2,8 @@ import { Command, Option } from "commander";
 import { BaseCommand } from "../../common/interfaces";
 import Logger from "../../common/logger";
 import SRGConfigure from "./SRGConfigure";
-import AuthManager from "../../dynatrace/AuthOptions";
-import ApiManager from "../../dynatrace/ApiManager";
+import AuthOptions from "../../dynatrace/AuthOptions";
+import DTApiV3 from "../../dynatrace/DTApiV3";
 class SRGCommandConfigure implements BaseCommand {
   constructor(mainCommand: Command) {
     this.init(mainCommand);
@@ -15,9 +15,9 @@ class SRGCommandConfigure implements BaseCommand {
       .description(
         "Select a template (i.e --template=performance) and provide the required values to configure a new SRG evaluation or use a custom template with --template-path option."
       );
-    const apiManager = new ApiManager();
+    const auth = new AuthOptions();
     //adds the options for oauth authentication
-    apiManager.auth.addOathOptions(subcommand);
+    auth.addOathOptions(subcommand);
     subcommand
       .addOption(
         new Option("--template <template>", "Default template type")
@@ -34,7 +34,8 @@ class SRGCommandConfigure implements BaseCommand {
           .env("SRG_TEMPLATE_PATH")
       )
       .action(async (options) => {
-        const success = await configureEvaluation(options, apiManager);
+        const success = await configureEvaluation(options, auth);
+
         if (!success) {
           mainCommand.error("Execution stop", {
             exitCode: 1,
@@ -47,15 +48,16 @@ class SRGCommandConfigure implements BaseCommand {
 
 async function configureEvaluation(
   options: { [key: string]: string },
-  apiManager: ApiManager
+  auth: AuthOptions
 ): Promise<boolean> {
   let res = false;
 
   try {
     Logger.info("Configuring SRG evaluation with template " + options);
     //sets the options values for authentication that the user provided
-    apiManager.auth.setOptionsValuesForAuth(options);
-    const manager = new SRGConfigure(apiManager);
+    auth.setOptionsValuesForAuth(options);
+    const api = new DTApiV3(auth);
+    const manager = new SRGConfigure(api);
     await manager.configureEvaluation(options);
     res = true;
   } catch (err) {

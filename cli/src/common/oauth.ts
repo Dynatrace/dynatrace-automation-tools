@@ -1,7 +1,7 @@
+/* eslint-disable camelcase */
 import axios, { AxiosInstance } from "axios";
 import Logger from "./logger";
-
-export class OauthParams {
+class DTOAuth {
   SSOUrl: string;
 
   ClientId: string;
@@ -9,20 +9,7 @@ export class OauthParams {
   ClientSecret: string;
 
   AccountUUID: string;
-  constructor(
-    SSOUrl: string,
-    ClientId: string,
-    ClientSecret: string,
-    AccountUUID: string
-  ) {
-    this.SSOUrl = SSOUrl;
-    this.ClientId = ClientId;
-    this.ClientSecret = ClientSecret;
-    this.AccountUUID = AccountUUID;
-  }
-}
-class DTOAuth {
-  oauthParams: OauthParams;
+
   axiosApiInstance: AxiosInstance;
 
   constructor(
@@ -31,30 +18,24 @@ class DTOAuth {
     clientSecret: string,
     accountUUID: string
   ) {
-    this.oauthParams = new OauthParams(
-      ssoUrl,
-      clientId,
-      clientSecret,
-      accountUUID
-    );
+    this.SSOUrl = ssoUrl;
+    this.ClientId = clientId;
+    this.ClientSecret = clientSecret;
+    this.AccountUUID = accountUUID;
     this.axiosApiInstance = axios.create();
   }
 
   async GetScopedToken(scope: string): Promise<string> {
     const data = {
-      grantType: "client_credentials",
-      clientId: this.oauthParams.ClientId,
-      clientSecret: this.oauthParams.ClientSecret,
+      grant_type: "client_credentials",
+      client_id: this.ClientId,
+      client_secret: this.ClientSecret,
       scope: scope,
-      resource: this.oauthParams.AccountUUID,
+      resource: this.AccountUUID,
     };
-    const res = await this.axiosApiInstance.post(
-      this.oauthParams.SSOUrl,
-      data,
-      {
-        headers: { "content-type": "application/x-www-form-urlencoded" },
-      }
-    );
+    const res = await this.axiosApiInstance.post(this.SSOUrl, data, {
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+    });
 
     if (res.status != 200) {
       Logger.error("Failed to get token");
