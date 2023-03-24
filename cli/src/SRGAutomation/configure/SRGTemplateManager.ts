@@ -25,9 +25,9 @@ class SRGTemplateManager {
   ReplaceDependencies(workflowDefinition: any, srgProject: any): any {
     Logger.debug("Replacing template variables with dependencies");
     const regex = new RegExp(`##OBJECT_ID##`, "g");
-    workflowDefinition = workflowDefinition.replace(regex, srgProject);
-
-    return workflowDefinition;
+    let workflowAsString: string = JSON.stringify(workflowDefinition);
+    workflowAsString = workflowAsString.replace(regex, srgProject[0].objectId);
+    return JSON.parse(workflowAsString);
   }
 
   //scans the template files for variables

@@ -29,6 +29,14 @@ class SRGConfigure {
     const srgProject = await this.api.SRGProjectCreate(
       srgTemplate.srgAppDefinition
     );
+
+    if (srgProject == "SRG project already exists") {
+      Logger.info(
+        "SRG evaluation project already exists. Skipping generation of SRG evaluation app and workflow."
+      );
+      return;
+    }
+
     Logger.info("SRG evaluation app created successfully");
     Logger.debug("Creating SRG evaluation Workflow");
     Logger.verbose(srgProject);

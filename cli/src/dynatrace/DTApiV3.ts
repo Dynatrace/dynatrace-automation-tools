@@ -27,32 +27,54 @@ class DTApiV3 {
 
       return res.data;
     } catch (e: any) {
-      Logger.error(e.response?.data[0]);
       if (e.response?.data[0].code == 400) {
-        Logger.error(e.response?.data[0].error.constraintViolations[0].message);
+        const msg: string =
+          e.response?.data[0].error.constraintViolations[0].message;
+
+        if (msg.includes("another guardian with an identical name defined")) {
+          Logger.debug(msg);
+          return "SRG project already exists";
+        }
+
+        Logger.error(msg);
+      } else {
+        Logger.error(e.response?.data[0]);
       }
+
       throw new Error("Failed create SRG project");
     }
   };
 
   WorkflowCreate = async (workflow: string): Promise<any> => {
-    const client = await this.Auth.getGen3ClientWithScopeRequest(
-      "automation:workflows:write"
-    );
+    try {
+      const client = await this.Auth.getGen3ClientWithScopeRequest(
+        "automation:workflows:write"
+      );
 
-    Logger.debug("Creating workflow from template");
-    const res = await client.post(
-      "/platform/automation/v0.2/workflows",
-      workflow
-    );
+      Logger.debug("Creating workflow from template");
+      const res = await client.post(
+        "/platform/automation/v0.2/workflows",
+        workflow
+      );
 
-    if (res.status != 201) {
-      Logger.error("Failed create workflow");
-      Logger.verbose(res);
-      throw new Error("Failed create workflow");
+      if (res.status != 201) {
+        Logger.error("Failed create workflow");
+        Logger.verbose(res);
+        throw new Error("Failed create workflow");
+      }
+
+      return res;
+    } catch (e: any) {
+      if (e.response?.data[0].code == 400) {
+        const msg: string =
+          e.response?.data[0].error.constraintViolations[0].message;
+        Logger.error(msg);
+      } else {
+        Logger.error(e.response?.data[0]);
+      }
+
+      throw new Error("Failed create Workflow");
     }
-
-    return res;
   };
 }
 export default DTApiV3;
