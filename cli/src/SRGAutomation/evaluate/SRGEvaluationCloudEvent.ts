@@ -1,15 +1,11 @@
 import { CloudEvent } from "cloudevents";
 import { v4 as uuidv4 } from "uuid";
 
-class SRGEvaluationCloudEvent extends CloudEvent<SRGEvaluationPayload> {
-  appname: string;
-
-  stage: string;
-
-  service: string;
+class SRGEvaluationCloudEvent {
+  data: CloudEvent<SRGEvaluationPayload>;
 
   constructor(appName: string, options: { [key: string]: string }) {
-    super({
+    const baseEvent: CloudEvent<SRGEvaluationPayload> = new CloudEvent({
       id: uuidv4(),
       type: "com.dynatrace.event.srg.evaluation.triggered.v1",
       source: "ci-cd",
@@ -23,9 +19,12 @@ class SRGEvaluationCloudEvent extends CloudEvent<SRGEvaluationPayload> {
         options["labels"]
       ),
     });
-    this.appname = appName;
-    this.stage = options["stage"];
-    this.service = options["service"];
+    //CloudEvent is immutable, so we need to clone it and add the appname and stage
+    this.data = baseEvent.cloneWith({
+      appname: appName,
+      stage: options["stage"],
+      service: options["service"],
+    });
   }
 }
 

@@ -28,7 +28,7 @@ class SRGEvaluate {
   private async sendEvent(event: SRGEvaluationCloudEvent) {
     Logger.debug("Sending SRG evaluation event");
     Logger.verbose(event);
-    const bizEventResult = await this.api.BizEventSend(event);
+    const bizEventResult = await this.api.BizEventSend(event.data);
     Logger.verbose(bizEventResult);
     Logger.info("SRG evaluation event sent");
     return bizEventResult;
