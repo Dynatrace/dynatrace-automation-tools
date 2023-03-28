@@ -26,37 +26,15 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "dt srg configure",
+            "name": "dt srg evaluate",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cli/dist/index.js",
             "args": [
                 "srg",
-                "configure",
-                "-h"
-            ],
-            "outputCapture": "std",
-            "env": {
-                "LOG_LEVEL": "debug",
-            },
-            "envFile": "${workspaceFolder}/cli/.env",
-            "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "dt srg configure --template",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/cli/dist/index.js",
-            "args": [
-                "srg",
-                "configure",
-                "--template=performance",
+                "evaluate",
+                "simplenode"
             ],
             "outputCapture": "std",
             "env": {

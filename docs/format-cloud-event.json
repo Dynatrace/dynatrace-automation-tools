@@ -1,0 +1,21 @@
+{
+    "specversion": "1.0",
+    "type": "com.dynatrace.event.srg.evaluation.triggered.v1",
+    "source": "ci-cd",
+    "id": "1234-5678-90ab-cdef",
+    "datacontenttype": "application/json",
+    "data": {
+        "timeFrame": {
+            "start": "2023-03-27T00:00:00Z",
+            "end": "2023-03-27T23:59:59Z"
+        },
+        "gitCommitId": "",
+        "labels": {
+            "label-key": "label-value"
+        }
+    },
+    "appname": "simplenode",
+    "service": "simplenode",
+    "stage": "dev",
+    "provider": "dynatrace-automation-cli"
+}

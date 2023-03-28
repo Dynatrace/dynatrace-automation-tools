@@ -7,21 +7,6 @@ import axios, { AxiosInstance } from "axios";
 class AuthOptions {
   private options: any;
 
-  addClassicTokenOptions(mainCommand: Command): Command {
-    mainCommand
-      .addOption(
-        new Option("dynatrace-url", "dynatrace environment URL")
-          .env("DYNATRACE_URL")
-          .makeOptionMandatory()
-      )
-      .addOption(
-        new Option("dynatrace-token", "dynatrace token")
-          .env("DYNATRACE_TOKEN")
-          .makeOptionMandatory()
-      );
-    return mainCommand;
-  }
-
   addOathOptions(mainCommand: Command): Command {
     mainCommand
       .addOption(

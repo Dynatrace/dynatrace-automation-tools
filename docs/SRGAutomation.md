@@ -1,33 +1,35 @@
 # Site Reliability automation
 
-This feature allows to automate the process of creating and executing Site Reliability Guardian from a CI/CD or automation platform.
+Allows to automate the process of executing Site Reliability Automation from a CI/CD or automation platform.
 
 ## Instructions
 
-Getting started in 5 mins:
+Getting started:
 
+1. Follow the guide [Here](./SRGAutomation-initial-setup.md) to configure the base SRG application and workflow.
 1. Download the CLI or use the docker container version [Main Docs](../README.md)\
-1. Generate an Oauth2 token with the scopes `automation:workflows:write`. Details about [Authentication](./Authentication.md)
-1. Generate a classic token authentication with scope for `settings.read settings.write`.
-1. Run the command `dt-automation-cli srg configure --template=performance` to start the configuration process.
-1. Run the command `dt-automation-cli srg evaluate` to trigger a new quality gate evaluation.
+1. Generate an Oauth2 token with the scopes `storage:bizevents:read storage:events:write`. Details about [Authentication](./Authentication.md)
+1. Run the command `dt-automation-cli srg execute appName` to trigger a new quality gate evaluation.
 
-## SRG configure command
+## SRG execute command details
 
-The SRG configure command allows to configure an SRG application and a workflow to trigger the evaluation by using a template. By default, you have 3 different templates available:
+The command `dt-automation srg execute appName` triggers a new Site Reliability Guardian evaluation by sending an event into Dynatrace with the required details for the evaluation. On the Dynatrace side, a workflow is listening for the event and triggers a SRG task to execute the evaluation itself.
 
-- performance: Measures the performance of the application using response time and error rate as base metrics.
-- security
-- cost
+The required values for this command are:
 
-You can also customize the templates and create your own version by using the command `srg generate --template=performance -o=./template-folder` and specifying the output folder.
+- appName: This would be used to link the SRG evaluation and the workflow, additional parameters can be used in the optional values.
 
-To execute a custom template use the command `srg configure --template-path=./template-folder`. This would take the template in the specified folder and apply it to the target environment.
+The available options for this command are:
 
-To learn more about template creation check section below Advanced Use Case:Generating custom templates
+- start-time and end-time (start-time and end-time )
+- timespan (last x mins) (this conflicts with start-time end-time, so only one should be defined)
+- stage
+- service
+- labels
+- gitCommitId
 
-## SRG evaluate command
+The return payload after this command is executed includes:
 
-## Advanced Use Case:Generating custom templates
-
-To generate a custom template follow the steps:
+- evaluation_event_id
+- evaluation_result
+- evaluation_url_link

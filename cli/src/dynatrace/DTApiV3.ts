@@ -76,5 +76,66 @@ class DTApiV3 {
       throw new Error("Failed create Workflow");
     }
   };
+
+  BizEventSend = async (event: object): Promise<any> => {
+    try {
+      const client = await this.Auth.getGen3ClientWithScopeRequest(
+        "storage:events:write"
+      );
+      const res = await client.post(
+        "/platform/classic/environment-api/v2/bizevents/ingest",
+        event
+      );
+
+      if (res.status != 202) {
+        Logger.error("Failed send business event");
+        Logger.verbose(res);
+        throw new Error("Failed send business event");
+      }
+
+      return res.data;
+    } catch (e: any) {
+      Logger.verbose(e);
+
+      if (e.response?.data[0].code == 400) {
+        const msg: string =
+          e.response?.data[0].error.constraintViolations[0].message;
+        Logger.error(msg);
+      } else {
+        Logger.error(e.response?.data[0]);
+      }
+
+      throw new Error("Failed to send business event");
+    }
+  };
+
+  BizEventQuery = async (eventId: string): Promise<any> => {
+    try {
+      const client = await this.Auth.getGen3ClientWithScopeRequest(
+        "storage:events:read"
+      );
+      const res = await client.get(
+        `/api/v2/bizevents/query?eventId=${eventId}`
+      );
+
+      if (res.status != 200) {
+        Logger.error("Failed query business event");
+        Logger.verbose(res);
+        throw new Error("Failed query business event");
+      }
+
+      return res.data;
+    } catch (e: any) {
+      if (e.response?.data[0].code == 400) {
+        const msg: string =
+          e.response?.data[0].error.constraintViolations[0].message;
+        Logger.error(msg);
+      } else {
+        Logger.error(e.response?.data[0]);
+      }
+
+      throw new Error("Failed query business event");
+    }
+  };
 }
 export default DTApiV3;
