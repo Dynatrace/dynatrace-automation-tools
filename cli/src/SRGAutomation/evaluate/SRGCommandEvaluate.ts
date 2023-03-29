@@ -53,7 +53,7 @@ class SRGCommandEvaluate implements BaseCommand {
           "--stage [stage]",
           "Evaluation stage, can be dev, test,quality-gate, prod, etc."
         )
-          .default("quality-gate")
+          .default("")
           .env("SRG_EVALUATION_STAGE")
       )
       .addOption(
@@ -110,7 +110,7 @@ async function executeEvaluation(
     await manager.triggerEvaluation(appName, options);
     res = true;
   } catch (err) {
-    Logger.error("While configuring SRG evaluation ", err);
+    Logger.error("While executing SRG evaluation ", err);
   }
 
   return res;

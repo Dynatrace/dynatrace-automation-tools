@@ -1,5 +1,6 @@
 import Logger from "../common/logger";
 import AuthOptions from "./AuthOptions";
+import DQLQuery from "./DQLQuery";
 //Dynatrace API v3 for gen3 endpoints
 class DTApiV3 {
   Auth: AuthOptions;
@@ -97,7 +98,7 @@ class DTApiV3 {
     } catch (e: any) {
       Logger.verbose(e);
 
-      if (e.response?.data[0].code == 400) {
+      if (e.response?.data[0]?.code == 400) {
         const msg: string =
           e.response?.data[0].error.constraintViolations[0].message;
         Logger.error(msg);
@@ -109,13 +110,14 @@ class DTApiV3 {
     }
   };
 
-  BizEventQuery = async (eventId: string): Promise<any> => {
+  BizEventQuery = async (query: DQLQuery): Promise<any> => {
     try {
       const client = await this.Auth.getGen3ClientWithScopeRequest(
-        "storage:events:read"
+        "storage:events:read storage:buckets:read storage:bizevents:read"
       );
-      const res = await client.get(
-        `/api/v2/bizevents/query?eventId=${eventId}`
+      const res = await client.post(
+        `/platform/storage/query/v1/query:execute`,
+        query
       );
 
       if (res.status != 200) {
@@ -124,11 +126,12 @@ class DTApiV3 {
         throw new Error("Failed query business event");
       }
 
-      return res.data;
+      return res.data.result.records;
     } catch (e: any) {
-      if (e.response?.data[0].code == 400) {
-        const msg: string =
-          e.response?.data[0].error.constraintViolations[0].message;
+      Logger.verbose(e.response);
+
+      if (e.response?.data?.error.code == 400) {
+        const msg: string = e.response?.data.error.details.message;
         Logger.error(msg);
       } else {
         Logger.error(e.response?.data[0]);

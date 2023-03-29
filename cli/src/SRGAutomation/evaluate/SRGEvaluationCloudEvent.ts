@@ -12,8 +12,8 @@ class SRGEvaluationCloudEvent {
       datacontenttype: "application/json",
       provider: "dynatrace-automation-cli",
       data: new SRGEvaluationPayload(
-        options["starttime"],
-        options["endtime"],
+        options["startTime"],
+        options["endTime"],
         options["timespan"],
         options["gitCommitId"],
         options["labels"]
@@ -42,11 +42,17 @@ class SRGEvaluationPayload {
     gitCommitId: string,
     labels: string
   ) {
-    if (timeSpan !== "") {
+    if (startTime == undefined && endTime === undefined && timeSpan !== "") {
       const date = new Date();
       date.setMinutes(date.getMinutes() - parseInt(timeSpan));
       startTime = date.toISOString();
       endTime = new Date().toISOString();
+    } else {
+      if (startTime === "" || endTime === "") {
+        throw new Error(
+          "Either start time or end time or timespan must be provided"
+        );
+      }
     }
 
     this.TimeFrame = new TimeFrame(startTime, endTime);
