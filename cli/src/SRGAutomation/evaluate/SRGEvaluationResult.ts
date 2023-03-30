@@ -1,3 +1,5 @@
+import Logger from "../../common/logger";
+
 class SRGEvaluationResult {
   status: string;
 
@@ -14,6 +16,29 @@ class SRGEvaluationResult {
       event["guardian.id"] +
       "?validationId=" +
       event["validation.id"];
+  }
+
+  PrintEvaluationResults(
+    result: SRGEvaluationResult,
+    stopOnFailure: string,
+    stopOnWarning: string
+  ) {
+    Logger.info("#############################################");
+    Logger.info("Evaluation results:");
+
+    if (result.status == "fail" || result.status == "error") {
+      Logger.error("  Status: " + result.status);
+      if (stopOnFailure == "true" || stopOnWarning == "true") {
+        process.exit(1);
+      }
+    } else {
+      Logger.info("  Status: " + result.status);
+    }
+    Logger.info(
+      " SLO summary (number of SLO that failed): \n " + result.validationSummary
+    );
+    Logger.info(" Evaluation Link: \n  " + result.srgLink);
+    Logger.info("#############################################");
   }
 }
 

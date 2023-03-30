@@ -80,6 +80,22 @@ class SRGCommandEvaluate implements BaseCommand {
           .default("")
           .env("SRG_EVALUATION_LABELS")
       )
+      .addOption(
+        new Option(
+          "-s, --stop-on-failure",
+          "stop execution if evaluation fails"
+        )
+          .default(true)
+          .env("SRG_EVALUATION_STOP_ON_FAILURE")
+      )
+      .addOption(
+        new Option(
+          "-w, --stop-on-warning",
+          "stop execution if evaluation has warnings"
+        )
+          .default(false)
+          .env("SRG_EVALUATION_STOP_ON_WARNING")
+      )
       .addArgument(new Argument("appName", "Application name").argRequired())
       .action(async (arg, options) => {
         const success = await executeEvaluation(arg, options, auth);

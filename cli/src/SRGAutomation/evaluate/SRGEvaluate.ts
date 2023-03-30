@@ -18,7 +18,11 @@ class SRGEvaluate {
       event,
       options["<dynatrace_url_gen3>"]
     );
-    this.printEvaluationResults(result);
+    result.PrintEvaluationResults(
+      result,
+      options["--stop-on-failure"],
+      options["--stop-on-warning"]
+    );
   }
 
   private getCloudEvent(
@@ -131,13 +135,6 @@ class SRGEvaluate {
     const finalDql = dqlWithtagFilter + " | sort timestamp desc | limit 1 ";
 
     return finalDql;
-  }
-
-  private printEvaluationResults(result: SRGEvaluationResult) {
-    Logger.info("Evaluation results:");
-    Logger.info("  Status: " + result.status);
-    Logger.info("  Summary: " + result.validationSummary);
-    Logger.info(" Evaluation Link: " + result.srgLink);
   }
 }
 

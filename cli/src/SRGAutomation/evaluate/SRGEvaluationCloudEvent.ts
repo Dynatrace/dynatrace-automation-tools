@@ -81,6 +81,9 @@ class TimeFrame {
   constructor(start: string, end: string) {
     this.start = this.convertTimeFromString(start);
     this.end = this.convertTimeFromString(end);
+    if (this.start > this.end) {
+      throw new Error("Start time must be before end time");
+    }
   }
 
   convertTimeFromString(time: string) {
@@ -91,7 +94,9 @@ class TimeFrame {
     const date = new Date(time);
 
     if (isNaN(date.getTime())) {
-      throw new Error(`Invalid time format: ${time}`);
+      throw new Error(
+        `Invalid time format ${time}. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)`
+      );
     }
 
     return date.toISOString();
