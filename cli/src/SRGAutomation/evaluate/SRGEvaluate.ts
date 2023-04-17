@@ -56,7 +56,6 @@ class SRGEvaluate {
       Logger.verbose(result);
 
       if (result.length > 0) {
-        Logger.info("Evaluation results:");
         return new SRGEvaluationResult(result[0], dynatraceUrl);
       }
 
@@ -108,9 +107,9 @@ class SRGEvaluate {
   private getExpression(event: SRGEvaluationCloudEvent) {
     const initialdql =
       'fetch bizevents | filter event.type == "guardian.validation.finished" AND validation.from =="' +
-      event.data.data?.TimeFrame.start +
+      event.data.starttime +
       '" AND validation.to =="' +
-      event.data.data?.TimeFrame.end +
+      event.data.endtime +
       '"';
     let dqlWithtagFilter =
       initialdql +
