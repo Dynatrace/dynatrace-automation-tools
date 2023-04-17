@@ -49,7 +49,7 @@ const getTransports = () => {
   if (process.env.LOG_FILE === "true") {
     transports.push(
       new winston.transports.File({
-        filename: "logs/error.log",
+        filename: "logs/logs.log",
         level: process.env.LOG_LEVEL || "error",
       })
     );

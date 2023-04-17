@@ -1,5 +1,5 @@
 {
-    "name": "dt-automation-cli",
+    "name": "dta",
     "version": "0.0.1",
     "description": "Dynatrace Automation tools CLI",
     "main": "index.js",
@@ -7,11 +7,9 @@
     "scripts": {
         "dev": "tsc --watch",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-        "build": "npx tsc && npm run copy-assets",
-        "copy-assets": "rm -rf ./dist/SRGAutomation/configure/templates/ && cp -r ./src/SRGAutomation/configure/templates ./dist/SRGAutomation/configure/templates/",
-        "help": "npm run build && node dist/index.js -h",
+        "build": "npx tsc",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
-        "docker": "docker build -t dt-automation-cli . && docker run -it dt-automation-cli bash"
+        "docker": "docker build -t dta . && docker run -it dta bash"
     },
     "pkg": {
         "scripts": "executables/**/*.js",

@@ -39,6 +39,7 @@
             "outputCapture": "std",
             "env": {
                 "LOG_LEVEL": "verbose",
+                "LOG_FILE": "true"
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [
