@@ -11,37 +11,29 @@ class SRGEvaluationCloudEvent {
       source: "ci-cd",
       datacontenttype: "application/json",
       provider: "dynatrace-automation-cli",
-      data: new SRGEvaluationPayload(
-        options["startTime"],
-        options["endTime"],
-        options["timespan"],
-        options["gitCommitId"],
-        options["labels"]
-      ),
+      data: new SRGEvaluationPayload(options["gitCommitId"], options["labels"]),
     });
+    const timeframe = this.getTimeframe(
+      options["startTime"],
+      options["endTime"],
+      options["timespan"]
+    );
     //CloudEvent is immutable, so we need to clone it and add the appname and stage
+    //Properties are added outside the data object because restrictions in the Dynatrace workflow side to parse the data
     this.data = baseEvent.cloneWith({
       appname: appName,
       stage: options["stage"],
       service: options["service"],
+      starttime: timeframe.Start,
+      endtime: timeframe.End,
     });
   }
-}
 
-class SRGEvaluationPayload {
-  TimeFrame: TimeFrame;
-
-  GitCommitId: string;
-
-  labels: object;
-
-  constructor(
+  getTimeframe(
     startTime: string,
     endTime: string,
-    timeSpan: string,
-    gitCommitId: string,
-    labels: string
-  ) {
+    timeSpan: string
+  ): TimeFrame {
     if (startTime == undefined && endTime === undefined && timeSpan !== "") {
       const date = new Date();
       date.setMinutes(date.getMinutes() - parseInt(timeSpan));
@@ -55,7 +47,14 @@ class SRGEvaluationPayload {
       }
     }
 
-    this.TimeFrame = new TimeFrame(startTime, endTime);
+    return new TimeFrame(startTime, endTime);
+  }
+}
+
+class SRGEvaluationPayload {
+  GitCommitId: string;
+  labels: object;
+  constructor(gitCommitId: string, labels: string) {
     this.GitCommitId = gitCommitId;
     this.labels = this.commaSeparatedStringToObject(labels);
   }
@@ -74,14 +73,14 @@ class SRGEvaluationPayload {
   }
 }
 class TimeFrame {
-  start: string;
-
-  end: string;
+  Start: string;
+  End: string;
 
   constructor(start: string, end: string) {
-    this.start = this.convertTimeFromString(start);
-    this.end = this.convertTimeFromString(end);
-    if (this.start > this.end) {
+    this.Start = this.convertTimeFromString(start);
+    this.End = this.convertTimeFromString(end);
+
+    if (this.Start > this.End) {
       throw new Error("Start time must be before end time");
     }
   }
