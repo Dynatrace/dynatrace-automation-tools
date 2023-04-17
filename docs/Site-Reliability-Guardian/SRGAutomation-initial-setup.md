@@ -6,7 +6,7 @@ To configure the initial Site Reliability Guardian for a CI/CD usage follow the 
 
 Search in the Dynatrace Hub for the Site Reliability Guardian and install it in your Dynatrace Environment.
 
-<img src="./assets/install-SRG.png"  width="1300" height="550">
+<img src="./assets/install-SRG.png"  width="1200" height="550">
 
 ## 2. Create a SLO definition in Dynatrace
 
@@ -30,11 +30,13 @@ type("SERVICE"),tag("[Environment]DT_RELEASE_PRODUCT:simplenodeservice","environ
 ## 3. Create a Site Reliability application
 
 Create a new Site Reliability Guardian and add the label `appname:yourappname`. This will be the key property that you will use in the next part to identify this specific guardian using the CLI.
-![Srg-tag](./assets/srg-tag.png)
+
+<img src="./assets/srg-tag.png"  width="470" height="370">
 Select the SLO definition created in Dynatrace during the previous step as part of the guardian configuration.
-![Srg-objective](./assets/srg-objective.png)
+
+<img src="./assets/srg-objective.png"  width="420" height="360">
 Finally, set the thresholds for the Site Reliability Guardian as the following image.
-![Srg-thresholds](./assets/srg-thresholds.png)
+<img src="./assets/srg-thresholds.png"  width="900" height="345">
 
 > Note: The return value of the SLO is a percentage from 0 to 100% where, 100% means that all the request in the specified timeframe are lower than the maximum value of 400ms. The thresholds set for this SLO are:
 >
