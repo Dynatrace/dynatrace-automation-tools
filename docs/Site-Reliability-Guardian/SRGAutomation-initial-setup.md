@@ -5,7 +5,8 @@ To configure the initial Site Reliability Guardian for a CI/CD usage follow the 
 ## 1. Install the Site Reliability Guardian
 
 Search in the Dynatrace Hub for the Site Reliability Guardian and install it in your Dynatrace Environment.
-![Install SRG](./assets/install-SRG.png)
+
+<img src="./assets/install-SRG.png"  width="1300" height="550">
 
 ## 2. Create a SLO definition in Dynatrace
 
@@ -25,7 +26,6 @@ type("SERVICE"),tag("[Environment]DT_RELEASE_PRODUCT:simplenodeservice","environ
 ```
 
 <img src="./assets/slo-definition.png"  width="550" height="300">
-![SLO-Definition](./assets/slo-definition.png)
 
 ## 3. Create a Site Reliability application
 
@@ -49,9 +49,10 @@ Create a Dynatrace Workflow that includes the Site Reliability Guardian applicat
 type == "com.dynatrace.event.srg.evaluation.triggered.v1" AND appname=="appnamehere"
 ```
 
-![Srg-thresholds](./assets/workflow-filter.png)
+<img src="./assets/workflow-filter.png"  width="675" height="400">
 
 Then add the SRG item with the following expression to get the start time and end time of the event into the execution:
-![Srg-item](./assets/workflow-srg-item.png)
+
+<img src="./assets/workflow-srg-item.png"  width="560" height="540">
 
 With this final step you are ready to execute a Site Reliability Guardian evaluation.
