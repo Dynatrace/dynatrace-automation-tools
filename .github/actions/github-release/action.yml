@@ -1,0 +1,13 @@
+name: "Github Release"
+description: "Creates a new release in github"
+inputs:
+  release-docs:
+    description: "release docs"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Debug
+      shell: bash
+      run: |
+        pwd

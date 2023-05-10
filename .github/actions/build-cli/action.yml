@@ -1,0 +1,21 @@
+name: "Build CLI "
+description: "Builds the CLI and outputs the binary"
+author: Diego Quispe
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: npm install
+      shell: bash
+      run: npm install
+    - name: npm run pack
+      shell: bash
+      run: npm run pack
+    - name: Debug
+      shell: bash
+      run: |
+        pwd
+        cd ./executables
+        ls

@@ -1,0 +1,36 @@
+name: build-and-release
+on:
+  push:
+    branches:
+      - "dev"
+      - "10-feature-poc-*"
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: "cli"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: build-cli
+        name: "Build CLI from code"
+        uses: ./.github/actions/build-cli
+
+      - id: build-push-container
+        name: Build and push docker images DockerHub
+        uses: ./.github/actions/build-push-docker
+        with:
+          docker-folder: ./
+          user: ${{ secrets.DOCKERHUB_USER }}
+          token: ${{ secrets.DOCKERHUB_TOKEN }}
+          repo-url: ${{ secrets.TARGET_REPO_URL }}
+          description: "CLI to integrate Dynatrace with other CICD and automation platforms"
+          readmepath: "../README.md"
+      - id: release-github
+        name: Create GitHub Release
+        uses: ./.github/actions/github-release
+        with:
+          release-docs: README.md
