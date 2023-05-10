@@ -26,7 +26,7 @@ jobs:
           token: ${{ secrets.DOCKERHUB_TOKEN }}
           repo-url: ${{ secrets.TARGET_REPO_URL }}
           description: "CLI to integrate Dynatrace with other CICD and automation platforms"
-          readmepath: "../README.md"
+          readmepath: "README.md"
       - id: release-github
         name: Create GitHub Release
         uses: ./.github/actions/github-release
