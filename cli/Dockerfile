@@ -1,5 +1,4 @@
 FROM ubuntu:20.04
-WORKDIR /
 
 COPY ./executables/dt-automation-cli-linux .
 RUN chmod +x dt-automation-cli-linux
