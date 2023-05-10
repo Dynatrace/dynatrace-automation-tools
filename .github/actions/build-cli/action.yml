@@ -1,6 +1,10 @@
 name: "Build CLI "
 description: "Builds the CLI and outputs the binary"
 author: Diego Quispe
+inputs:
+  build-dir:
+    description: "build directory"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -10,11 +14,14 @@ runs:
     - name: npm install
       shell: bash
       run: npm install
+      working-directory: ${{ inputs.build-dir }}
     - name: npm run pack
       shell: bash
       run: npm run pack
+      working-directory: ${{ inputs.build-dir }}
     - name: Debug
       shell: bash
+      working-directory: ${{ inputs.build-dir }}
       run: |
         pwd
         cd ./executables
