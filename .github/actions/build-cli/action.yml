@@ -19,8 +19,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.build-dir }}
       run: |
-        sudo apt-get update
-        sudo apt-get install ncc
+        npm i -g @vercel/ncc
         npm run pack
 
     - name: Debug
