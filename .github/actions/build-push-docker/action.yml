@@ -49,6 +49,14 @@ runs:
         labels: |
           org.opencontainers.image.title=${{ inputs.repo-url }}
 
+    - name: Debug
+      shell: bash
+      working-directory: ${{ inputs.docker-folder }}
+      run: |
+        pwd
+        cd ./executables
+        ls
+
     - name: Build and push Docker
       uses: docker/build-push-action@v3
       with:
