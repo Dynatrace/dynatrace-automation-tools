@@ -33,5 +33,5 @@ jobs:
         name: Create GitHub Release
         uses: ./.github/actions/github-release
         with:
-          cli-files: ./cli/executables/*
+          cli-files: ./cli/executables/dta*
           release-docs: README.md
