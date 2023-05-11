@@ -4,6 +4,8 @@ on:
     branches:
       - "dev"
       - "10-feature-poc-*"
+    tags:
+      - "v*.*.*"
 jobs:
   build:
     runs-on: ubuntu-20.04
