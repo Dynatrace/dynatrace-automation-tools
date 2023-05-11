@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - id: build-cli
         name: "Build CLI from code"
@@ -31,4 +31,5 @@ jobs:
         name: Create GitHub Release
         uses: ./.github/actions/github-release
         with:
+          cli-files: ./cli/executables/*
           release-docs: README.md

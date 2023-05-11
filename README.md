@@ -16,7 +16,7 @@ Use the docker container image from Docker Hub: https://hub.docker.com/repositor
 
 ### Executable app
 
-Download the CLI executable from this repo.
+Download the CLI executable from the Github repo
 
 For Linux users execute the following:
 
