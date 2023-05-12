@@ -10,14 +10,14 @@ Search in the Dynatrace Hub for the Site Reliability Guardian and install it in 
 
 ## 2. Create a SLO definition in Dynatrace
 
-You will need to identify a service that you want to monitor and then create a basic SLO expression. Later, you can enhance or replace this definition with a more complex SLO.
-If you want to quickly started, you can use an expression like this one:
+You need to identify a service that you want to monitor and then create a basic SLO expression. Later, you can enhance or replace this definition with a more complex SLO.
+If you want to get started quickly, you can use an expression like this one:
 
 ```
 ((builtin:service.response.time:avg:partition("latency",value("good",lt(400000))):splitBy():count:default(0))/(builtin:service.response.time:avg:splitBy():count)*(100))
 ```
 
-This expression measures service performance by counting the number of request during which the response latency is below the defined threshold 400000 [µs] or 400 ms.
+> This expression measures service performance by counting the number of request during which the response latency is below the defined threshold 400000 [µs] or 400 ms.
 
 For the entity filters, you can use a combination of entity type and tags to find the target entity in Dynatrace. i.e.:
 
@@ -45,11 +45,13 @@ Finally, set the thresholds for the Site Reliability Guardian as the following i
 
 ## Create a Dynatrace Workflow
 
-Create a Dynatrace Workflow that includes the Site Reliability Guardian application as a step and it's trigger based on the following Biz Event:
+Create a Dynatrace Workflow that includes the Site Reliability Guardian application as a step and is triggered based on the following Biz Event:
 
 ```
 type == "com.dynatrace.event.srg.evaluation.triggered.v1" AND appname=="appnamehere"
 ```
+
+You will need to replace `appnamehere` with the value that you configured on step 3.
 
 <img src="./assets/workflow-filter.png"  width="675" height="400">
 

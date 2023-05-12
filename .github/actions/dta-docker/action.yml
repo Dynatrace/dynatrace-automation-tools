@@ -1,0 +1,37 @@
+# action.yml
+name: "DT automation CLI dockerize version"
+description: "Test the CLI using the docker version"
+inputs:
+  dt-url:
+    description: "Dynatrace URL"
+    required: true
+  dt-account-urn:
+    description: "Dynatrace account URN"
+    required: true
+  dt-client-id:
+    description: "Dynatrace client id for oauth"
+    required: true
+  dt-secret:
+    description: "Dynatrace secret for oauth"
+    required: true
+  dt-sso-url:
+    description: "Dynatrace sso url for oauth"
+    required: true
+  dt-guardian-name:
+    description: "Dynatrace Site Reliability Guardian name"
+    required: true
+outputs:
+  eval-result:
+    description: "evaluation result"
+runs:
+  using: "docker"
+  image: "dynatraceace/dt-automation-cli:latest"
+  env:
+    LOG_LEVEL: "verbose"
+    ACCOUNT_URN: ${{ inputs.dt-account-urn}}
+    DYNATRACE_CLIENT_ID: ${{ inputs.dt-client-id}}
+    DYNATRACE_SECRET: ${{ inputs.dt-secret}}
+    DYNATRACE_SSO_URL: ${{ inputs.dt-sso-url}}
+
+  args:
+    - ./dta srg evaluate ${{ inputs.dt-guardian-name}}
