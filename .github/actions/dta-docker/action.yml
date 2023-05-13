@@ -11,7 +11,7 @@ inputs:
   dt-client-id:
     description: "Dynatrace client id for oauth"
     required: true
-  dt-secret:
+  dt-client-secret:
     description: "Dynatrace secret for oauth"
     required: true
   dt-sso-url:
@@ -19,6 +19,12 @@ inputs:
     required: true
   dt-guardian-name:
     description: "Dynatrace Site Reliability Guardian name"
+    required: true
+  srg-start-time:
+    description: "Start time for the evaluation"
+    required: true
+  srg-end-time:
+    description: "End time for the evaluation"
     required: true
 outputs:
   eval-result:
@@ -31,8 +37,9 @@ runs:
     DYNATRACE_URL_GEN3: ${{ inputs.dt-url}}
     ACCOUNT_URN: ${{ inputs.dt-account-urn}}
     DYNATRACE_CLIENT_ID: ${{ inputs.dt-client-id}}
-    DYNATRACE_SECRET: ${{ inputs.dt-secret}}
+    DYNATRACE_SECRET: ${{ inputs.dt-client-secret}}
     DYNATRACE_SSO_URL: ${{ inputs.dt-sso-url}}
-
+    SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
+    SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
   args:
     - /dta srg evaluate ${{ inputs.dt-guardian-name}}

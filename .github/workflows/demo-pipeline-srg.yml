@@ -16,7 +16,7 @@ jobs:
           dt-url: ${{ secrets.DYNATRACE_URL_GEN3 }}
           dt-account-urn: ${{ secrets.ACCOUNT_URN }}
           dt-client-id: ${{ secrets.DYNATRACE_CLIENT_ID }}
-          dt-client-secret: ${{ secrets.DYNATRACE_CLIENT_SECRET }}
+          dt-client-secret: ${{ secrets.DYNATRACE_SECRET }}
           dt-sso-url: ${{ secrets.DYNATRACE_SSO_URL }}
           srg-start-time: "2023-03-29T23:27:15.301Z"
           srg-end-time: "2023-03-29T23:38:15.301Z"
