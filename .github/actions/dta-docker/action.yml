@@ -34,7 +34,7 @@ runs:
   image: "dynatraceace/dt-automation-cli:latest"
   env:
     LOG_LEVEL: "verbose"
-    DYNATRACE_URL_GEN3: ${{ inputs.dt-url}}
+    DYNATRACE_URL_GEN3: ${{ inputs.dt-url }}
     ACCOUNT_URN: ${{ inputs.dt-account-urn}}
     DYNATRACE_CLIENT_ID: ${{ inputs.dt-client-id}}
     DYNATRACE_SECRET: ${{ inputs.dt-client-secret}}
@@ -42,4 +42,5 @@ runs:
     SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
     SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
   args:
+    - echo $DYNATRACE_URL_GEN3
     - /dta srg evaluate ${{ inputs.dt-guardian-name}}
