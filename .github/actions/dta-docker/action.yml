@@ -28,6 +28,7 @@ runs:
   image: "dynatraceace/dt-automation-cli:latest"
   env:
     LOG_LEVEL: "verbose"
+    DYNATRACE_URL_GEN3: ${{ inputs.dt-url}}
     ACCOUNT_URN: ${{ inputs.dt-account-urn}}
     DYNATRACE_CLIENT_ID: ${{ inputs.dt-client-id}}
     DYNATRACE_SECRET: ${{ inputs.dt-secret}}
