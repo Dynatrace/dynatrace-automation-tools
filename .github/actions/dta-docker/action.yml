@@ -35,4 +35,4 @@ runs:
     DYNATRACE_SSO_URL: ${{ inputs.dt-sso-url}}
 
   args:
-    - ./dta srg evaluate ${{ inputs.dt-guardian-name}}
+    - /dta srg evaluate ${{ inputs.dt-guardian-name}}
