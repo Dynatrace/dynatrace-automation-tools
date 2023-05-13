@@ -18,7 +18,6 @@ jobs:
         uses: ./.github/actions/build-cli
         with:
           build-dir: "./cli"
-
       - id: build-push-container
         name: Build and push docker images DockerHub
         uses: ./.github/actions/build-push-docker
@@ -35,3 +34,5 @@ jobs:
         with:
           cli-files: ./cli/executables/dta*
           release-docs: README.md
+  test-cli-workflow:
+    uses: ./.github/workflows/demo-pipeline-srg.yml

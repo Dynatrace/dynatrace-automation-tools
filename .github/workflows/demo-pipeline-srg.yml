@@ -2,9 +2,7 @@
 name: demo-pipeline-srg
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "10-feature-poc-*"
+  workflow_call:
 jobs:
   test-cli:
     runs-on: ubuntu-20.04
