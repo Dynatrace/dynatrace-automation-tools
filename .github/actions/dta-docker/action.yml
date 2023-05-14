@@ -41,5 +41,6 @@ runs:
     DYNATRACE_SSO_URL: ${{ inputs.dt-sso-url}}
     SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
     SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
+    SRG_EVALUATION_STOP_ON_FAILURE: "true"
   args:
     - /dta srg evaluate ${{ inputs.dt-guardian-name}}
