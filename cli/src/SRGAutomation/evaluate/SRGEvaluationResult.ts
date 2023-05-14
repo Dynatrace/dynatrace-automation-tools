@@ -29,11 +29,10 @@ class SRGEvaluationResult {
     if (result.status == "fail" || result.status == "error") {
       Logger.error("  Status: " + result.status);
 
-      if (stopOnFailure == "true" || stopOnWarning == "true") {
-        Logger.verbose(
-          "Stop on failure/warning is enabled. Exit with status 1"
-        );
+      Logger.verbose("Stop on warning is " + stopOnWarning + ".");
+      Logger.verbose("Stop on failure is " + stopOnFailure + ".");
 
+      if (stopOnFailure == "true" || stopOnWarning == "true") {
         process.exit(1);
       }
     } else {
