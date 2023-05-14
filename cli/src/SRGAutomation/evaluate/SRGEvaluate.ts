@@ -20,8 +20,8 @@ class SRGEvaluate {
     );
     result.PrintEvaluationResults(
       result,
-      options["--stop-on-failure"],
-      options["--stop-on-warning"]
+      options["stopOnFailure"],
+      options["stopOnWarning"]
     );
   }
 
