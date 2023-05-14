@@ -18,8 +18,8 @@ class SRGEvaluate {
       event,
       options["<dynatrace_url_gen3>"]
     );
-    const stopOnFailure = options.stopOnFailure === "true";
-    const stopOnWarning = options.stopOnWarning === "true";
+    const stopOnFailure = options["stopOnFailure"].toString() === "true";
+    const stopOnWarning = options["stopOnWarning"].toString() === "true";
     result.PrintEvaluationResults(result, stopOnFailure, stopOnWarning);
   }
 
