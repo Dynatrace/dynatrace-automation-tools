@@ -42,5 +42,4 @@ runs:
     SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
     SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
   args:
-    - echo $DYNATRACE_URL_GEN3
     - /dta srg evaluate ${{ inputs.dt-guardian-name}}
