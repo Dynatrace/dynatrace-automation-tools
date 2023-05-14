@@ -30,6 +30,10 @@ class SRGEvaluationResult {
       Logger.error("  Status: " + result.status);
 
       if (stopOnFailure == "true" || stopOnWarning == "true") {
+        Logger.verbose(
+          "Stop on failure/warning is enabled. Exit with status 1"
+        );
+
         process.exit(1);
       }
     } else {
