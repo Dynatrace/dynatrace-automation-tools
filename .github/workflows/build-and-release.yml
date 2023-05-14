@@ -36,9 +36,6 @@ jobs:
           release-docs: README.md
   test-cli-workflow:
     uses: ./.github/workflows/demo-pipeline-srg.yml
-    secrets:
+    with:
       DYNATRACE_URL_GEN3: ${{ vars.DYNATRACE_URL_GEN3 }}
-      ACCOUNT_URN: ${{ secrets.ACCOUNT_URN }}
-      DYNATRACE_CLIENT_ID: ${{ secrets.DYNATRACE_CLIENT_ID }}
-      DYNATRACE_SECRET: ${{ secrets.DYNATRACE_SECRET }}
-      DYNATRACE_SSO_URL: ${{ secrets.DYNATRACE_SSO_URL }}
+    secrets: inherit

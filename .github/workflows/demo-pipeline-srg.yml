@@ -3,17 +3,10 @@ name: demo-pipeline-srg
 on:
   workflow_dispatch:
   workflow_call:
-    secrets:
+    inputs:
       DYNATRACE_URL_GEN3:
         required: true
-      ACCOUNT_URN:
-        required: true
-      DYNATRACE_CLIENT_ID:
-        required: true
-      DYNATRACE_SECRET:
-        required: true
-      DYNATRACE_SSO_URL:
-        required: true
+        type: string
 jobs:
   test-cli:
     runs-on: ubuntu-20.04
@@ -24,7 +17,7 @@ jobs:
         name: Run CLI with SRG
         uses: ./.github/actions/dta-docker
         with:
-          dt-url: ${{ secrets.DYNATRACE_URL_GEN3 }}
+          dt-url: ${{ inputs.DYNATRACE_URL_GEN3 }}
           dt-account-urn: ${{ secrets.ACCOUNT_URN }}
           dt-client-id: ${{ secrets.DYNATRACE_CLIENT_ID }}
           dt-client-secret: ${{ secrets.DYNATRACE_SECRET }}
