@@ -20,8 +20,8 @@ class SRGEvaluationResult {
 
   PrintEvaluationResults(
     result: SRGEvaluationResult,
-    stopOnFailure: string,
-    stopOnWarning: string
+    stopOnFailure: boolean,
+    stopOnWarning: boolean
   ) {
     Logger.info("#############################################");
     Logger.info("Evaluation results:");
@@ -32,7 +32,7 @@ class SRGEvaluationResult {
       Logger.verbose("Stop on warning is " + stopOnWarning + ".");
       Logger.verbose("Stop on failure is " + stopOnFailure + ".");
 
-      if (stopOnFailure === "true" || stopOnWarning === "true") {
+      if (stopOnFailure === true || stopOnWarning === true) {
         Logger.verbose("Exiting with code 1.");
         process.exit(1);
       }
