@@ -33,6 +33,7 @@ class SRGEvaluationResult {
       Logger.verbose("Stop on failure is " + stopOnFailure + ".");
 
       if (stopOnFailure === "true" || stopOnWarning === "true") {
+        Logger.verbose("Exiting with code 1.");
         process.exit(1);
       }
     } else {

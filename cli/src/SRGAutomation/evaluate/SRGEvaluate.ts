@@ -21,7 +21,7 @@ class SRGEvaluate {
     result.PrintEvaluationResults(
       result,
       options["stopOnFailure"],
-      options["stop"]
+      options["stopOnWarning"]
     );
   }
 
