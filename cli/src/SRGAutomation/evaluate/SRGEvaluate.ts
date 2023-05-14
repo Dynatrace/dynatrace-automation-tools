@@ -18,11 +18,9 @@ class SRGEvaluate {
       event,
       options["<dynatrace_url_gen3>"]
     );
-    result.PrintEvaluationResults(
-      result,
-      options.stopOnFailure === "true",
-      options.stopOnWarning === "true"
-    );
+    const stopOnFailure = options.stopOnFailure === "true";
+    const stopOnWarning = options.stopOnWarning === "true";
+    result.PrintEvaluationResults(result, stopOnFailure, stopOnWarning);
   }
 
   private getCloudEvent(

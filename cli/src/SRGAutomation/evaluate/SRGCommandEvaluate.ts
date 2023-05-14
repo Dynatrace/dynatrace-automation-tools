@@ -85,7 +85,7 @@ class SRGCommandEvaluate implements BaseCommand {
           "-s, --stop-on-failure",
           "stop execution if evaluation fails"
         )
-          .default(true)
+          .default("true")
           .env("SRG_EVALUATION_STOP_ON_FAILURE")
       )
       .addOption(
@@ -93,7 +93,7 @@ class SRGCommandEvaluate implements BaseCommand {
           "-w, --stop-on-warning",
           "stop execution if evaluation has warnings"
         )
-          .default(false)
+          .default("false")
           .env("SRG_EVALUATION_STOP_ON_WARNING")
       )
       .addArgument(new Argument("appName", "Application name").argRequired())
