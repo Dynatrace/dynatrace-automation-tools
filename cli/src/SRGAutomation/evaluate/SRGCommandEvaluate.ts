@@ -82,7 +82,7 @@ class SRGCommandEvaluate implements BaseCommand {
       )
       .addOption(
         new Option(
-          "-s, --stop-on-failure",
+          "-s, --stop-on-failure [stopOnFailure]",
           "stop execution if evaluation fails"
         )
           .default("true")
@@ -90,7 +90,7 @@ class SRGCommandEvaluate implements BaseCommand {
       )
       .addOption(
         new Option(
-          "-w, --stop-on-warning",
+          "-w, --stop-on-warning [stopOnWarning]",
           "stop execution if evaluation has warnings"
         )
           .default("false")

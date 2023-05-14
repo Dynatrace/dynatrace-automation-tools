@@ -30,10 +30,12 @@ The available options for this command are:
 
 - start-time and end-time (start-time and end-time)
 - timespan (last x mins) (this conflicts with start-time end-time, so only one should be defined)
-- stage
-- service
-- labels
-- gitCommitId
+- stage (stage name, optionally to use as a filter in Dynatrace workflow)
+- service (service name, optionally to use as a filter in Dynatrace Workflow)
+- labels (additional information to send as part of they payload. Might be useful in the workflow part in Dynatrace)
+- gitCommitId (gitCommitId for future analysis of the evaluation)
+- stop-on-failure (true or false, defaults to true)
+- stop-on-warning (true or false, defaults to false)
 
 The return payload after this command is executed includes:
 
