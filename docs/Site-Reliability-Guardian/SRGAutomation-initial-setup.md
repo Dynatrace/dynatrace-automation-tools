@@ -8,7 +8,9 @@ Search in the Dynatrace Hub for the Site Reliability Guardian and install it in 
 
 <img src="./assets/install-SRG.png"  width="1200" height="550">
 
-## 2. Create a SLO definition in Dynatrace
+## 2. Create an SLO definition with DQL
+
+## 2.(Optional) Create a SLO definition in Dynatrace
 
 You need to identify a service that you want to monitor and then create a basic SLO expression. Later, you can enhance or replace this definition with a more complex SLO.
 If you want to get started quickly, you can use an expression like this one:

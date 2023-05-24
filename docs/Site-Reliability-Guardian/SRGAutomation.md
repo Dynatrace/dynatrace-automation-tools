@@ -5,8 +5,8 @@ The `dta srg evaluate` allows to automate the process of executing Site Reliabil
 ## Getting started
 
 1. Follow the guide [here](./SRGAutomation-initial-setup.md) to configure the base SRG application and workflow. This is currently a manual process.
-1. Download the CLI or use the docker container version [Main Docs](../README.md)\
-1. Generate an Oauth2 token with the scopes `storage:bizevents:read storage:events:write`. Details about [Authentication](./Authentication.md)
+1. Download the CLI or use the docker container version [Main Docs](./../README.md).
+1. Generate an Oauth2 token with the scopes `storage:bizevents:read storage:events:write`. Details about generating [Authentication](./Authentication.md) tokens.
 1. Run the command `dta srg evaluate <appname>` to trigger a new quality gate evaluation. Where the `appname` is the value you setup for the application name on step 1.
 
 ## SRG evaluate command

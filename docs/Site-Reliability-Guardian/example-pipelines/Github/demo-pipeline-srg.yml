@@ -2,10 +2,6 @@
 name: demo-pipeline-srg
 on:
   workflow_dispatch:
-    inputs:
-      DYNATRACE_URL_GEN3:
-        required: true
-        type: string
   workflow_call:
     inputs:
       DYNATRACE_URL_GEN3:
@@ -17,6 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - id: build-release
         name: Run CLI with SRG
         uses: ./.github/actions/dta-docker
