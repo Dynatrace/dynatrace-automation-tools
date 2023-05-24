@@ -22,3 +22,4 @@ DYNATRACE_SSO_URL=https://sso-xxxx.dynatrace.com/sso/oauth2/token # Only change 
 ```
 
 > Note: The authentication values can only be provided as environment variables for security reasons.
+> Note2: In the SSO URL don't forget to include the path /sso/oauth2/token
