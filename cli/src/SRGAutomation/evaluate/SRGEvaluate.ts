@@ -48,6 +48,8 @@ class SRGEvaluate {
   ): Promise<SRGEvaluationResult> {
     Logger.info("Waiting for evaluation results to be available");
     const query = this.getDQLQuery(event);
+    Logger.verbose("Query used to find the event \n ");
+    Logger.verbose(query);
 
     for (let i = 0; i < 12; i++) {
       const result = await this.api.BizEventQuery(query);

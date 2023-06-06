@@ -25,7 +25,7 @@ In this example, the CloudEvents payload includes:
 
 - The **specversion** set to "1.0", which represents the CloudEvents specification version.
 - The **type** field is set to "com.dynatrace.event.srg.evaluation.triggered.v1" to indicate that this event triggers a quality gate evaluation.
-- The **source** field contains the source or context of the event, "ci-cd" is used as default, but it can be customized in the CLI.
+- The **provider** field contains the source or context of the event, "ci-cd" is used as default, but it can be customized in the CLI.
   The **id** field contains a unique identifier for this event. (source + id should be unique for the event)
   The **datacontenttype** field is set to "application/json", indicating the data payload is in JSON format.
 

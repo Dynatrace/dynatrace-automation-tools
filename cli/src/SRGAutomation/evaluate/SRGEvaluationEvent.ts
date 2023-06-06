@@ -31,14 +31,14 @@ class SRGEvaluationEvent {
     this["timeframe.to"] = timeframe.End;
     this.execution_context = new ExecutionContext(
       eventId,
-      options["gitCommitId"],
+      options["buildId"],
       options["version"]
     );
     this["tag.service"] = options["service"];
     this["tag.application"] = appName;
     this["tag.stage"] = options["stage"];
     this["event.id"] = eventId;
-    this["event.provider"] = options["source"];
+    this["event.provider"] = options["provider"];
     this["event.type"] = "guardian.validation.triggered";
   }
 

@@ -61,14 +61,16 @@ If you want to consume service metrics like `response time` or `error rate` of a
 2.  Add the SLO in the Site Reliability guardian created in the previous step.
     Select the SLO definition created in Dynatrace during the previous step as part of the guardian configuration.
 
-        <img src="./assets/srg-objective.png"  width="420" height="360">
-        Finally, set the thresholds for the Site Reliability Guardian as the following image.
-        <img src="./assets/srg-thresholds.png"  width="900" height="345">
+    <img src="./assets/srg-objective.png"  width="420" height="360">
 
-        > Note: The return value of the SLO is a percentage from 0 to 100% where, 100% means that all the request in the specified timeframe are lower than the maximum value of 400ms. The thresholds set for this SLO are:
-        >
-        > - 99% for a warning (for every 100 requests 1 request slower than 400ms)
-        > - 95% for a failure (for every 100 requests 5 requests are slower than 400ms)
+    Finally, set the thresholds for the Site Reliability Guardian as the following image.
+
+    ## <img src="./assets/srg-thresholds.png"  width="900" height="345">
+
+    > Note: The return value of the SLO is a percentage from 0 to 100% where, 100% means that all the request in the specified timeframe are lower than the maximum value of 400ms. The thresholds set for this SLO are:
+    >
+    > - 99% for a warning (for every 100 requests 1 request slower than 400ms)
+    > - 95% for a failure (for every 100 requests 5 requests are slower than 400ms)
 
     </details>
 
@@ -86,7 +88,7 @@ You will need to replace `appnamehere` with a value of your choice for the appli
 
 <img src="./assets/workflow-filter.png"  width="675" height="400">
 
-Then add the SRG item with the following expression to get the start time and end time of the event into the execution:
+Then add the SRG item with the following expression to get the start time `{{event()['timeframe.from']}}` and end time `{{event()['timeframe.to']}}` of the event into the execution:
 
 <img src="./assets/workflow-srg-item.png"  width="560" height="540">
 

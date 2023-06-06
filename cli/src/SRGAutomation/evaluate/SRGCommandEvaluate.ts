@@ -58,11 +58,11 @@ class SRGCommandEvaluate implements BaseCommand {
       )
       .addOption(
         new Option(
-          "--source [source]",
-          "Source of the request. i.e. github, jenkins, jenkins-production-1 etc."
+          "--provider [provider]",
+          "Provider of the request. i.e. github, jenkins, jenkins-production-1 etc."
         )
           .default("cicd")
-          .env("SRG_EVALUATION_SOURCE")
+          .env("SRG_EVALUATION_PROVIDER")
       )
       .addOption(
         new Option(
@@ -74,19 +74,11 @@ class SRGCommandEvaluate implements BaseCommand {
       )
       .addOption(
         new Option(
-          "--gitCommitId [gitCommitId]",
-          "Git commit ID. optional for reference in the evaluation."
+          "--buildId [buildId]",
+          "Build ID. optional for reference in the evaluation. Can also be used for the Git commit ID"
         )
           .default("")
-          .env("SRG_EVALUATION_GIT_COMMIT_ID")
-      )
-      .addOption(
-        new Option(
-          "--labels [labels]",
-          "Labels. Additional properties to send with the evaluation. Format using comma separated values like key1=value1,key2=value2"
-        )
-          .default("")
-          .env("SRG_EVALUATION_LABELS")
+          .env("SRG_EVALUATION_BUILD_ID")
       )
       .addOption(
         new Option(

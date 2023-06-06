@@ -36,10 +36,7 @@ class AuthOptions {
           .makeOptionMandatory()
       )
       .addOption(
-        new Option(
-          "<sso_url>",
-          "Dynatrace SSO Oauth URL. Defaults to https://sso.dynatrace.com/sso/oauth2/token"
-        )
+        new Option("<sso_url>", "Dynatrace SSO Oauth URL")
           .env("DYNATRACE_SSO_URL")
           .default("https://sso.dynatrace.com/sso/oauth2/token")
       );
