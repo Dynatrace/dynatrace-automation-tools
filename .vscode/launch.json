@@ -34,12 +34,16 @@
             "args": [
                 "srg",
                 "evaluate",
-                "simplenode"
+                "simplenode2423"
             ],
             "outputCapture": "std",
             "env": {
                 "LOG_LEVEL": "verbose",
                 "LOG_FILE": "true",
+                // "SRG_EVALUATION_STAGE": "dev",
+                // "SRG_EVALUATION_SERVICE": "demo-service",
+                // "SRG_APP_VERSION": "1.0.0",
+                // "SRG_EVALUATION_GIT_COMMIT_ID": "1234567890",
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [

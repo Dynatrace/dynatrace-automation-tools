@@ -66,6 +66,14 @@ class SRGCommandEvaluate implements BaseCommand {
       )
       .addOption(
         new Option(
+          "--version [version]",
+          "Version of the app. v1.0.1 for example"
+        )
+          .default("")
+          .env("SRG_APP_VERSION")
+      )
+      .addOption(
+        new Option(
           "--gitCommitId [gitCommitId]",
           "Git commit ID. optional for reference in the evaluation."
         )
