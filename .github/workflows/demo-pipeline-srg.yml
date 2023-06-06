@@ -26,6 +26,5 @@ jobs:
           dt-client-id: ${{ secrets.DYNATRACE_CLIENT_ID }}
           dt-client-secret: ${{ secrets.DYNATRACE_SECRET }}
           dt-sso-url: ${{ secrets.DYNATRACE_SSO_URL }}
-          srg-start-time: "-5m"
-          srg-end-time: "now"
+          srg-timespan: "5"
           dt-guardian-name: dta-cli-self-test
