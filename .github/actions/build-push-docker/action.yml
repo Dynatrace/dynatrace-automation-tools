@@ -44,7 +44,7 @@ runs:
           type=ref,event=pr
           type=semver,pattern={{version}}
           type=semver,pattern={{major}}.{{minor}}
-          type=raw,value=latest,enable=${{ contains(github.ref,'dev') }}
+          type=raw,value=latest,enable=${{ contains(github.ref,'dev') || contains(github.ref,'10-feature') }}
           type=raw,value=release,enable=${{ contains(github.ref,'release') }}
         labels: |
           org.opencontainers.image.title=${{ inputs.repo-url }}
