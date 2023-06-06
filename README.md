@@ -1,6 +1,6 @@
 # Dynatrace-automation-tools
 
-This CLI allows automating different Dynatrace use-cases to be use with CI/CD or automation platforms. The current implemented use cases:
+This CLI allows automating different Dynatrace use-cases to be used with CI/CD or automation platforms. The current implemented use cases:
 
 1. [Site Reliability Guardian Automation](docs/Site-Reliability-Guardian/SRGAutomation.md)
 
@@ -12,7 +12,7 @@ To use the CLI you have different deployment options:
 
 Use the docker container image from Docker Hub: https://hub.docker.com/repository/docker/dynatraceace/dt-automation-cli. This container is made for CI/CD pipelines, to run it locally you can use the following:
 
-1. `docker run -i -t dynatraceace/dt-automation-cli:latest bash`. It will open terminal inside the container where you can use the commands for the CLI like `./dta -h`. Reference for each command is described in the documentation for each use case.
+1. `docker run -i -t dynatraceace/dt-automation-cli:latest bash`. This will open terminal inside the container where you can use the commands for the CLI like `/dta -h`. Reference for each command is described in the documentation for each use case.
 
 ### Executable app
 
@@ -21,7 +21,7 @@ Download the CLI executable from the Github repo
 For Linux users execute the following:
 
 ```(bash)
-wget https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/0.0.1/dta
+wget https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/0.0.8/dta
 ./chmod +rx ./dta
 ./dta -h
 ```
