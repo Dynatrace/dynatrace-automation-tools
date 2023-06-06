@@ -42,8 +42,8 @@ runs:
     DYNATRACE_CLIENT_ID: ${{ inputs.dt-client-id}}
     DYNATRACE_SECRET: ${{ inputs.dt-client-secret}}
     DYNATRACE_SSO_URL: ${{ inputs.dt-sso-url}}
-    SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
-    SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
+    # SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
+    # SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
     SRG_EVALUATION_TIMESPAN: ${{ inputs.srg-timespan}}
     SRG_EVALUATION_STOP_ON_FAILURE: "false"
   args:
