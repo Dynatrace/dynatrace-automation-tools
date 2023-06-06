@@ -28,4 +28,4 @@ jobs:
           dt-sso-url: ${{ secrets.DYNATRACE_SSO_URL }}
           srg-start-time: "2023-03-29T23:27:15.301Z"
           srg-end-time: "2023-03-29T23:38:15.301Z"
-          dt-guardian-name: simplenode
+          dt-guardian-name: dta-cli-self-test

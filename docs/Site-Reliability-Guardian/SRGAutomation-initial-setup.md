@@ -27,11 +27,13 @@ For the entity filters, you can use a combination of entity type and tags to fin
 type("SERVICE"),tag("[Environment]DT_RELEASE_PRODUCT:simplenodeservice","environment:canary")
 ```
 
+> Note: Replace this tags, with your service tags "[Environment]DT_RELEASE_PRODUCT:simplenodeservice","environment:canary"
+
 <img src="./assets/slo-definition.png"  width="550" height="300">
 
 ## 3. Create a Site Reliability application
 
-Create a new Site Reliability Guardian and add the label `appname:yourappname`. This will be the key property that you will use in the next part to identify this specific guardian using the CLI.
+Create a new Site Reliability Guardian.
 
 <img src="./assets/srg-tag.png"  width="470" height="370">
 Select the SLO definition created in Dynatrace during the previous step as part of the guardian configuration.
