@@ -68,3 +68,12 @@ The return payload after this command is executed includes:
   Status: `pass` or `fail`. If you get `error` as a result, there is a configuration issue.
 - SLO summary: Number of SLO with pass, warning an fail results.
 - evaluation_url_link: Link to Dynatrace SRG evaluation
+
+## Pipeline integration examples
+
+Currently, we provide the following examples for CICD integration:
+
+1.  [Gitlab integration](./example-pipelines/Gitlab/readme.md)
+1.  [Jenkins integration](./example-pipelines/Jenkins/readme.md)
+
+> Note: Other CICD providers can consume the CLI or docker container version.
