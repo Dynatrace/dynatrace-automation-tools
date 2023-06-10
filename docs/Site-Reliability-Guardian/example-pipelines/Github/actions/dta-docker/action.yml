@@ -22,10 +22,13 @@ inputs:
     required: true
   srg-start-time:
     description: "Start time for the evaluation"
-    required: true
+    required: false
   srg-end-time:
     description: "End time for the evaluation"
-    required: true
+    required: false
+  srg-timespan:
+    description: "Timespan for the evaluation"
+    required: false
 outputs:
   eval-result:
     description: "evaluation result"
@@ -39,8 +42,9 @@ runs:
     DYNATRACE_CLIENT_ID: ${{ inputs.dt-client-id}}
     DYNATRACE_SECRET: ${{ inputs.dt-client-secret}}
     DYNATRACE_SSO_URL: ${{ inputs.dt-sso-url}}
-    SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
-    SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
+    # SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
+    # SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
+    SRG_EVALUATION_TIMESPAN: ${{ inputs.srg-timespan}}
     SRG_EVALUATION_STOP_ON_FAILURE: "false"
   args:
     - /dta srg evaluate ${{ inputs.dt-guardian-name}}

@@ -34,7 +34,7 @@ outputs:
     description: "evaluation result"
 runs:
   using: "docker"
-  image: "dynatraceace/dt-automation-cli:latest"
+  image: "dynatraceace/dt-automation-cli:azdo"
   env:
     LOG_LEVEL: "verbose"
     DYNATRACE_URL_GEN3: ${{ inputs.dt-url }}
