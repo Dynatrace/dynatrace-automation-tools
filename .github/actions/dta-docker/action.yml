@@ -35,6 +35,7 @@ outputs:
 runs:
   using: "docker"
   image: "dynatraceace/dt-automation-cli:azdo"
+  entrypoint: "/bin/bash"
   env:
     LOG_LEVEL: "verbose"
     DYNATRACE_URL_GEN3: ${{ inputs.dt-url }}
