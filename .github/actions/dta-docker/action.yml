@@ -50,4 +50,4 @@ runs:
   args:
     - srg
     - evaluate
-    - "{{  inputs.dt-guardian-name }}"
+    - "${{  inputs.dt-guardian-name }}"
