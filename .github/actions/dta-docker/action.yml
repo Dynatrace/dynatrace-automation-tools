@@ -48,4 +48,4 @@ runs:
     SRG_EVALUATION_TIMESPAN: ${{ inputs.srg-timespan}}
     SRG_EVALUATION_STOP_ON_FAILURE: "false"
   args:
-    - srg evaluate ${{ inputs.dt-guardian-name}}
+    - srg evaluate
