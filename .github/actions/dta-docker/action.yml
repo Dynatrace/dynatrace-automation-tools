@@ -35,7 +35,7 @@ outputs:
 runs:
   using: "docker"
   image: "dynatraceace/dt-automation-cli:azdo"
-  entrypoint: "/bin/bash"
+  entrypoint: "/dta srg evaluate ${{ inputs.dt-guardian-name}}"
   env:
     LOG_LEVEL: "verbose"
     DYNATRACE_URL_GEN3: ${{ inputs.dt-url }}
@@ -47,5 +47,3 @@ runs:
     # SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
     SRG_EVALUATION_TIMESPAN: ${{ inputs.srg-timespan}}
     SRG_EVALUATION_STOP_ON_FAILURE: "false"
-  args:
-    - /dta srg evaluate ${{ inputs.dt-guardian-name}}
