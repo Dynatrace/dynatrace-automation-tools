@@ -84,6 +84,8 @@ Create a **Dynatrace Workflow** that includes the Site Reliability Guardian appl
 type == "guardian.validation.triggered" AND tag.application=="appnamehere"
 ```
 
+> Note: `tag.application` is not related to any other Dynatrace configuration.
+
 You will need to replace `appnamehere` with a value of your choice for the application name. This value would be used during the CLI execution to trigger this specific workflow.
 
 <img src="./assets/workflow-filter.png"  width="675" height="400">
@@ -95,4 +97,4 @@ Then add the SRG item with the following expression to get the start time `{{eve
 With this final step you are ready to execute a Site Reliability Guardian evaluation.
 
 Continue in the main guide
-[Site Reliability Guardian Automation](docs/Site-Reliability-Guardian/SRGAutomation.md)
+[Site Reliability Guardian Automation](SRGAutomation.md)
