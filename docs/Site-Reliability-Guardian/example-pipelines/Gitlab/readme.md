@@ -17,7 +17,7 @@ trigger_evaluation_and_receive_result:
     SRG_EVALUATION_STOP_ON_FAILURE: "true"
   script:
     - export LOG_LEVEL="verbose" # Enable for initial testing, once in production remove this line.
-    - /dta srg evaluate $APP_NAME
+    - dta srg evaluate $APP_NAME
 
 ```
 
@@ -50,6 +50,6 @@ And modify the `trigger_evaluation_and_receive_result` step
     - eval_start=$(cat srg.test.starttime)
     - eval_end=$(cat srg.test.endtime)
     - export LOG_LEVEL="verbose" # Enable for initial testing, once in production remove this line.
-    - /dta srg evaluate --start-time=$eval_start --end-time=$eval_end $APP_NAME
+    - dta srg evaluate --start-time=$eval_start --end-time=$eval_end $APP_NAME
 ...
 ```

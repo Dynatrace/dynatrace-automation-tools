@@ -51,7 +51,7 @@ pipeline {
             steps {
                     container('dta') {
                     sh """
-                        /dta srg evaluate \$APPNAME
+                        dta srg evaluate \$APPNAME
                     """
                     }
             }
@@ -104,7 +104,7 @@ pipeline {
                     sh """
                         eval_start=\$(cat srg.test.starttime)
                         eval_end=\$(cat srg.test.endtime)
-                        /dta srg evaluate --start-time \$eval_start --end-time \$eval_end \$APPNAME
+                        dta srg evaluate --start-time \$eval_start --end-time \$eval_end \$APPNAME
                     """
                     }
             }
