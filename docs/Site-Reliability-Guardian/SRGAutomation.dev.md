@@ -15,6 +15,8 @@ DYNATRACE_SSO_URL=https://sso-xxxx.dynatrace.com/sso/oauth2/token # this variabl
 
 To pack the application cd into the cli folder and run `npm run pack` and then to build a container to test use `docker build -t dta .`
 
+> Note: "node18-macos-arm64" and "node18-macos-x64" Will need to be signed with Apple Developer ID certificate to run on macOS so it's not generated as part of the npm run pack.
+
 ## Cloud event description and example
 
 Internally, to trigger a quality gate evaluation using SRG we are using Dynatrace Biz Event that is documented on the SRG help section in the app.

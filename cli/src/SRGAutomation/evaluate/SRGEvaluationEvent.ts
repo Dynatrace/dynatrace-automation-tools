@@ -19,7 +19,7 @@ class SRGEvaluationEvent {
 
   "event.type": string;
 
-  constructor(appName: string, options: { [key: string]: string }) {
+  constructor(options: { [key: string]: string }) {
     const eventId = crypto.randomUUID().toString();
     const timeframe = this.getTimeframe(
       options["startTime"],
@@ -35,7 +35,7 @@ class SRGEvaluationEvent {
       options["version"]
     );
     this["tag.service"] = options["service"];
-    this["tag.application"] = appName;
+    this["tag.application"] = options["application"];
     this["tag.stage"] = options["stage"];
     this["event.id"] = eventId;
     this["event.provider"] = options["provider"];

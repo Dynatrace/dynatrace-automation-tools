@@ -5,3 +5,4 @@ cli/pre-executable/**
 cli/logs/**
 logs/**
 cli/.env
+cli/src/version.ts

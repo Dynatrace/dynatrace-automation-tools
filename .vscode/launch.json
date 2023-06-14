@@ -33,8 +33,7 @@
             "program": "${workspaceFolder}/cli/dist/index.js",
             "args": [
                 "srg",
-                "evaluate",
-                "dta-cli-self-test"
+                "evaluate"
             ],
             "outputCapture": "std",
             "env": {

@@ -29,6 +29,10 @@ class SRGEvaluationResult {
     if (result.status == "fail" || result.status == "error") {
       Logger.error("Status: " + result.status);
 
+      if (result.status == "fail") {
+        this.summarizeSLO(result);
+      }
+
       Logger.verbose("Stop on warning is " + stopOnWarning + ".");
       Logger.verbose("Stop on failure is " + stopOnFailure + ".");
 
@@ -40,6 +44,10 @@ class SRGEvaluationResult {
       Logger.info("  Status: " + result.status);
     }
 
+    this.summarizeSLO(result);
+  }
+
+  summarizeSLO(result: any) {
     Logger.info(
       " SLO summary (status of each SLO): \n " + result.validationSummary
     );

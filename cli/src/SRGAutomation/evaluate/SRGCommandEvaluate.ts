@@ -41,20 +41,25 @@ class SRGCommandEvaluate implements BaseCommand {
           .env("SRG_EVALUATION_TIMESPAN")
       )
       .addOption(
+        new Option("--application [application]", "Application name")
+          .default("")
+          .env("SRG_EVALUATION_APPLICATION")
+      )
+      .addOption(
         new Option(
           "--service [service]",
           "Service name. i.e. backend-service, api-gateway, etc."
         )
-          .default("")
           .env("SRG_EVALUATION_SERVICE")
+          .makeOptionMandatory(true)
       )
       .addOption(
         new Option(
           "--stage [stage]",
           "Evaluation stage, can be dev, test,quality-gate, prod, etc."
         )
-          .default("")
           .env("SRG_EVALUATION_STAGE")
+          .makeOptionMandatory(true)
       )
       .addOption(
         new Option(
@@ -96,9 +101,8 @@ class SRGCommandEvaluate implements BaseCommand {
           .default("false")
           .env("SRG_EVALUATION_STOP_ON_WARNING")
       )
-      .addArgument(new Argument("appName", "Application name").argRequired())
-      .action(async (arg, options) => {
-        const success = await executeEvaluation(arg, options, auth);
+      .action(async (options) => {
+        const success = await executeEvaluation(options, auth);
 
         if (!success) {
           mainCommand.error("Execution stop", {
@@ -111,19 +115,23 @@ class SRGCommandEvaluate implements BaseCommand {
 }
 
 async function executeEvaluation(
-  appName: any,
   options: { [key: string]: string },
   auth: AuthOptions
 ): Promise<boolean> {
   let res = false;
 
   try {
-    Logger.info("Executing SRG evaluation for " + appName);
+    Logger.info(
+      "Executing SRG evaluation for service " +
+        options["service"] +
+        " in stage " +
+        options["stage"]
+    );
     //sets the options values for authentication that the user provided
     auth.setOptionsValuesForAuth(options);
     const api = new DTApiV3(auth);
     const manager = new SRGEvaluate(api);
-    await manager.triggerEvaluation(appName, options);
+    await manager.triggerEvaluation(options);
     res = true;
   } catch (err) {
     Logger.error("While executing SRG evaluation ", err);

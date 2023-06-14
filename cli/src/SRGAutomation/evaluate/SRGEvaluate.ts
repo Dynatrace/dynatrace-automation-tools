@@ -4,7 +4,6 @@ import DTApiV3 from "../../dynatrace/DTApiV3";
 import SRGEvaluationEvent from "./SRGEvaluationEvent";
 import { setTimeout } from "timers/promises";
 import SRGEvaluationResult from "./SRGEvaluationResult";
-import { json } from "stream/consumers";
 class SRGEvaluate {
   private api: DTApiV3;
 
@@ -12,8 +11,8 @@ class SRGEvaluate {
     this.api = api;
   }
 
-  async triggerEvaluation(appName: string, options: { [key: string]: string }) {
-    const event = this.getCloudEvent(appName, options);
+  async triggerEvaluation(options: { [key: string]: string }) {
+    const event = this.getCloudEvent(options);
     await this.sendEvent(event);
     const result = await this.waitForEvaluationResult(
       event,
@@ -24,13 +23,8 @@ class SRGEvaluate {
     result.PrintEvaluationResults(result, stopOnFailure, stopOnWarning);
   }
 
-  private getCloudEvent(
-    appName: string,
-    options: {
-      [key: string]: string;
-    }
-  ): any {
-    const data = new SRGEvaluationEvent(appName, options);
+  private getCloudEvent(options: { [key: string]: string }): any {
+    const data = new SRGEvaluationEvent(options);
     return data;
   }
 
@@ -74,14 +68,18 @@ class SRGEvaluate {
         query.defaultTimeframeEnd
     );
     throw new Error(
-      "Failed to find evaluation result after 60 seconds. Check your configuration."
+      "Failed to find evaluation result for service " +
+        event["tag.service"] +
+        "in stage " +
+        event["tag.stage"] +
+        " after 60 seconds. Check your configuration."
     );
   }
 
   private getDQLQuery(event: SRGEvaluationEvent): DQLQuery {
     const dqlExp = this.getExpression(event);
     const date = new Date();
-    //queries for events that happened in the last 10 minutes (-1 min to account for time difference between client and server)
+    //queries for events that happened in the last 10 minutes
     date.setMinutes(date.getMinutes() - 10);
     const startTime = date.toISOString();
     date.setMinutes(date.getMinutes() + 20);
@@ -102,9 +100,6 @@ class SRGEvaluate {
     return query;
   }
 
-  //Filters by event type and timeframe and a final filter by app name using tags. Then takes the latest event.
-  //Multiple runs for the same timeframe and app name will result in multiple events. The latest event is the one that is used.
-  //TODO: Sanitize DQL expression
   private getExpression(event: SRGEvaluationEvent) {
     const initialdql =
       'fetch bizevents | filter event.type == "guardian.validation.finished" AND contains(execution_context,"' +
