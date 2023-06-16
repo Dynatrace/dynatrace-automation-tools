@@ -26,19 +26,24 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "dt srg configure",
+            "name": "dt srg evaluate",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cli/dist/index.js",
             "args": [
                 "srg",
-                "configure",
-                "simplenode"
+                "evaluate"
             ],
             "outputCapture": "std",
             "env": {
-                "LOG_LEVEL": "debug",
+                "LOG_LEVEL": "verbose",
+                "LOG_FILE": "true",
+                "SRG_EVALUATION_STAGE": "dev",
+                "SRG_EVALUATION_SERVICE": "demo-cli-service",
+                "SRG_APP_VERSION": "v1.0.0",
+                "SRG_EVALUATION_PROVIDER": "local-vscode",
+                "SRG_EVALUATION_BUILD_ID": "1234567890",
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [

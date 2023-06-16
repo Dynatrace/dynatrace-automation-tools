@@ -1,24 +1,28 @@
 {
-    "name": "dt-automation-cli",
-    "version": "0.0.1",
+    "name": "dta",
+    "version": "0.1.0",
     "description": "Dynatrace Automation tools CLI",
     "main": "index.js",
     "bin": "executables/index.js",
     "scripts": {
+        "preinstall": "node -p \"'export const DTA_CLI_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'\" > src/version.ts",
         "dev": "tsc --watch",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
         "build": "npx tsc",
-        "help": "npm run build && node dist/index.js -h",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
-        "docker": "docker build -t dt-automation-cli . && docker run -it dt-automation-cli bash"
+        "docker": "docker build -t dta . && docker run -it dta bash"
     },
     "pkg": {
         "scripts": "executables/**/*.js",
-        "assets": "executables/fonts/*",
+        "assets": [
+            "executables/fonts/*",
+            "executables/**/*.json"
+        ],
         "targets": [
-            "linux",
-            "macos",
-            "win"
+            "node18-linux-arm64",
+            "node18-linux-x64",
+            "node18-win-arm64",
+            "node18-win-x64"
         ],
         "outputPath": "./executables"
     },
@@ -38,7 +42,7 @@
     "devDependencies": {
         "@types/figlet": "^1.5.5",
         "@types/node": "^18.11.18",
-        "@types/uuid": "^9.0.0",
+        "@types/uuid": "^9.0.1",
         "@typescript-eslint/eslint-plugin": "^5.54.1",
         "@typescript-eslint/parser": "^5.54.1",
         "eslint": "^8.35.0",

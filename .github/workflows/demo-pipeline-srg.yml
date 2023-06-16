@@ -1,0 +1,31 @@
+# Demo pipeline for SRG evaluation. The target application for the evaluation already has constant traffic.
+name: demo-pipeline-srg
+on:
+  workflow_dispatch:
+    inputs:
+      DYNATRACE_URL_GEN3:
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      DYNATRACE_URL_GEN3:
+        required: true
+        type: string
+jobs:
+  test-cli:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: build-release
+        name: Run CLI with SRG
+        uses: ./.github/actions/dta-docker
+        with:
+          dt-url: ${{ inputs.DYNATRACE_URL_GEN3 }}
+          dt-account-urn: ${{ secrets.ACCOUNT_URN }}
+          dt-client-id: ${{ secrets.DYNATRACE_CLIENT_ID }}
+          dt-client-secret: ${{ secrets.DYNATRACE_SECRET }}
+          dt-sso-url: ${{ secrets.DYNATRACE_SSO_URL }}
+          srg-timespan: "5"
+          dt-service-name: "demo-cli-service"
+          dt-stage-name: "dev"

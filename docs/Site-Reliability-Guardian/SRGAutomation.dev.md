@@ -1,7 +1,5 @@
 # Development documentation for Site Reliability Automation
 
-This command uses the AuthOptions to require authentication tokens for Classic and Gen3 API's. The scope for each token is detailed in the main documentation for the command. [SRGAutomation](SRGAutomation.md)
-
 ## Using VS Code
 
 To debug with VSCode profiles please create a `.env` file under the `cli` folder with the following variables:
@@ -14,3 +12,11 @@ DYNATRACE_CLIENT_ID=dtxx.xxxxxx
 DYNATRACE_SECRET=dtxx.xxxxxxxxxxxxxx
 DYNATRACE_SSO_URL=https://sso-xxxx.dynatrace.com/sso/oauth2/token # this variable depends on your environment stage (sprint,dev or production)
 ```
+
+To pack the application cd into the cli folder and run `npm run pack` and then to build a container to test use `docker build -t dta .`
+
+> Note: "node18-macos-arm64" and "node18-macos-x64" Will need to be signed with Apple Developer ID certificate to run on macOS so it's not generated as part of the npm run pack.
+
+## Cloud event description and example
+
+Internally, to trigger a quality gate evaluation using SRG we are using Dynatrace Biz Event that is documented on the SRG help section in the app.

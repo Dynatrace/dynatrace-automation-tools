@@ -1,6 +1,6 @@
+/* eslint-disable camelcase */
 import axios, { AxiosInstance } from "axios";
 import Logger from "./logger";
-
 class DTOAuth {
   SSOUrl: string;
 
@@ -22,15 +22,14 @@ class DTOAuth {
     this.ClientId = clientId;
     this.ClientSecret = clientSecret;
     this.AccountUUID = accountUUID;
-
     this.axiosApiInstance = axios.create();
   }
 
   async GetScopedToken(scope: string): Promise<string> {
     const data = {
-      grantType: "client_credentials",
-      clientId: this.ClientId,
-      clientSecret: this.ClientSecret,
+      grant_type: "client_credentials",
+      client_id: this.ClientId,
+      client_secret: this.ClientSecret,
       scope: scope,
       resource: this.AccountUUID,
     };
