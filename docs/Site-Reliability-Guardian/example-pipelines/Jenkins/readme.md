@@ -41,7 +41,8 @@ pipeline {
         DYNATRACE_CLIENT_ID = credentials('DYNATRACE_CLIENT_ID')
         DYNATRACE_SECRET = credentials('DYNATRACE_SECRET')
         DYNATRACE_SSO_URL = credentials('DYNATRACE_SSO_URL')
-        APPNAME = 'your-app-name-here'
+        SRG_EVALUATION_SERVICE = 'your-service-name'
+        SRG_EVALUATION_STAGE = 'your-stage-name'
     }
     stages {
         stage('Quality Gate') {
@@ -51,7 +52,7 @@ pipeline {
             steps {
                     container('dta') {
                     sh """
-                        dta srg evaluate \$APPNAME
+                        dta srg evaluate
                     """
                     }
             }
@@ -71,7 +72,8 @@ pipeline {
         DYNATRACE_CLIENT_ID = credentials('DYNATRACE_CLIENT_ID')
         DYNATRACE_SECRET = credentials('DYNATRACE_SECRET')
         DYNATRACE_SSO_URL = credentials('DYNATRACE_SSO_URL')
-        APPNAME = 'your-app-name-here'
+        SRG_EVALUATION_SERVICE = 'your-service-name'
+        SRG_EVALUATION_STAGE = 'your-stage-name'
     }
     stages {
       //This performance test uses locust but you can use any testing/load generating tool
@@ -104,7 +106,7 @@ pipeline {
                     sh """
                         eval_start=\$(cat srg.test.starttime)
                         eval_end=\$(cat srg.test.endtime)
-                        dta srg evaluate --start-time \$eval_start --end-time \$eval_end \$APPNAME
+                        dta srg evaluate --start-time \$eval_start --end-time \$eval_end
                     """
                     }
             }

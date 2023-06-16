@@ -1,6 +1,6 @@
 # GitLab integration
 
-You can copy and paste the following code in your GitLab pipeline to integrate a CICD process with quality gates.
+You can copy and paste the following code in your GitLab pipeline to integrate a CI/CD process with quality gates.
 
 ```
 trigger_evaluation_and_receive_result:
@@ -8,7 +8,8 @@ trigger_evaluation_and_receive_result:
   stage: evaluate
   needs: ["run-tests"]
   variables:
-    APP_NAME: "your-app-name-here" # This should match your DQL filter in your dynatrace workflow
+    SRG_EVALUATION_SERVICE: "your-service-name" # This should match your DQL filter in your dynatrace workflow
+    SRG_EVALUATION_STAGE: "your-stage-name" # This should match your DQL filter in your dynatrace workflow
     DYNATRACE_URL_GEN3: $DYNATRACE_URL_GEN3
     ACCOUNT_URN: $ACCOUNT_URN
     DYNATRACE_CLIENT_ID: $DYNATRACE_CLIENT_ID
@@ -17,7 +18,7 @@ trigger_evaluation_and_receive_result:
     SRG_EVALUATION_STOP_ON_FAILURE: "true"
   script:
     - export LOG_LEVEL="verbose" # Enable for initial testing, once in production remove this line.
-    - dta srg evaluate $APP_NAME
+    - dta srg evaluate
 
 ```
 
@@ -45,11 +46,11 @@ run-tests:
 And modify the `trigger_evaluation_and_receive_result` step
 
 ```
-...
+#include the previous section with env variables
   script:
     - eval_start=$(cat srg.test.starttime)
     - eval_end=$(cat srg.test.endtime)
     - export LOG_LEVEL="verbose" # Enable for initial testing, once in production remove this line.
-    - dta srg evaluate --start-time=$eval_start --end-time=$eval_end $APP_NAME
+    - dta srg evaluate --start-time=$eval_start --end-time=$eval_end
 ...
 ```

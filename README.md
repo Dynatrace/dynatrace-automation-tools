@@ -21,7 +21,7 @@ Download the CLI executable from the Github repo
 For Linux users execute the following:
 
 ```(bash)
-wget https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/0.0.8/dta
+wget https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/0.1.0/dta
 ./chmod +rx ./dta
 ./dta -h
 ```

@@ -24,4 +24,5 @@ jobs:
           dt-client-secret: ${{ secrets.DYNATRACE_SECRET }}
           dt-sso-url: ${{ secrets.DYNATRACE_SSO_URL }}
           srg-timespan: "5"
-          dt-guardian-name: simplenode
+          dt-service-name: "demo-cli-service"
+          dt-stage-name: "dev"

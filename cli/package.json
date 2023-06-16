@@ -1,6 +1,6 @@
 {
     "name": "dta",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Dynatrace Automation tools CLI",
     "main": "index.js",
     "bin": "executables/index.js",

@@ -2,7 +2,7 @@
 
 To integrate the CLI with Azure DevOps you can use the yaml pipeline that references a docker container:
 
-- Please check the Microsoft pre-requisites for this: https://learn.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops
+- Please check the Microsoft pre-requisites for this [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops)
 
 ```
   trigger:
@@ -13,7 +13,7 @@ To integrate the CLI with Azure DevOps you can use the yaml pipeline that refere
   steps:
   - bash: |
       export LOG_LEVEL="verbose"
-      dta srg evaluate app-name-here
+      dta srg evaluate --stage="your-stage-here" --service="your-service-name"
     env:
       DYNATRACE_URL_GEN3: $(DYNATRACE_URL_GEN3)
       DYNATRACE_CLIENT_ID: $(DYNATRACE_CLIENT_ID)
@@ -42,7 +42,7 @@ After that you can use those values in the quality gate execution like:
 ```
   - bash: |
       export LOG_LEVEL="verbose"
-      dta srg evaluate --start-time=$(evalTime.start) --end-time=$(evalTime.end) app-name-here
+      dta srg evaluate --start-time=$(evalTime.start) --end-time=$(evalTime.end) --stage="your-stage-here" --service="your-service-name"
     env:
       DYNATRACE_URL_GEN3: $(DYNATRACE_URL_GEN3)
       DYNATRACE_CLIENT_ID: $(DYNATRACE_CLIENT_ID)

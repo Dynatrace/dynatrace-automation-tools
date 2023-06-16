@@ -14,7 +14,7 @@ Search in the Dynatrace Hub for the Site Reliability Guardian and install it in 
 
 ## 2. Create a new Guardian
 
-Locate the Site Reliability Guardian app in the sidebar an click `+ guardian` button.
+Locate the Site Reliability Guardian app in the sidebar and click `+ guardian` button.
 
 <img src="./assets/srg-create-ui.png"  width="550" height="200">
 
@@ -46,7 +46,7 @@ If you want to consume service metrics like `response time` or `error rate` of a
     ((builtin:service.response.time:avg:partition("latency",value("good",lt(400000))):splitBy():count:default(0))/(builtin:service.response.time:avg:splitBy():count)*(100))
     ```
 
-    > This expression measures service performance by counting the number of request during which the response latency is below the defined threshold 400000 [µs] or 400 ms. (you need to have traffic against your application for this expression to work)
+    > This expression measures service performance by counting the number of request during which the response latency is below the defined threshold 400000 [µs] or 400 ms. (you need to have traffic against your service for this expression to work)
 
     For the entity filters, you can use a combination of entity type and tags to find the target entity in Dynatrace. i.e.:
 
@@ -78,23 +78,26 @@ If you want to consume service metrics like `response time` or `error rate` of a
 
 ## 3. Create a Dynatrace Workflow
 
-Create a **Dynatrace Workflow** that includes the Site Reliability Guardian application as a step and is triggered based on the following Biz Event:
+Create a **Dynatrace Workflow** that includes the Site Reliability Guardian application. You can navigate into the Site Reliability Guardian and click in the option `create workflow`. This will open a new tab with the new workflow created.
+
+<img src="./assets/workflow-shortcut.png"  width="675" height="400">
+
+Then modify the Event trigger to follow this expression:
 
 ```
-type == "guardian.validation.triggered" AND tag.application=="appnamehere"
+type == "guardian.validation.triggered" AND tag.service == "your-service-name" AND tag.stage == "you-stage-name"
 ```
 
-> Note: `tag.application` is not related to any other Dynatrace configuration.
-
-You will need to replace `appnamehere` with a value of your choice for the application name. This value would be used during the CLI execution to trigger this specific workflow.
+> Note: The values for `tag.service` and `tag.stage` will be used as parameters during the CLI execution.
 
 <img src="./assets/workflow-filter.png"  width="675" height="400">
 
-Then add the SRG item with the following expression to get the start time `{{event()['timeframe.from']}}` and end time `{{event()['timeframe.to']}}` of the event into the execution:
+The start time and end time expression _is already added to the SRG task_ like in the image:
+`{{event()['timeframe.from']}}` and end time `{{event()['timeframe.to']}}`
 
 <img src="./assets/workflow-srg-item.png"  width="560" height="540">
 
-With this final step you are ready to execute a Site Reliability Guardian evaluation.
+You are ready to execute a Site Reliability Guardian evaluation.
 
 Continue in the main guide
 [Site Reliability Guardian Automation](SRGAutomation.md)

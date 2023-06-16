@@ -17,8 +17,11 @@ inputs:
   dt-sso-url:
     description: "Dynatrace sso url for oauth"
     required: true
-  dt-guardian-name:
-    description: "Dynatrace Site Reliability Guardian name"
+  dt-service-name:
+    description: "Service name for the evaluation"
+    required: true
+  dt-stage-name:
+    description: "Stage name for the evaluation"
     required: true
   srg-start-time:
     description: "Start time for the evaluation"
@@ -34,7 +37,8 @@ outputs:
     description: "evaluation result"
 runs:
   using: "docker"
-  image: "dynatraceace/dt-automation-cli:latest"
+  image: "dynatraceace/dt-automation-cli:azdo"
+  entrypoint: "dta"
   env:
     LOG_LEVEL: "verbose"
     DYNATRACE_URL_GEN3: ${{ inputs.dt-url }}
@@ -42,9 +46,12 @@ runs:
     DYNATRACE_CLIENT_ID: ${{ inputs.dt-client-id}}
     DYNATRACE_SECRET: ${{ inputs.dt-client-secret}}
     DYNATRACE_SSO_URL: ${{ inputs.dt-sso-url}}
-    # SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}}
-    # SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
     SRG_EVALUATION_TIMESPAN: ${{ inputs.srg-timespan}}
-    SRG_EVALUATION_STOP_ON_FAILURE: "false"
+    SRG_EVALUATION_STOP_ON_FAILURE: "true"
+    SRG_EVALUATION_SERVICE: ${{ inputs.dt-service-name }}
+    SRG_EVALUATION_STAGE: ${{ inputs.dt-stage-name }}
+    # SRG_EVALUATION_START_TIME: ${{ inputs.srg-start-time}} # if you enable this, remove the SRG_EVALUATION_TIMESPAN
+    # SRG_EVALUATION_END_TIME: ${{ inputs.srg-end-time}}
   args:
-    - dta srg evaluate ${{ inputs.dt-guardian-name}}
+    - srg
+    - evaluate
