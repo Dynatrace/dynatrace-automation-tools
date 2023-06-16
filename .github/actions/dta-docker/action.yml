@@ -37,7 +37,7 @@ outputs:
     description: "evaluation result"
 runs:
   using: "docker"
-  image: "dynatraceace/dt-automation-cli:azdo"
+  image: "dynatraceace/dt-automation-cli:latest"
   entrypoint: "dta"
   env:
     LOG_LEVEL: "verbose"
