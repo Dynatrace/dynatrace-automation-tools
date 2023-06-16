@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - "dev"
-      - "10-feature-poc-*"
     tags:
       - "v*"
 jobs:
