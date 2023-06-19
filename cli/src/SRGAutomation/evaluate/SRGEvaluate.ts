@@ -13,6 +13,7 @@ class SRGEvaluate {
 
   async triggerEvaluation(options: { [key: string]: string }) {
     const event = this.getCloudEvent(options);
+    await this.waitForData(options["delay"]);
     await this.sendEvent(event);
     const result = await this.waitForEvaluationResult(
       event,
@@ -21,6 +22,26 @@ class SRGEvaluate {
     const stopOnFailure = options["stopOnFailure"].toString() === "true";
     const stopOnWarning = options["stopOnWarning"].toString() === "true";
     result.PrintEvaluationResults(result, stopOnFailure, stopOnWarning);
+  }
+
+  //Provides a delay to allow data to be available in Dynatrace before sending the event.
+  //Returns user feedback every 30 seconds until the delay is over.
+  private async waitForData(delay: string) {
+    let delayInt = parseInt(delay);
+
+    while (delayInt > 0) {
+      Logger.info(
+        "Waiting " + delayInt + " seconds for data to be available in Dynatrace"
+      );
+
+      if (delayInt > 30) {
+        delayInt = delayInt - 30;
+        await setTimeout(30 * 1000);
+      } else {
+        await setTimeout(delayInt * 1000);
+        delayInt = 0;
+      }
+    }
   }
 
   private getCloudEvent(options: { [key: string]: string }): any {

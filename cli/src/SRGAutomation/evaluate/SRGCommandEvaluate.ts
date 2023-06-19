@@ -101,6 +101,14 @@ class SRGCommandEvaluate implements BaseCommand {
           .default("false")
           .env("SRG_EVALUATION_STOP_ON_WARNING")
       )
+      .addOption(
+        new Option(
+          "-d, --delay [delay]",
+          "Delay time (in seconds) before sending the evaluation request to give time for the data to be ingested"
+        )
+          .default("90")
+          .env("SRG_EVALUATION_DELAY")
+      )
       .action(async (options) => {
         const success = await executeEvaluation(options, auth);
 
