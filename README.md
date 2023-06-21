@@ -13,7 +13,7 @@ To use the CLI you have different deployment options:
 
 Use the docker container image from Docker Hub: https://hub.docker.com/repository/docker/dynatraceace/dt-automation-cli. This container is made for CI/CD pipelines, to run it locally you can use the following:
 
-1. `docker run -i -t dynatraceace/dt-automation-cli:latest bash`. This will open terminal inside the container where you can use the commands for the CLI like `/dta -h`. Reference for each command is described in the documentation for each use case.
+1. `docker run -i -t dynatraceace/dt-automation-cli:latest bash`. This will open terminal inside the container where you can use the commands for the CLI like `dta -h`. Reference for each command is described in the documentation for each use case.
 
 ### Executable app
 
