@@ -3,6 +3,7 @@
 This CLI allows automating different Dynatrace use-cases to be used with CI/CD or automation platforms. The current implemented use cases:
 
 1. [Site Reliability Guardian Automation](docs/Site-Reliability-Guardian/SRGAutomation.md)
+1. [Dynatrace Events](docs/Events/Dynatrace-Events.md)
 
 ## Installation options
 
@@ -37,6 +38,6 @@ To collect different a detail log level of the execution please set the environm
 
 This will output a file with the logs for the CLI in the path `logs/logs.log`
 
-## Development
+## Contributing and development
 
 For development instructions please check [Development](docs/Development.md)

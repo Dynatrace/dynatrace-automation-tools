@@ -78,6 +78,38 @@ class DTApiV3 {
     }
   };
 
+  EventSend = async (event: object): Promise<any> => {
+    try {
+      const client = await this.Auth.getGen3ClientWithScopeRequest(
+        "storage:events:write"
+      );
+      const res = await client.post(
+        "/platform/classic/environment-api/v2/events/ingest",
+        event
+      );
+
+      if (res.status != 201) {
+        Logger.error("Failed send event");
+        Logger.verbose(res);
+        throw new Error("Failed send event");
+      }
+
+      return res.data;
+    } catch (e: any) {
+      Logger.verbose(e);
+
+      if (e.response?.data[0]?.code == 400) {
+        const msg: string =
+          e.response?.data[0].error.constraintViolations[0].message;
+        Logger.error(msg);
+      } else {
+        Logger.error(e.response?.data[0]);
+      }
+
+      throw new Error("Failed to send event");
+    }
+  };
+
   BizEventSend = async (event: object): Promise<any> => {
     try {
       const client = await this.Auth.getGen3ClientWithScopeRequest(
