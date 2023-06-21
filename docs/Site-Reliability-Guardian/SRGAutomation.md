@@ -14,7 +14,7 @@ The `dta srg evaluate` allows to automate the process of executing Site Reliabil
 The command `dta srg evaluate --service "your-service-name" --stage "stage-name"` triggers the following process:
 
 1. A Biz Event is sent into Dynatrace with the required details for the quality gate evaluation including start time, end time and service/stage name.
-2. On the Dynatrace side, a Dynatrace Workflow is already configured and is listening for the Biz Event payload based on the expression `type == "guardian.validation.triggered" AND tag.service == "your-service-name" AND tag.stage == "you-stage-name"`
+2. On the Dynatrace side, a Dynatrace Workflow is already configured and is listening for the Biz Event payload based on the expression `event.type == "guardian.validation.triggered" AND tag.service == "your-service-name" AND tag.stage == "you-stage-name"`
 3. The Dynatrace Workflow triggers the Site Reliability Guardian evaluation and sends the input parameters from the biz event into the SRG evaluation.
 4. The evaluation is executed, and a Biz Event is created by the SRG application with the evaluation results and the metadata that allows the CLI to query for this specific result.
 5. The CLI queries Dynatrace API for the Biz Event that matches an internal ID that was sent on step 1. By default, it will retry this query every 5 seconds for 12 times until it finds the result event. If the number of retries is exceeded an no event is present, the CLI will assume the configuration is broken and the execution will fail.
