@@ -85,12 +85,12 @@ Create a **Dynatrace Workflow** that includes the Site Reliability Guardian appl
 Then modify the Event trigger to follow this expression:
 
 ```
-type == "guardian.validation.triggered" AND tag.service == "your-service-name" AND tag.stage == "you-stage-name"
+event.type == "guardian.validation.triggered" AND tag.service == "your-service-name" AND tag.stage == "you-stage-name"
 ```
 
 > Note: The values for `tag.service` and `tag.stage` will be used as parameters during the CLI execution.
 
-<img src="./assets/workflow-filter.png"  width="675" height="400">
+<img src="./assets/workflow-filter.png"  width="675" height="350">
 
 The start time and end time expression _is already added to the SRG task_ like in the image:
 `{{event()['timeframe.from']}}` and end time `{{event()['timeframe.to']}}`
