@@ -66,10 +66,7 @@
             "env": {
                 "LOG_LEVEL": "verbose",
                 "LOG_FILE": "true",
-                "EVENT_DEPLOY_NAME": "deploy test",
-                "EVENT_DEPLOY_VERSION": "v1.0.1",
                 "EVENT_ENTITY_SELECTOR": "type(PROCESS_GROUP_INSTANCE),tag(app:simplenodeservice)",
-                "SRG_APP_VERSION": "v1.0.0",
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [

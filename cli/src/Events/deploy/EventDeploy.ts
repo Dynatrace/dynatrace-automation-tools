@@ -68,28 +68,22 @@ class EventProperties {
   "gitcommit": string;
   "change-request": string;
   "dt.event.deployment.remediation_action_link": string;
-  "dt.event.is_rootcause_relevant": boolean;
+  "dt.event.is_rootcause_relevant": string;
 
   constructor(options: { [key: string]: string }) {
     this["dt.event.deployment.name"] = options["name"];
     this["dt.event.deployment.version"] = options["version"];
-    this["dt.event.deployment.release_stage"] = options["release_stage"];
-    this["dt.event.deployment.release_product"] = options["release_product"];
+    this["dt.event.deployment.release_stage"] = options["releaseStage"];
+    this["dt.event.deployment.release_product"] = options["releaseProduct"];
     this["dt.event.deployment.release_build_version"] =
-      options["release_build_version"];
+      options["releaseBuildVersion"];
     this["approver"] = options["approver"];
     this["dt.event.deployment.ci_back_link"] = options["ci_back_link"];
     this["gitcommit"] = options["gitcommit"];
-    this["change-request"] = options["change-request"];
+    this["change-request"] = options["changeRequest"];
     this["dt.event.deployment.remediation_action_link"] =
-      options["remediation_action_link"];
-    //this["dt.event.is_rootcause_relevant"] = options["is_rootcause_relevant"];
-  }
-
-  getVersion(options: { [key: string]: string }) {
-    // if(options["version"] !== ""){
-    //   return options["version"];
-    // }
+      options["remediationActionLink"];
+    this["dt.event.is_rootcause_relevant"] = options["isRootCauseRelevant"];
   }
 }
 

@@ -37,10 +37,68 @@ class EventDeployCommand implements BaseCommand {
       .addOption(
         new Option(
           "--version [version]",
-          "Deployment version. i.e. 1.0.0. If you have defined SRG_APP_VERSION environment variable, it will be used as default value"
+          "Deployment version. i.e. 1.0.0 or v1.0.0"
         )
           .env("EVENT_DEPLOY_VERSION")
-          .default(process.env.SRG_APP_VERSION || "")
+          .default("")
+      )
+      .addOption(
+        new Option(
+          "--release-stage [releaseStage]",
+          "Release stage for the application. i.e. dev, staging, etc."
+        )
+          .env("EVENT_DEPLOY_RELEASE_STAGE")
+          .default("")
+      )
+      .addOption(
+        new Option(
+          "--release-product-name [releaseProductName]",
+          "Release product name (useful when having multiple component of a single application) i.e. your-app-commercial-name."
+        )
+          .env("EVENT_DEPLOY_RELEASE_PRODUCT_NAME")
+          .default("")
+      )
+      .addOption(
+        new Option(
+          "--release-build-version [releaseBuildVersion]",
+          "Release build version i.e. your internal build id (git commit id, cicd build id, etc)"
+        )
+          .env("EVENT_DEPLOY_RELEASE_BUILD_VERSION")
+          .default("")
+      )
+      .addOption(
+        new Option("--approver [approver]", "Approver name for the deployment")
+          .env("EVENT_DEPLOY_APPROVER")
+          .default("")
+      )
+      .addOption(
+        new Option("--gitcommit [gitcommit]", "Git commit id")
+          .env("EVENT_DEPLOY_GITCOMMIT")
+          .default("")
+      )
+      .addOption(
+        new Option(
+          "--change-request [changeRequest]",
+          "Change request code if applicable"
+        )
+          .env("EVENT_DEPLOY_CHANGE_REQUEST")
+          .default("")
+      )
+      .addOption(
+        new Option(
+          "--remediation-link [remediationLink]",
+          "Remediation link for auto-remediation scenarios that you might want to implement"
+        )
+          .env("EVENT_DEPLOY_REMEDIATION_LINK")
+          .default("")
+      )
+      .addOption(
+        new Option(
+          "--is-root-cause-relevant [isRootCauseRelevant]",
+          "Set's if this would be relevant to a root cause analysis from Dynatrace Davis AI"
+        )
+          .env("EVENT_DEPLOY_ROOT_CAUSE_RELEVANT")
+          .default(true)
       )
       .action(async (options) => {
         const success = await execute(options, auth);

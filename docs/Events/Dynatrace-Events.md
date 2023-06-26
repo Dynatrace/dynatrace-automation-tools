@@ -48,8 +48,9 @@ The optional values for this command are:
 
 | Command                  | Environment variable               | Description                                                                                                                    |
 | ------------------------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| --version                | EVENT_DEPLOY_VERSION               | Deployment version. i.e. 1.0.0. default: ""                                                                                    |
 | --release-stage          | EVENT_DEPLOY_RELEASE_STAGE         | Release stage for the application. i.e. dev, staging, etc. default: ""                                                         |
-| --release-product        | EVENT_DEPLOY_RELEASE_PRODUCT_NAME  | Release product name (useful when having multiple component of a single application) i.e. your-app-commercial-name default: "" |
+| --release-product-name   | EVENT_DEPLOY_RELEASE_PRODUCT_NAME  | Release product name (useful when having multiple component of a single application) i.e. your-app-commercial-name default: "" |
 | --release-build-version  | EVENT_DEPLOY_RELEASE_BUILD_VERSION | Release build version i.e. your internal build id (git commit id, cicd build id, etc) default: ""                              |
 | --approver               | EVENT_DEPLOY_APPROVER              | Approver name for the deployment. default: ""                                                                                  |
 | --gitcommit              | EVENT_DEPLOY_GITCOMMIT             | Git commit id. default: ""                                                                                                     |
