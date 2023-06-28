@@ -44,6 +44,22 @@ class EventDeployCommand implements BaseCommand {
       )
       .addOption(
         new Option(
+          "--project [project]",
+          "Project name. i.e. simple-node-project."
+        )
+          .env("EVENT_DEPLOY_PROJECT")
+          .default("")
+      )
+      .addOption(
+        new Option(
+          "--source [source]",
+          "Source name. i.e. Jenkins, Gitlab, etc."
+        )
+          .env("EVENT_DEPLOY_SOURCE")
+          .default("")
+      )
+      .addOption(
+        new Option(
           "--release-stage [releaseStage]",
           "Release stage for the application. i.e. dev, staging, etc."
         )
@@ -72,6 +88,14 @@ class EventDeployCommand implements BaseCommand {
           .default("")
       )
       .addOption(
+        new Option(
+          "--ci-back-link [ciBackLink]",
+          "CI/CD back link i.e. https://pipelines/easytravel/123"
+        )
+          .env("EVENT_DEPLOY_CI_BACK_LINK")
+          .default("")
+      )
+      .addOption(
         new Option("--gitcommit [gitcommit]", "Git commit id")
           .env("EVENT_DEPLOY_GITCOMMIT")
           .default("")
@@ -86,10 +110,10 @@ class EventDeployCommand implements BaseCommand {
       )
       .addOption(
         new Option(
-          "--remediation-link [remediationLink]",
+          "--remediation-action-link [remediationActionLink]",
           "Remediation link for auto-remediation scenarios that you might want to implement"
         )
-          .env("EVENT_DEPLOY_REMEDIATION_LINK")
+          .env("EVENT_DEPLOY_REMEDIATION_ACTION_LINK")
           .default("")
       )
       .addOption(

@@ -66,7 +66,9 @@
             "env": {
                 "LOG_LEVEL": "verbose",
                 "LOG_FILE": "true",
+                "EVENT_DEPLOY_NAME": "demo-simple-app",
                 "EVENT_ENTITY_SELECTOR": "type(PROCESS_GROUP_INSTANCE),tag(app:simplenodeservice)",
+                "EVENT_DEPLOY_VERSION": "v1.0.9"
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [

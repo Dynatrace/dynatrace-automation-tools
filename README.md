@@ -5,7 +5,7 @@
 This CLI allows automating different Dynatrace use-cases to be used with CI/CD or automation platforms. The current implemented use cases:
 
 1. [Site Reliability Guardian Automation](https://github.com/dynatrace-ace/dynatrace-automation-tools/tree/main/docs/Site-Reliability-Guardian/SRGAutomation.md)
-1. [Dynatrace Events](https://github.com/dynatrace-ace/dynatrace-automation-tools/tree/main/docs/Events/Dynatrace-Events.md)
+1. [Dynatrace Events](https://github.com/dynatrace-ace/dynatrace-automation-tools/tree/main/docs/Events/Readme.md)
 
 ## Installation options
 

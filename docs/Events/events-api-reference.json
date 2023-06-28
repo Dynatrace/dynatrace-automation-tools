@@ -1,0 +1,384 @@
+{
+    "totalCount": 63,
+    "pageSize": 63,
+    "eventProperties": [
+        {
+            "key": "dt.davis.analysis_time_budget",
+            "displayName": "Analysis time budget",
+            "description": "The time budget (in seconds) that the Davis® engine is granted before it must raise a problem. The analysis time budget can be set per event and controls the balance of sending out alerts early and granting the AI analysis enough time to finish its analysis.\n\nThe trade-off of a short analysis budget is that the root cause and event merge analysis is limited or even skipped. For example, the time budget of 0 seconds means that the event raises a problem and sends the alert immediately, without any analysis.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.davis.analysis_trigger_delay",
+            "displayName": "Analysis trigger delay",
+            "description": "The time delay (in seconds) before the trigger of Davis® analysis. For example, the delay of 0 seconds triggers a Davis® problem and the root cause analysis immediately. \n\nThe trigger delay can be used to hold the analysis until all the relevant root cause data has arrived to Dynatrace. For example, it might be beneficial for cloud integrations or log integrations that report data in different schedules - you can delay the analysis until data from all sources is available. \n\nNote that while longer delays means more data is available for root cause analysis, it also delays alerts delivery.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.allow_davis_merge",
+            "displayName": "Allow Davis merge",
+            "description": "This flag controls whether the Davis® engine is allowed to merge this event into a larger problem (true) or if a new problem must be created (false).\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.allow_entity_remapping",
+            "displayName": "Allow entity remapping",
+            "description": "This flag defines whether the remapping of the target entity is enabled (true) or disabled (false). \n\nIf the remapping is enabled, Dynatrace can map the event to an entity extracted from the event metadata. \n\nIf the remapping is disabled or the extraction is not possible, Dynatrace maps the event to the entity specified in the event configuration (for example, a specific host) or to the global environment entity.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.allow_frequent_issue_detection",
+            "displayName": "Allow frequent issue detection",
+            "description": "The flag controls whether the Davis® engine should consider suppressing frequent events (true) or bypassing frequent issues check (false).\n\n\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.baseline.affected_load",
+            "displayName": "Load",
+            "description": "The load (calls per minute) of the affected requests or application actions that violated the baseline.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.affected_load_reference",
+            "displayName": "Load baseline",
+            "description": "The baseline for the load (calls per minute) of the service or application.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.error_rate",
+            "displayName": "Error rate",
+            "description": "The error rate that violated the baseline and triggered the event.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.error_rate_reference",
+            "displayName": "Error rate baseline",
+            "description": "The baseline for the error rate.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.is_response_time_p50_abnormal",
+            "displayName": "50th percentile baseline violation",
+            "description": "The baseline for the 50th percentile response time has (true) or has not (false) been violated.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.is_response_time_p90_abnormal",
+            "displayName": "90th percentile baseline violation",
+            "description": "The baseline for the 90th percentile response time has (true) or has not (false) been violated.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.response_time_p50",
+            "displayName": "Response time 50th percentile",
+            "description": "The 50th percentile (median) of response time, in microseconds.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.response_time_p50_reference",
+            "displayName": "Response time 50th percentile - baseline",
+            "description": "The baseline for the 50th percentile (median) response time, in microseconds.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.response_time_p90",
+            "displayName": "Response time 90th percentile",
+            "description": "The 90th percentile of response time, in microseconds.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.response_time_p90_reference",
+            "displayName": "Response time 90th percentile - baseline",
+            "description": "The baseline for the 90th percentile response time, in microseconds.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.service_method",
+            "displayName": "Affected service method",
+            "description": "A list of service methods affected by the service event.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.static_user_override",
+            "displayName": "Static threshold override",
+            "description": "The static threshold (true) or the dynamic baseline (false) is used in event evaluation.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.baseline.total_load",
+            "displayName": "Total load",
+            "description": "The load (calls per minute) of the entire service or application affected by the event.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.deployment.ci_back_link",
+            "displayName": "CI back link",
+            "description": "The link to the CI system.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.deployment.name",
+            "displayName": "Deployment name",
+            "description": "The name of the deployment.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.deployment.project",
+            "displayName": "Project name",
+            "description": "The name of the deployed project.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.deployment.release_build_version",
+            "displayName": "Release build version",
+            "description": "Build version of the release.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.deployment.release_product",
+            "displayName": "Release product",
+            "description": "Product name of the release.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.deployment.release_stage",
+            "displayName": "Release stage",
+            "description": "Stage name of the release.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.deployment.remediation_action_link",
+            "displayName": "Remediation action link",
+            "description": "The link to the remediation action.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.deployment.version",
+            "displayName": "Deployment version",
+            "description": "The version of the deployed component.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.description",
+            "displayName": "Event description",
+            "description": "A short description of the event. The description of the event may change over time.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.disable_davis_merge_reason",
+            "displayName": "Merge with existing problem disabled reason",
+            "description": "A short description of why the event should not merge.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.entity_remapping_failure_info",
+            "displayName": "Entity remapping failure information",
+            "description": "Provides additional information in case remapping an event onto an entity that was extracted from the event metadata failed.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.group_label",
+            "displayName": "Event group label",
+            "description": "The semantic group of the event type.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.impact_level",
+            "displayName": "Event impact level",
+            "description": "The impact level of the event, such as Infrastructure, Services, Application or Environment.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.is_rootcause_relevant",
+            "displayName": "Relevant for root cause analysis",
+            "description": "This flag controls whether the Davis® engine should include this event within the root cause analysis (true) or if it is not (false) relevant.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.log_query",
+            "displayName": "Log query",
+            "description": "The log query, selecting logs for the event.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.maintenance_window_ids",
+            "displayName": "Maintenance windows",
+            "description": "A list of maintenance window (defined by IDs) matching the event.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.metric_selector",
+            "displayName": "Metric selector",
+            "description": "Defines the metric to be monitored by the event.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.metric_threshold",
+            "displayName": "Threshold (static or baseline) of the metric",
+            "description": "The threshold (either static or baseline) that is used to monitor the metric.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.oa.cpu_idle_threshold",
+            "displayName": "Host CPU idle threshold",
+            "description": "The threshold for CPU idle. If the value is below this threshold, the host is considered saturated.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.oa.cpu_idle_value",
+            "displayName": "Host CPU idle ",
+            "description": "The current value of CPU idle of the monitored host.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.oa.mem_bytes_available",
+            "displayName": "Memory available, bytes",
+            "description": "The amount of memory (bytes) available on the host.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.oa.mem_pagefaults",
+            "displayName": "Page faults count",
+            "description": "The number of page faults on the host.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.oa.mem_pagefaults_threshold",
+            "displayName": "Page faults threshold",
+            "description": "The threshold for page faults count. If the value is above this threshold, the host is considered saturated.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.oa.mem_percentage_available",
+            "displayName": "Memory available, %",
+            "description": "The amount of memory (%) available on the host.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.oa.mem_percentage_available_threshold",
+            "displayName": "Memory available threshold, %",
+            "description": "The threshold for available memory percentage. If the value is below this threshold, the host is considered saturated.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.preferred_entity_type",
+            "displayName": "Preferred entity type for remapping",
+            "description": "The preferred entity type for remapping. \n\nYou can find possible values in Dynatrace UI under Settings > Topology model > Generic types. \n\nIf the remapping (dt.event.allow_entity_remapping) is enabled, this property defines the entity type to which the event should be mapped. If no entity of the preferred type is extracted, no remapping is applied.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.release_version",
+            "displayName": "Entity release version",
+            "description": "The release version of the event entity.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.source",
+            "displayName": "Event source",
+            "description": "The name or ID of the event's source.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.suppress_problem",
+            "displayName": "Suppress problem",
+            "description": "The problem can (true) or cannot (false) be suppressed by the problem engine.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.suppress_problem_reason",
+            "displayName": "Suppress problem reason",
+            "description": "A short description of the suppression reason.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_affected_events",
+            "displayName": "Affected events",
+            "description": "A list of monitor events affected by the failure.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_affected_locations",
+            "displayName": "Affected Synthetic locations",
+            "description": "A list of Synthetic locations (defined by name or ID) with failing monitors.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_affected_steps",
+            "displayName": "Affected steps",
+            "description": "A list of monitor steps affected by the failure.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_automatically_connected_apps",
+            "displayName": "Automatically assigned applications",
+            "description": "A list of applications automatically assigned to the monitor.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_configured_locations",
+            "displayName": "Locations configured for synthetic monitor",
+            "description": "Locations configured for synthetic monitor",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_connected_applications",
+            "displayName": "Assigned applications",
+            "description": "A list of applications assigned to the monitor.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_connected_services",
+            "displayName": "Assigned services",
+            "description": "A list of services assigned to the monitor.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_first_failed_execution",
+            "displayName": "First failed execution",
+            "description": "The timestamp (UTC milliseconds) of the first failed monitor execution in the event.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_http_status_code",
+            "displayName": "HTTP status code",
+            "description": "The HTTP status code of the failed execution.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_last_cv_config_update",
+            "displayName": "Last credentials modification of the monitor",
+            "description": "The timestamp (UTC milliseconds) of the last credential vault change in the monitor.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_last_monitor_config_update",
+            "displayName": "Last modification of the monitor",
+            "description": "The timestamp (UTC milliseconds) of the last change in monitor's configuration.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_private_location_health_state",
+            "displayName": "Private location health state",
+            "description": "The health state of private Synthetic location attached to monitor.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.synthetic_status_codes_and_messages",
+            "displayName": "Messages associated with status codes",
+            "description": "A list of Synthetic error codes and associated messages.",
+            "writable": false
+        },
+        {
+            "key": "dt.event.timeout",
+            "displayName": "Event timeout",
+            "description": "The event timeout period (in minutes). Various event sources use this event property to keep an event active by regularly refreshing an initial event. The timeout defines how fast the event source must refresh an event to keep it active. \n\nTo keep the event active, the event source must send the refresh within the timeout period. If no refresh is sent, the event is automatically closed by Dynatrace after the timeout period. \n\nNote that metric sources use their own configurable de-alerting windows to close events. Setting the timeout shorter than the de-alerting window will force events to close and increase the risk of false-positive alerts. \n\n\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        },
+        {
+            "key": "dt.event.title",
+            "displayName": "Event title",
+            "description": "The title of the event.\n\nThis property can be written by most event sources, such as Events API, metric events, log events, or Extension 1.0 events. \n\nFor extension 1.0 events, the value must be specified as a string.",
+            "writable": true
+        }
+    ]
+}
