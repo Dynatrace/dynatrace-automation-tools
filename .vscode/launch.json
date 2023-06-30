@@ -60,6 +60,7 @@
             "program": "${workspaceFolder}/cli/dist/index.js",
             "args": [
                 "event",
+                "send",
                 "deploy"
             ],
             "outputCapture": "std",

@@ -13,7 +13,8 @@ class EventCommand implements BaseCommand {
       .command("event")
       .description("Dynatrace events commands");
 
-    new EventDeployCommand(event);
+    const send = event.command("send").description("Send event commands");
+    new EventDeployCommand(send);
   }
 }
 

@@ -98,6 +98,7 @@ class EventProperties {
     if (value === "") {
       return undefined;
     }
+
     return value;
   }
 }

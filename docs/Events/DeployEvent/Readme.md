@@ -2,7 +2,7 @@
 
 The sub-command `dta event send deploy` sends a deployment event to Dynatrace that updates the [release inventory](https://www.dynatrace.com/support/help/platform-modules/cloud-automation/release-monitoring/monitor-releases-with-dynatrace).
 
-### Getting started with deployment events
+## Getting started with deployment events
 
 1. Go to Dynatrace and find your application Process Group Instance (PGI) in the UI. Locate the combination of tags that uniquely identify your PGI. This information will be used in the entity selector.
 
@@ -13,7 +13,7 @@ The sub-command `dta event send deploy` sends a deployment event to Dynatrace th
 1. Run the following command to trigger a new deployment event.
 
 ```(bash)
-dta event deploy --entity-selector "type(PROCESS_GROUP_INSTANCE),tag(your-pgi-tag)" --name "app-deploy-v1-example" --version "v1.0.0
+dta event send deploy --entity-selector "type(PROCESS_GROUP_INSTANCE),tag(your-pgi-tag)" --name "app-deploy-v1-example" --version "v1.0.0
 ```
 
 1. Navigate into Dynatrace and check the release inventory being update with the latest version.
