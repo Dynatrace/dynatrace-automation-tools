@@ -22,30 +22,39 @@ dta event send deploy --entity-selector "type(PROCESS_GROUP_INSTANCE),tag(your-p
 
 The required values for this command are:
 
-| Command           | Environment variable  | Description                                                                             |
-| ----------------- | --------------------- | --------------------------------------------------------------------------------------- |
-| --entity-selector | EVENT_ENTITY_SELECTOR | Dynatrace entity selector expression : i.e.type(PROCESS_GROUP_INSTANCE),tag(easytravel) |
-| --name            | EVENT_DEPLOY_NAME     | Deployment event name. i.e. App-simplenode-Release-1.0.0                                |
+| Command           | Environment variable | Description                                                                             |
+| ----------------- | -------------------- | --------------------------------------------------------------------------------------- |
+| --entity-selector | DT_ENTITY_SELECTOR   | Dynatrace entity selector expression : i.e.type(PROCESS_GROUP_INSTANCE),tag(easytravel) |
+| --name            | DT_EVENT_DEPLOY_NAME | Deployment event name. i.e. App-simplenode-Release-1.0.0                                |
 |                   |
 
 ### Optional Values
 
 The optional values for this command are:
 
-| Command                   | Environment variable                 | Description                                                                                                                    |
-| ------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| --version                 | EVENT_DEPLOY_VERSION                 | Deployment version. i.e. 1.0.0. default: ""                                                                                    |
-| --project                 | EVENT_DEPLOY_PROJECT                 | Project name. i.e. simple-node-project. default: ""                                                                            |
-| --source                  | EVENT_DEPLOY_SOURCE                  | Source name. i.e. Jenkins, Gitlab, etc. default: ""                                                                            |
-| --release-stage           | EVENT_DEPLOY_RELEASE_STAGE           | Release stage for the application. i.e. dev, staging, etc. default: ""                                                         |
-| --release-product-name    | EVENT_DEPLOY_RELEASE_PRODUCT_NAME    | Release product name (useful when having multiple component of a single application) i.e. your-app-commercial-name default: "" |
-| --release-build-version   | EVENT_DEPLOY_RELEASE_BUILD_VERSION   | Release build version i.e. your internal build id (git commit id, cicd build id, etc) default: ""                              |
-| --approver                | EVENT_DEPLOY_APPROVER                | Approver name for the deployment. default: ""                                                                                  |
-| --ci-back-link            | EVENT_DEPLOY_CI_BACK_LINK            | CI/CD back link i.e. https://pipelines/easytravel/123 . default: ""                                                            |
-| --gitcommit               | EVENT_DEPLOY_GITCOMMIT               | Git commit id. default: ""                                                                                                     |
-| --change-request          | EVENT_DEPLOY_CHANGE_REQUEST          | Change request code if applicable default: ""                                                                                  |
-| --remediation-action-link | EVENT_DEPLOY_REMEDIATION_ACTION_LINK | Remediation link for auto-remediation scenarios that you might want to implement                                               |
-| --is-root-cause-relevant  | EVENT_DEPLOY_ROOT_CAUSE_RELEVANT     | Set's if this would be relevant to a root cause analysis from Dynatrace Davis AI. default: true                                |
+| Command                   | Environment variable       | Description                                                                                                                    |
+| ------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| --version                 | DT_RELEASE_VERSION         | Deployment version. i.e. 1.0.0. default: ""                                                                                    |
+| --project                 | DT_PROJECT                 | Project name. i.e. simple-node-project. default: ""                                                                            |
+| --source                  | DT_SOURCE                  | Source name. i.e. Jenkins, Gitlab, etc. default: ""                                                                            |
+| --release-stage           | DT_RELEASE_STAGE           | Release stage for the application. i.e. dev, staging, etc. default: ""                                                         |
+| --release-product-name    | DT_RELEASE_PRODUCT         | Release product name (useful when having multiple component of a single application) i.e. your-app-commercial-name default: "" |
+| --release-build-version   | DT_RELEASE_BUILD_VERSION   | Release build version i.e. your internal build id (git commit id, cicd build id, etc) default: ""                              |
+| --approver                | DT_APPROVER                | Approver name for the deployment. default: ""                                                                                  |
+| --ci-back-link            | DT_CI_BACK_LINK            | CI/CD back link i.e. https://pipelines/easytravel/123 . default: ""                                                            |
+| --gitcommit               | DT_GITCOMMIT               | Git commit id. default: ""                                                                                                     |
+| --change-request          | DT_CHANGE_REQUEST          | Change request code if applicable default: ""                                                                                  |
+| --remediation-action-link | DT_REMEDIATION_ACTION_LINK | Remediation link for auto-remediation scenarios that you might want to implement                                               |
+| --is-root-cause-relevant  | DT_ROOT_CAUSE_RELEVANT     | Set's if this would be relevant to a root cause analysis from Dynatrace Davis AI. default: true                                |
+
+The best practices for setting the version detection with Dynatrace include the definition of at least the following variables:
+
+- DT_RELEASE_VERSION for Version
+- DT_RELEASE_STAGE for Stage
+- DT_RELEASE_PRODUCT for Product
+- DT_RELEASE_BUILD_VERSION for Build version
+
+You can read more information [here](https://www.dynatrace.com/support/help/platform-modules/cloud-automation/release-monitoring/version-detection-strategies)
 
 ## Resources
 

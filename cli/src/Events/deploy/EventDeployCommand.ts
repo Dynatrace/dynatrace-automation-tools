@@ -23,7 +23,7 @@ class EventDeployCommand implements BaseCommand {
           "-n --name [name]",
           "Deployment event name. i.e. App-simplenode-Release-1.0.0"
         )
-          .env("EVENT_DEPLOY_NAME")
+          .env("DT_EVENT_DEPLOY_NAME")
           .makeOptionMandatory(true)
       )
       .addOption(
@@ -31,7 +31,7 @@ class EventDeployCommand implements BaseCommand {
           "-e --entity-selector [entitySelector]",
           "Dynatrace entity selector expression : i.e.type(PROCESS_GROUP_INSTANCE),tag(easytravel)"
         )
-          .env("EVENT_ENTITY_SELECTOR")
+          .env("DT_ENTITY_SELECTOR")
           .makeOptionMandatory(true)
       )
       .addOption(
@@ -39,7 +39,7 @@ class EventDeployCommand implements BaseCommand {
           "--version [version]",
           "Deployment version. i.e. 1.0.0 or v1.0.0"
         )
-          .env("EVENT_DEPLOY_VERSION")
+          .env("DT_RELEASE_VERSION")
           .default("")
       )
       .addOption(
@@ -47,7 +47,7 @@ class EventDeployCommand implements BaseCommand {
           "--project [project]",
           "Project name. i.e. simple-node-project."
         )
-          .env("EVENT_DEPLOY_PROJECT")
+          .env("DT_PROJECT")
           .default("")
       )
       .addOption(
@@ -55,7 +55,7 @@ class EventDeployCommand implements BaseCommand {
           "--source [source]",
           "Source name. i.e. Jenkins, Gitlab, etc."
         )
-          .env("EVENT_DEPLOY_SOURCE")
+          .env("DT_SOURCE")
           .default("")
       )
       .addOption(
@@ -63,7 +63,7 @@ class EventDeployCommand implements BaseCommand {
           "--release-stage [releaseStage]",
           "Release stage for the application. i.e. dev, staging, etc."
         )
-          .env("EVENT_DEPLOY_RELEASE_STAGE")
+          .env("DT_RELEASE_STAGE")
           .default("")
       )
       .addOption(
@@ -71,7 +71,7 @@ class EventDeployCommand implements BaseCommand {
           "--release-product-name [releaseProductName]",
           "Release product name (useful when having multiple component of a single application) i.e. your-app-commercial-name."
         )
-          .env("EVENT_DEPLOY_RELEASE_PRODUCT_NAME")
+          .env("DT_RELEASE_PRODUCT")
           .default("")
       )
       .addOption(
@@ -79,12 +79,12 @@ class EventDeployCommand implements BaseCommand {
           "--release-build-version [releaseBuildVersion]",
           "Release build version i.e. your internal build id (git commit id, cicd build id, etc)"
         )
-          .env("EVENT_DEPLOY_RELEASE_BUILD_VERSION")
+          .env("DT_RELEASE_BUILD_VERSION")
           .default("")
       )
       .addOption(
         new Option("--approver [approver]", "Approver name for the deployment")
-          .env("EVENT_DEPLOY_APPROVER")
+          .env("DT_APPROVER")
           .default("")
       )
       .addOption(
@@ -92,12 +92,12 @@ class EventDeployCommand implements BaseCommand {
           "--ci-back-link [ciBackLink]",
           "CI/CD back link i.e. https://pipelines/easytravel/123"
         )
-          .env("EVENT_DEPLOY_CI_BACK_LINK")
+          .env("DT_CI_BACK_LINK")
           .default("")
       )
       .addOption(
         new Option("--gitcommit [gitcommit]", "Git commit id")
-          .env("EVENT_DEPLOY_GITCOMMIT")
+          .env("DT_GITCOMMIT")
           .default("")
       )
       .addOption(
@@ -105,7 +105,7 @@ class EventDeployCommand implements BaseCommand {
           "--change-request [changeRequest]",
           "Change request code if applicable"
         )
-          .env("EVENT_DEPLOY_CHANGE_REQUEST")
+          .env("DT_CHANGE_REQUEST")
           .default("")
       )
       .addOption(
@@ -113,7 +113,7 @@ class EventDeployCommand implements BaseCommand {
           "--remediation-action-link [remediationActionLink]",
           "Remediation link for auto-remediation scenarios that you might want to implement"
         )
-          .env("EVENT_DEPLOY_REMEDIATION_ACTION_LINK")
+          .env("DT_REMEDIATION_ACTION_LINK")
           .default("")
       )
       .addOption(
@@ -121,7 +121,7 @@ class EventDeployCommand implements BaseCommand {
           "--is-root-cause-relevant [isRootCauseRelevant]",
           "Set's if this would be relevant to a root cause analysis from Dynatrace Davis AI"
         )
-          .env("EVENT_DEPLOY_ROOT_CAUSE_RELEVANT")
+          .env("DT_ROOT_CAUSE_RELEVANT")
           .default(true)
       )
       .action(async (options) => {
