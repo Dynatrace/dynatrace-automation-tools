@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "rootDir": "src",
-        "outDir": "dist",
+        "outDir": "./dist",
         "strict": true,
         "target": "es6",
         "module": "commonjs",
@@ -9,5 +9,16 @@
         "esModuleInterop": true,
         "moduleResolution": "node",
         "resolveJsonModule": true,
-    }
+        "types": [
+            "jest"
+        ],
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "./dist",
+        "executables"
+    ]
 }
