@@ -1,8 +1,11 @@
 # Dynatrace-automation-tools
 
+> Note: If you are reading this in Docker Hub, please check the full documentation in the Github Repo [Dynatrace Automation Tools](https://github.com/dynatrace-ace/dynatrace-automation-tools)
+
 This CLI allows automating different Dynatrace use-cases to be used with CI/CD or automation platforms. The current implemented use cases:
 
-1. [Site Reliability Guardian Automation](docs/Site-Reliability-Guardian/SRGAutomation.md)
+1. [Site Reliability Guardian Automation](https://github.com/dynatrace-ace/dynatrace-automation-tools/tree/main/docs/Site-Reliability-Guardian/SRGAutomation.md)
+1. [Dynatrace Events](https://github.com/dynatrace-ace/dynatrace-automation-tools/tree/main/docs/Events/Readme.md)
 
 ## Installation options
 
@@ -10,9 +13,9 @@ To use the CLI you have different deployment options:
 
 ### Docker container
 
-Use the docker container image from Docker Hub: https://hub.docker.com/repository/docker/dynatraceace/dt-automation-cli. This container is made for CI/CD pipelines, to run it locally you can use the following:
+Use the docker container image from Docker Hub: [https://hub.docker.com/repository/docker/dynatraceace/dt-automation-cli](https://hub.docker.com/repository/docker/dynatraceace/dt-automation-cli). This container is made for CI/CD pipelines, to run it locally you can use the following:
 
-1. `docker run -i -t dynatraceace/dt-automation-cli:latest bash`. This will open terminal inside the container where you can use the commands for the CLI like `/dta -h`. Reference for each command is described in the documentation for each use case.
+1. `docker run -i -t dynatraceace/dt-automation-cli:latest bash`. This will open terminal inside the container where you can use the commands for the CLI like `dta -h`. Reference for each command is described in the documentation for each use case.
 
 ### Executable app
 
@@ -37,6 +40,6 @@ To collect different a detail log level of the execution please set the environm
 
 This will output a file with the logs for the CLI in the path `logs/logs.log`
 
-## Development
+## Contributing and development
 
-For development instructions please check [Development](docs/Development.md)
+For development instructions please check [Development](https://github.com/dynatrace-ace/dynatrace-automation-tools/tree/main/docs/Development.md)

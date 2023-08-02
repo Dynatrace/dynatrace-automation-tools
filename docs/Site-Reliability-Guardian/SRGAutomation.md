@@ -36,7 +36,7 @@ Authentication configs: Additionally you need to configure the environment varia
 
 ### Optional Values
 
-The optional values are sent as part of the BizEvent into Dynatrace and can be use to further enhance the validation process
+The optional values are sent as part of the BizEvent into Dynatrace and can be used to further enhance the validation process
 
 | Command           | Environment variable           | Description                                                                                                                                   |
 | ----------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,16 +1,33 @@
 import figlet from "figlet";
 import { Command } from "commander";
 import SRGCommand from "./SRGAutomation/SRGCommand";
-import { DTA_CLI_VERSION } from './version';
+import { DTA_CLI_VERSION } from "./version";
+import EventCommand from "./Events/EventCommand";
 
-const program = new Command();
-program
-  .name("Dynatrace automation tools CLI")
-  .version(DTA_CLI_VERSION)
-  .description("Dynatrace automation tools CLI");
-console.log(figlet.textSync("DT automation"));
-//Register the commands here
+export function printBanner() {
+  console.log(figlet.textSync("DT automation"));
+}
 
-new SRGCommand(program);
+export function createCLIProgram(version: string) {
+  const program = new Command();
+  program
+    .name("Dynatrace automation tools CLI")
+    .version(version)
+    .description("Dynatrace automation tools CLI");
+  return program;
+}
 
-program.parseAsync(process.argv);
+export function registerCommands(program: Command) {
+  //Register the commands here
+  new SRGCommand(program);
+  new EventCommand(program);
+}
+
+export async function initialize(version: string, args: string[]) {
+  printBanner();
+  const program = createCLIProgram(version);
+  registerCommands(program);
+  return await program.parseAsync(args);
+}
+
+initialize(DTA_CLI_VERSION, process.argv);
