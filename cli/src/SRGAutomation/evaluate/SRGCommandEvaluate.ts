@@ -1,4 +1,4 @@
-import { Argument, Command, Option } from "commander";
+import { Command, Option } from "commander";
 import { BaseCommand } from "../../common/interfaces";
 import Logger from "../../common/logger";
 import SRGEvaluate from "./SRGEvaluate";
@@ -10,16 +10,14 @@ class SRGCommandEvaluate implements BaseCommand {
   }
 
   init(mainCommand: Command) {
-    const subcommand = mainCommand
-      .command("evaluate")
-      .description(
-        "executes a Site Reliability Guardian evaluation by sending a Dynatrace Biz Event. (check the docs for more info)"
-      );
+    const subcommand = mainCommand.command(
+      "evaluate",
+      "executes a Site Reliability Guardian evaluation by sending a Dynatrace Biz Event. (check the docs for more info)"
+    );
     const auth = new AuthOptions();
     //adds the options for oauth authentication
     auth.addOathOptions(subcommand);
     subcommand
-
       .addOption(
         new Option("--start-time [starttime]", "Evaluation start time")
           .conflicts("timespan")

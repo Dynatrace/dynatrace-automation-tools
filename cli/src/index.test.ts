@@ -10,10 +10,18 @@ import SRGCommand from "./SRGAutomation/SRGCommand";
 import EventCommand from "./Events/EventCommand";
 // import { Command } from "commander";
 // Mocks
-jest.mock("figlet");
+
 jest.mock("./SRGAutomation/SRGCommand");
 jest.mock("./Events/EventCommand");
+jest.mock("figlet");
 
+beforeAll(() => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  jest.spyOn(console, "log").mockImplementation(() => {});
+});
+afterAll(() => {
+  jest.restoreAllMocks();
+});
 describe("printBanner", () => {
   it("should print the DT automation banner", () => {
     printBanner();
