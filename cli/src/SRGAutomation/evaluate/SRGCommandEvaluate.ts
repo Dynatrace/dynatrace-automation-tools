@@ -1,9 +1,7 @@
 import { Command, Option } from "commander";
 import { BaseCommand } from "../../common/interfaces";
-import Logger from "../../common/logger";
-import SRGEvaluate from "./SRGEvaluate";
 import AuthOptions from "../../dynatrace/AuthOptions";
-import DTApiV3 from "../../dynatrace/DTApiV3";
+import SRGEvaluateManager from "./SRGEvaluateManager";
 class SRGCommandEvaluate implements BaseCommand {
   constructor(mainCommand: Command) {
     this.init(mainCommand);
@@ -14,136 +12,158 @@ class SRGCommandEvaluate implements BaseCommand {
       "evaluate",
       "executes a Site Reliability Guardian evaluation by sending a Dynatrace Biz Event. (check the docs for more info)"
     );
+    this.configSubCommand(subcommand);
+  }
+
+  configSubCommand(subcommand: Command) {
     const auth = new AuthOptions();
     //adds the options for oauth authentication
     auth.addOathOptions(subcommand);
-    subcommand
-      .addOption(
-        new Option("--start-time [starttime]", "Evaluation start time")
-          .conflicts("timespan")
-          .env("SRG_EVALUATION_START_TIME")
-      )
-      .addOption(
-        new Option("--end-time [endtime]", "Evaluation end time")
-          .conflicts("timespan")
-
-          .env("SRG_EVALUATION_END_TIME")
-      )
-      .addOption(
-        new Option(
-          "--timespan [timespan]",
-          "Grab the last X minutes of data for the evaluation"
-        )
-          .default("5")
-          .conflicts(["start-time", "end-time"])
-          .env("SRG_EVALUATION_TIMESPAN")
-      )
-      .addOption(
-        new Option("--application [application]", "Application name")
-          .default("")
-          .env("SRG_EVALUATION_APPLICATION")
-      )
-      .addOption(
-        new Option(
-          "--service [service]",
-          "Service name. i.e. backend-service, api-gateway, etc."
-        )
-          .env("SRG_EVALUATION_SERVICE")
-          .makeOptionMandatory(true)
-      )
-      .addOption(
-        new Option(
-          "--stage [stage]",
-          "Evaluation stage, can be dev, test,quality-gate, prod, etc."
-        )
-          .env("SRG_EVALUATION_STAGE")
-          .makeOptionMandatory(true)
-      )
-      .addOption(
-        new Option(
-          "--provider [provider]",
-          "Provider of the request. i.e. github, jenkins, jenkins-production-1 etc."
-        )
-          .default("cicd")
-          .env("SRG_EVALUATION_PROVIDER")
-      )
-      .addOption(
-        new Option(
-          "--version [version]",
-          "Version of the app. v1.0.1 for example"
-        )
-          .default("")
-          .env("SRG_APP_VERSION")
-      )
-      .addOption(
-        new Option(
-          "--buildId [buildId]",
-          "Build ID. optional for reference in the evaluation. Can also be used for the Git commit ID"
-        )
-          .default("")
-          .env("SRG_EVALUATION_BUILD_ID")
-      )
-      .addOption(
-        new Option(
-          "-s, --stop-on-failure [stopOnFailure]",
-          "stop execution if evaluation fails"
-        )
-          .default("true")
-          .env("SRG_EVALUATION_STOP_ON_FAILURE")
-      )
-      .addOption(
-        new Option(
-          "-w, --stop-on-warning [stopOnWarning]",
-          "stop execution if evaluation has warnings"
-        )
-          .default("false")
-          .env("SRG_EVALUATION_STOP_ON_WARNING")
-      )
-      .addOption(
-        new Option(
-          "-d, --delay [delay]",
-          "Delay time (in seconds) before sending the evaluation request to give time for the data to be ingested"
-        )
-          .default("90")
-          .env("SRG_EVALUATION_DELAY")
-      )
-      .action(async (options) => {
-        const success = await executeEvaluation(options, auth);
-
-        if (!success) {
-          mainCommand.error("Execution stop", {
-            exitCode: 1,
-            code: "pipeline_execution_stop",
-          });
-        }
-      });
-  }
-}
-
-async function executeEvaluation(
-  options: { [key: string]: string },
-  auth: AuthOptions
-): Promise<boolean> {
-  let res = false;
-
-  try {
-    Logger.info(
-      "Executing SRG evaluation for service " +
-        options["service"] +
-        " in stage " +
-        options["stage"]
+    const timeOptions = this.getTimeframeOptions();
+    const descriptionOptions = this.getDescriptionOptions();
+    const additionalConfigOptions = this.getAdditionalConfigOptions();
+    subcommand = this.addCommandOptions(
+      subcommand,
+      timeOptions,
+      descriptionOptions,
+      additionalConfigOptions
     );
-    //sets the options values for authentication that the user provided
-    auth.setOptionsValuesForAuth(options);
-    const api = new DTApiV3(auth);
-    const manager = new SRGEvaluate(api);
-    await manager.triggerEvaluation(options);
-    res = true;
-  } catch (err) {
-    Logger.error("While executing SRG evaluation ", err);
+    this.addAction(subcommand, auth);
   }
 
-  return res;
+  addAction(subcommand: Command, auth: AuthOptions) {
+    subcommand.action(async (options) => {
+      const success = await SRGEvaluateManager.executeEvaluation(options, auth);
+
+      if (!success) {
+        subcommand.error("Execution stop", {
+          exitCode: 1,
+          code: "pipeline_execution_stop",
+        });
+      }
+    });
+  }
+
+  getAdditionalConfigOptions(): Option[] {
+    const options: Option[] = [];
+
+    const stopOnFailure = new Option(
+      "-s, --stop-on-failure [stopOnFailure]",
+      "stop execution if evaluation fails"
+    )
+      .default("true")
+      .env("SRG_EVALUATION_STOP_ON_FAILURE");
+    const stopOnWarning = new Option(
+      "-w, --stop-on-warning [stopOnWarning]",
+      "stop execution if evaluation has warnings"
+    )
+      .default("false")
+      .env("SRG_EVALUATION_STOP_ON_WARNING");
+
+    const delayResults = new Option(
+      "-d, --delay [delay]",
+      "Delay time (in seconds) before sending the evaluation request to give time for the data to be ingested"
+    )
+      .default("90")
+      .env("SRG_EVALUATION_DELAY");
+
+    options.push(stopOnFailure);
+    options.push(stopOnWarning);
+    options.push(delayResults);
+    return options;
+  }
+
+  getTimeframeOptions(): Option[] {
+    const options: Option[] = [];
+    const startTime = new Option(
+      "--start-time [starttime]",
+      "Evaluation start time"
+    )
+      .conflicts("timespan")
+      .env("SRG_EVALUATION_START_TIME");
+    const endTime = new Option("--end-time [endtime]", "Evaluation end time")
+      .conflicts("timespan")
+      .env("SRG_EVALUATION_END_TIME");
+    const timeSpan = new Option(
+      "--timespan [timespan]",
+      "Grab the last X minutes of data for the evaluation"
+    )
+      .default("5")
+      .conflicts(["start-time", "end-time"])
+      .env("SRG_EVALUATION_TIMESPAN");
+    options.push(startTime);
+    options.push(endTime);
+    options.push(timeSpan);
+    return options;
+  }
+
+  getDescriptionOptions(): Option[] {
+    const options: Option[] = [];
+    const application = new Option(
+      "--application [application]",
+      "Application name"
+    )
+      .default("")
+      .env("SRG_EVALUATION_APPLICATION");
+    const service = new Option(
+      "--service [service]",
+      "Service name. i.e. backend-service, api-gateway, etc."
+    )
+      .env("SRG_EVALUATION_SERVICE")
+      .makeOptionMandatory(true);
+
+    const stage = new Option(
+      "--stage [stage]",
+      "Evaluation stage, can be dev, test,quality-gate, prod, etc."
+    )
+      .env("SRG_EVALUATION_STAGE")
+      .makeOptionMandatory(true);
+
+    const provider = new Option(
+      "--provider [provider]",
+      "Provider of the request. i.e. github, jenkins, jenkins-production-1 etc."
+    )
+      .default("cicd")
+      .env("SRG_EVALUATION_PROVIDER");
+    const version = new Option(
+      "--version [version]",
+      "Version of the app. v1.0.1 for example"
+    )
+      .default("")
+      .env("SRG_APP_VERSION");
+    const buildId = new Option(
+      "--buildId [buildId]",
+      "Build ID. optional for reference in the evaluation. Can also be used for the Git commit ID"
+    )
+      .default("")
+      .env("SRG_EVALUATION_BUILD_ID");
+
+    options.push(application);
+    options.push(service);
+    options.push(stage);
+    options.push(provider);
+    options.push(version);
+    options.push(buildId);
+    return options;
+  }
+
+  addCommandOptions(
+    subcommand: Command,
+    timeOptions: Option[],
+    descriptionOptions: Option[],
+    additionalConfigOptions: Option[]
+  ): Command {
+    timeOptions.forEach((option) => {
+      subcommand.addOption(option);
+    });
+    descriptionOptions.forEach((option) => {
+      subcommand.addOption(option);
+    });
+    additionalConfigOptions.forEach((option) => {
+      subcommand.addOption(option);
+    });
+    return subcommand;
+  }
 }
 
 export default SRGCommandEvaluate;

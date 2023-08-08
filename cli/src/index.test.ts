@@ -1,15 +1,8 @@
 import figlet from "figlet";
-import {
-  createCLIProgram,
-  registerCommands,
-  printBanner,
-  initialize,
-} from "./index";
+import { initialize } from "./index";
 import { Command } from "commander";
 import SRGCommand from "./SRGAutomation/SRGCommand";
 import EventCommand from "./Events/EventCommand";
-// import { Command } from "commander";
-// Mocks
 
 jest.mock("./SRGAutomation/SRGCommand");
 jest.mock("./Events/EventCommand");
@@ -22,29 +15,19 @@ beforeAll(() => {
 afterAll(() => {
   jest.restoreAllMocks();
 });
-describe("printBanner", () => {
-  it("should print the DT automation banner", () => {
-    printBanner();
+
+describe("initialize", () => {
+  it("Print banner called", async () => {
     expect(figlet.textSync).toHaveBeenCalledWith("DT automation");
   });
-});
-it("Code should be 0", async () => {
-  const result = await initialize("0.0.1", ["-h"]);
-  expect(result).toBeInstanceOf(Command);
-});
-
-describe("createCLIProgram", () => {
-  it("should create a new CLI program", () => {
-    const program = createCLIProgram("0.0.1");
-    expect(program).toBeInstanceOf(Command);
+  it("Program should be created", async () => {
+    const command = await initialize("0.0.1", ["-h"]);
+    expect(command).toBeInstanceOf(Command);
+    expect(command.name()).toBe("Dynatrace automation tools CLI");
   });
-});
-
-describe("registerCommands", () => {
-  it("should register SRGCommand and EventCommand with the program", () => {
-    const mockProgram = new Command();
-    registerCommands(mockProgram);
-    expect(SRGCommand).toHaveBeenCalledWith(mockProgram);
-    expect(EventCommand).toHaveBeenCalledWith(mockProgram);
+  it("should register SRGCommand and EventCommand with the program", async () => {
+    const command = await initialize("0.0.1", ["-h"]);
+    expect(SRGCommand).toHaveBeenCalledWith(command);
+    expect(EventCommand).toHaveBeenCalledWith(command);
   });
 });

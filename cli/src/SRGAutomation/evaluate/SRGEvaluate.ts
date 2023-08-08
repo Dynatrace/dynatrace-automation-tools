@@ -11,22 +11,9 @@ class SRGEvaluate {
     this.api = api;
   }
 
-  async triggerEvaluation(options: { [key: string]: string }) {
-    const event = this.getCloudEvent(options);
-    await this.waitForData(options["delay"]);
-    await this.sendEvent(event);
-    const result = await this.waitForEvaluationResult(
-      event,
-      options["<dynatrace_url_gen3>"]
-    );
-    const stopOnFailure = options["stopOnFailure"].toString() === "true";
-    const stopOnWarning = options["stopOnWarning"].toString() === "true";
-    result.PrintEvaluationResults(result, stopOnFailure, stopOnWarning);
-  }
-
   //Provides a delay to allow data to be available in Dynatrace before sending the event.
   //Returns user feedback every 30 seconds until the delay is over.
-  private async waitForData(delay: string) {
+  async waitForData(delay: string) {
     let delayInt = parseInt(delay);
 
     while (delayInt > 0) {
@@ -44,12 +31,12 @@ class SRGEvaluate {
     }
   }
 
-  private getCloudEvent(options: { [key: string]: string }): any {
+  getCloudEvent(options: { [key: string]: string }): any {
     const data = new SRGEvaluationEvent(options);
     return data;
   }
 
-  private async sendEvent(event: SRGEvaluationEvent) {
+  async sendEvent(event: SRGEvaluationEvent) {
     Logger.debug("Sending SRG evaluation event");
     Logger.verbose(event);
     const bizEventResult = await this.api.BizEventSend(event);
@@ -57,7 +44,7 @@ class SRGEvaluate {
     Logger.info("SRG evaluation event sent");
   }
 
-  private async waitForEvaluationResult(
+  async waitForEvaluationResult(
     event: SRGEvaluationEvent,
     dynatraceUrl: string
   ): Promise<SRGEvaluationResult> {
@@ -66,12 +53,13 @@ class SRGEvaluate {
     Logger.verbose("Query used to find the event \n ");
     Logger.verbose(query);
 
+    //queries for 60 seconds for the event to be available
     for (let i = 0; i < 12; i++) {
       const result = await this.api.BizEventQuery(query);
-      Logger.verbose("records retrieved: " + result.length);
+      Logger.verbose("records retrieved: " + result?.length);
       Logger.verbose(result);
 
-      if (result.length > 0) {
+      if (result?.length > 0) {
         return new SRGEvaluationResult(result[0], dynatraceUrl);
       }
 
