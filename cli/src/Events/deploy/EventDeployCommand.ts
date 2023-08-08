@@ -2,7 +2,7 @@ import { Command, Option } from "commander";
 import { BaseCommand } from "../../common/interfaces";
 import Logger from "../../common/logger";
 import EventDeploy from "./EventDeploy";
-import AuthOptions from "../../dynatrace/AuthOptions";
+import AuthOptions, { AuthOption } from "../../dynatrace/AuthOptions";
 import DTApiV3 from "../../dynatrace/DTApiV3";
 class EventDeployCommand implements BaseCommand {
   constructor(mainCommand: Command) {
@@ -146,7 +146,7 @@ async function execute(
   try {
     Logger.info("Sending deployment event " + options["name"]);
     //sets the options values for authentication that the user provided
-    auth.setOptionsValuesForAuth(options);
+    auth.setOptionsValuesForAuth(options as AuthOption);
     const api = new DTApiV3(auth);
     const manager = new EventDeploy(api);
     await manager.send(options);

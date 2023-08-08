@@ -8,10 +8,12 @@ jest.mock("../../dynatrace/DTApiV3");
 jest.mock("./SRGEvaluationEvent");
 jest.mock("./SRGEvaluationResult");
 jest.mock("timers/promises");
-beforeAll(() => {
+beforeEach(() => {
   jest.useFakeTimers();
 });
-
+afterEach(() => {
+  jest.clearAllMocks();
+});
 afterAll(() => {
   jest.useRealTimers();
 });
@@ -19,54 +21,24 @@ afterAll(() => {
 describe("SRGEvaluate", () => {
   process.env.LOG_LEVEL = "verbose";
 
-  // it("Try send biz event and fetch result with error", async () => {
-  //   const mockApi = jest.fn() as unknown as DTApiV3;
-  //   mockApi.BizEventSend = jest.fn();
-  //   mockApi.BizEventQuery = jest.fn();
-  //   const evaluate = new SRGEvaluate(mockApi);
+  it("wait for evaluation result", async () => {
+    const mockApi = jest.fn() as unknown as DTApiV3;
+    mockApi.BizEventSend = jest.fn();
+    mockApi.BizEventQuery = jest.fn();
+    const evaluate = new SRGEvaluate(mockApi);
+    const event = new SRGEvaluationEvent({});
 
-  //   try {
-  //     return await evaluate.triggerEvaluation({
-  //       "<dynatrace_url_gen3>": "https://test.com",
-  //       delay: "0",
-  //       stopOnFailure: "true",
-  //       stopOnWarning: "true",
-  //     });
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   } catch (e: any) {
-  //     expect(e.message).toContain("Failed to find evaluation result");
-  //   }
-  //   //12 retries with 5 seconds delay
-  //   expect(setTimeout).toHaveBeenCalledTimes(12);
-  //   //expect(setTimeout).toHaveBeenLastCalledWith(10000);
-  // });
-  // it("wait 120 seconds for data", async () => {
-  //   const waitForEvaluationResult = jest.spyOn(
-  //     SRGEvaluate.prototype as any,
-  //     "waitForEvaluationResult"
-  //   );
+    try {
+      await evaluate.waitForEvaluationResult(event, "https://test.com");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      expect(e.message).toContain("Failed to find evaluation result");
+    }
 
-  //   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  //   waitForEvaluationResult.mockImplementation(() => {});
-  //   const mockApi = jest.fn() as unknown as DTApiV3;
-  //   mockApi.BizEventSend = jest.fn();
-  //   mockApi.BizEventQuery = jest.fn();
-  //   const evaluate = new SRGEvaluate(mockApi);
+    //12 retries with 5 seconds delay
+    expect(mockApi.BizEventQuery).toHaveBeenCalledTimes(12);
+  });
 
-  //   try {
-  //     return await evaluate.triggerEvaluation({
-  //       "<dynatrace_url_gen3>": "https://test.com",
-  //       delay: "0",
-  //       stopOnFailure: "true",
-  //       stopOnWarning: "true",
-  //     });
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   } catch (e: any) {
-  //     expect(e.message).toContain("Failed to find evaluation result");
-  //   }
-  //   expect(setTimeout).toHaveBeenCalledTimes(12);
-  //   expect(setTimeout).toHaveBeenLastCalledWith(10000);
-  // });
   it("send event called", async () => {
     const mockApi = jest.fn() as unknown as DTApiV3;
     mockApi.BizEventSend = jest.fn();
@@ -78,6 +50,8 @@ describe("SRGEvaluate", () => {
   });
   it("wait 130 seconds for data", async () => {
     const mockApi = jest.fn() as unknown as DTApiV3;
+    mockApi.BizEventSend = jest.fn();
+    mockApi.BizEventQuery = jest.fn();
     const evaluate = new SRGEvaluate(mockApi);
     await evaluate.waitForData("130");
     expect(setTimeout).toHaveBeenCalledTimes(5);

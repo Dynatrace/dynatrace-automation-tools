@@ -9,7 +9,9 @@ class SRGCommand implements BaseCommand {
 
   init(program: Command) {
     //main command
-    const srg = program.command("srg", "Site Reliability Guardian commands.");
+    const srg = program
+      .command("srg")
+      .description("Site Reliability Guardian commands.");
     new SRGCommandEvaluate(srg);
   }
 }

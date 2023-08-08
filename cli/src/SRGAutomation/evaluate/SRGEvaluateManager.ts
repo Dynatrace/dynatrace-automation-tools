@@ -1,5 +1,5 @@
 import Logger from "../../common/logger";
-import AuthOptions from "../../dynatrace/AuthOptions";
+import AuthOptions, { AuthOption } from "../../dynatrace/AuthOptions";
 import DTApiV3 from "../../dynatrace/DTApiV3";
 import SRGEvaluate from "./SRGEvaluate";
 
@@ -18,7 +18,7 @@ class SRGEvaluateManager {
           options["stage"]
       );
       //sets the options values for authentication that the user provided
-      auth.setOptionsValuesForAuth(options);
+      auth.setOptionsValuesForAuth(options as AuthOption);
       const api = new DTApiV3(auth);
 
       const evaluate = new SRGEvaluate(api);
@@ -31,9 +31,7 @@ class SRGEvaluateManager {
       );
       const stopOnFailure = options["stopOnFailure"].toString() === "true";
       const stopOnWarning = options["stopOnWarning"].toString() === "true";
-      result.PrintEvaluationResults(result, stopOnFailure, stopOnWarning);
-
-      res = true;
+      res = result.printEvaluationResults(stopOnFailure, stopOnWarning);
     } catch (err) {
       Logger.error("While executing SRG evaluation ", err);
     }

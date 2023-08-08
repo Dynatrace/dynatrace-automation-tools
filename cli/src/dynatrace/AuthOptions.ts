@@ -3,9 +3,26 @@ import DTOAuth from "../common/oauth";
 import Logger from "../common/logger";
 import axios, { AxiosInstance } from "axios";
 //Abstracts the authentication options for the CLI. Common class since all Dynatrace API interactions would use the same authentication options.
+export type AuthOption = {
+  "<account_urn>": string;
+  "<dynatrace_url_gen3>": string;
+  "<client_id>": string;
+  "<client_secret>": string;
+  "<sso_url>": string;
+};
 
 class AuthOptions {
-  private options: any;
+  options: AuthOption;
+
+  constructor() {
+    this.options = {
+      "<account_urn>": "",
+      "<dynatrace_url_gen3>": "",
+      "<client_id>": "",
+      "<client_secret>": "",
+      "<sso_url>": "",
+    };
+  }
 
   addOathOptions(mainCommand: Command): Command {
     mainCommand
@@ -43,7 +60,7 @@ class AuthOptions {
     return mainCommand;
   }
 
-  setOptionsValuesForAuth(options: { [key: string]: string }) {
+  setOptionsValuesForAuth(options: AuthOption) {
     this.options = options;
   }
 
@@ -55,7 +72,7 @@ class AuthOptions {
       this.options["<account_urn>"]
     );
 
-    Logger.debug("DTApiV3: Requesting scoped token for " + scope);
+    Logger.verbose("DTApiV3: Requesting scoped token for " + scope);
     const token = await oauth.GetScopedToken(scope);
     const axiosApiInstance: AxiosInstance = axios.create();
     axiosApiInstance.defaults.headers.common["Authorization"] =

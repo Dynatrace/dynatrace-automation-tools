@@ -33,17 +33,30 @@ class DTOAuth {
       scope: scope,
       resource: this.AccountUUID,
     };
-    const res = await this.axiosApiInstance.post(this.SSOUrl, data, {
-      headers: { "content-type": "application/x-www-form-urlencoded" },
-    });
+    let res = null;
 
-    if (res.status != 200) {
-      Logger.error("Failed to get token");
-      Logger.verbose(res);
-      throw new Error("Failed to get token");
+    try {
+      res = await this.axiosApiInstance.post(this.SSOUrl, data, {
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (err?.response != 200) {
+        Logger.verbose(err.message);
+
+        if (err.response?.status == 400) {
+          Logger.error(
+            "Please check that the token has the correct permissions for the scope " +
+              scope
+          );
+        }
+      }
+
+      throw new Error("Failed to get scoped token");
     }
 
-    return res.data.access_token;
+    return res?.data.access_token;
   }
 }
 export default DTOAuth;

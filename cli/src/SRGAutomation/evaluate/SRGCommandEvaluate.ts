@@ -8,10 +8,11 @@ class SRGCommandEvaluate implements BaseCommand {
   }
 
   init(mainCommand: Command) {
-    const subcommand = mainCommand.command(
-      "evaluate",
-      "executes a Site Reliability Guardian evaluation by sending a Dynatrace Biz Event. (check the docs for more info)"
-    );
+    const subcommand = mainCommand
+      .command("evaluate")
+      .description(
+        "executes a Site Reliability Guardian evaluation by sending a Dynatrace Biz Event. (check the docs for more info)"
+      );
     this.configSubCommand(subcommand);
   }
 

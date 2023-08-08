@@ -31,7 +31,7 @@ class SRGEvaluate {
     }
   }
 
-  getCloudEvent(options: { [key: string]: string }): any {
+  getCloudEvent(options: { [key: string]: string }): SRGEvaluationEvent {
     const data = new SRGEvaluationEvent(options);
     return data;
   }
@@ -110,12 +110,12 @@ class SRGEvaluate {
   }
 
   private getExpression(event: SRGEvaluationEvent) {
-    const initialdql =
+    const initialDql =
       'fetch bizevents | filter event.type == "guardian.validation.finished" AND contains(execution_context,"' +
       event["event.id"] +
       '") ';
 
-    const finalDql = initialdql + " | sort timestamp desc | limit 1 ";
+    const finalDql = initialDql + " | sort timestamp desc | limit 1 ";
 
     return finalDql;
   }

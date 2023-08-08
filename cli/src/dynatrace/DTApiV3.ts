@@ -123,6 +123,7 @@ class DTApiV3 {
       if (res.status != 202) {
         Logger.error("Failed send business event");
         Logger.verbose(res);
+
         throw new Error("Failed send business event");
       }
 

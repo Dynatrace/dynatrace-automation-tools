@@ -7,7 +7,7 @@ class SRGEvaluationResult {
 
   srgLink: string;
 
-  constructor(event: any, dynatraceUrl: string) {
+  constructor(event: EvalResultPayload, dynatraceUrl: string) {
     this.status = event["validation.status"];
     this.validationSummary = event["validation.summary"];
     this.srgLink =
@@ -18,40 +18,48 @@ class SRGEvaluationResult {
       event["validation.id"];
   }
 
-  PrintEvaluationResults(
-    result: SRGEvaluationResult,
+  printEvaluationResults(
     stopOnFailure: boolean,
     stopOnWarning: boolean
-  ) {
+  ): boolean {
+    let status = true;
     Logger.info("#############################################");
     Logger.info("Evaluation results:");
 
-    if (result.status == "fail" || result.status == "error") {
-      Logger.error("Status: " + result.status);
+    if (this.status == "fail" || this.status == "error") {
+      Logger.error("Status: " + this.status);
 
-      this.summarizeSLO(result);
+      this.summarizeSLO();
 
       Logger.verbose("Stop on warning is " + stopOnWarning + ".");
       Logger.verbose("Stop on failure is " + stopOnFailure + ".");
 
+      //TODO: validate if warning status now exist
       if (stopOnFailure == true || stopOnWarning == true) {
         Logger.verbose("Exiting with code 1.");
-        process.exit(1);
+        status = false;
       }
     } else {
-      Logger.info("  Status: " + result.status);
+      Logger.info("  Status: " + this.status);
     }
 
-    this.summarizeSLO(result);
+    this.summarizeSLO();
+    return status;
   }
 
-  summarizeSLO(result: any) {
+  summarizeSLO() {
     Logger.info(
-      " SLO summary (status of each SLO): \n " + result.validationSummary
+      " SLO summary (status of each SLO): \n " + this.validationSummary
     );
-    Logger.info(" Evaluation Link: \n  " + result.srgLink);
+    Logger.info(" Evaluation Link: \n  " + this.srgLink);
     Logger.info("#############################################");
   }
 }
+export type EvalResultPayload = {
+  "validation.status": string;
+  "validation.summary": string;
+  "guardian.id": string;
+  "validation.id": string;
+};
 
 export default SRGEvaluationResult;

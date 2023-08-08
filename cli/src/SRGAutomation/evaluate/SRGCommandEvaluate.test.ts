@@ -13,10 +13,7 @@ describe("SRGCommandEvaluate", () => {
     const mockProgram = new Command();
     mockProgram.command = jest.fn().mockReturnValue(new Command());
     new SRGCommandEvaluate(mockProgram);
-    expect(mockProgram.command).toHaveBeenCalledWith(
-      "evaluate",
-      "executes a Site Reliability Guardian evaluation by sending a Dynatrace Biz Event. (check the docs for more info)"
-    );
+    expect(mockProgram.command).toHaveBeenCalledWith("evaluate");
   });
   const addOption = jest.spyOn(Command.prototype, "addOption");
   const getAdditionalConfigOptions = jest.spyOn(
@@ -47,8 +44,9 @@ describe("SRGCommandEvaluate", () => {
   });
   it("Evaluate command has action", async () => {
     const mockProgram = new Command();
-    mockProgram.action = jest.fn();
+    mockProgram.command = jest.fn().mockReturnValue(new Command());
+
     new SRGCommandEvaluate(mockProgram);
-    expect(mockProgram.action).toHaveBeenCalledTimes(1);
+    expect(mockProgram.command).toHaveBeenCalledTimes(1);
   });
 });

@@ -28,7 +28,7 @@ class EventDeployPayload {
 
   entitySelector: string;
 
-  properties: any;
+  properties: EventProperties;
 
   constructor(options: { [key: string]: string }) {
     this.eventType = "CUSTOM_DEPLOYMENT";
