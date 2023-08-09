@@ -1,9 +1,7 @@
 import { Command, Option } from "commander";
 import { BaseCommand } from "../../common/interfaces";
-import Logger from "../../common/logger";
-import EventDeploy from "./EventDeploy";
-import AuthOptions, { AuthOption } from "../../dynatrace/AuthOptions";
-import DTApiV3 from "../../dynatrace/DTApiV3";
+import AuthOptions from "../../dynatrace/AuthOptions";
+import EventDeployManager from "./EventDeployManager";
 class EventDeployCommand implements BaseCommand {
   constructor(mainCommand: Command) {
     this.init(mainCommand);
@@ -16,8 +14,12 @@ class EventDeployCommand implements BaseCommand {
     const auth = new AuthOptions();
     //adds the options for oauth authentication
     auth.addOathOptions(subcommand);
-    subcommand
+    this.addOptions(subcommand);
+    this.addAction(subcommand, mainCommand, auth);
+  }
 
+  addOptions(subcommand: Command) {
+    subcommand
       .addOption(
         new Option(
           "-n --name [name]",
@@ -123,39 +125,20 @@ class EventDeployCommand implements BaseCommand {
         )
           .env("DT_ROOT_CAUSE_RELEVANT")
           .default(true)
-      )
-      .action(async (options) => {
-        const success = await execute(options, auth);
-
-        if (!success) {
-          mainCommand.error("Execution stop", {
-            exitCode: 1,
-            code: "pipeline_execution_stop",
-          });
-        }
-      });
-  }
-}
-
-async function execute(
-  options: { [key: string]: string },
-  auth: AuthOptions
-): Promise<boolean> {
-  let res = false;
-
-  try {
-    Logger.info("Sending deployment event " + options["name"]);
-    //sets the options values for authentication that the user provided
-    auth.setOptionsValuesForAuth(options as AuthOption);
-    const api = new DTApiV3(auth);
-    const manager = new EventDeploy(api);
-    await manager.send(options);
-    res = true;
-  } catch (err) {
-    Logger.error("While sending deployment event ", err);
+      );
   }
 
-  return res;
-}
+  addAction(subcommand: Command, mainCommand: Command, auth: AuthOptions) {
+    subcommand.action(async (options) => {
+      const success = await EventDeployManager.execute(options, auth);
 
+      if (!success) {
+        mainCommand.error("Execution stop", {
+          exitCode: 1,
+          code: "pipeline_execution_stop",
+        });
+      }
+    });
+  }
+}
 export default EventDeployCommand;

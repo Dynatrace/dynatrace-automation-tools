@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "tsc --watch",
         "test": "jest",
+        "test-integration": "export $(xargs < .env) && jest --testPathPattern=integration",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
         "build": "npx tsc",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",

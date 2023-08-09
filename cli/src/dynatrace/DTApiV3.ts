@@ -3,7 +3,7 @@ import AuthOptions from "./AuthOptions";
 import DQLQuery from "./DQLQuery";
 //Dynatrace API v3 for gen3 endpoints
 class DTApiV3 {
-  Auth: AuthOptions;
+  private Auth: AuthOptions;
 
   constructor(auth: AuthOptions) {
     Logger.debug("Creating DTApi instance");
@@ -27,6 +27,7 @@ class DTApiV3 {
       }
 
       return res.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.response?.data[0].code == 400) {
         const msg: string =
@@ -65,6 +66,7 @@ class DTApiV3 {
       }
 
       return res;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.response?.data[0].code == 400) {
         const msg: string =
@@ -95,6 +97,7 @@ class DTApiV3 {
       }
 
       return res.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       Logger.verbose(e);
 
@@ -128,6 +131,7 @@ class DTApiV3 {
       }
 
       return res.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       Logger.verbose(e);
 
@@ -160,6 +164,7 @@ class DTApiV3 {
       }
 
       return res.data.result.records;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       Logger.verbose(e.response);
 
