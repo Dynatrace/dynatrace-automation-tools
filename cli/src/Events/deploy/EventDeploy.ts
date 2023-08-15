@@ -21,14 +21,14 @@ class EventDeploy {
     Logger.info("Deploy event successfully sent");
   }
 }
-class EventDeployPayload {
+export class EventDeployPayload {
   eventType: string;
 
   title: string;
 
   entitySelector: string;
 
-  properties: any;
+  properties: EventProperties;
 
   constructor(options: { [key: string]: string }) {
     this.eventType = "CUSTOM_DEPLOYMENT";
@@ -37,7 +37,7 @@ class EventDeployPayload {
     this.properties = new EventProperties(options);
   }
 }
-class EventProperties {
+export class EventProperties {
   "dt.event.deployment.name": string;
 
   "dt.event.deployment.version"?: string;

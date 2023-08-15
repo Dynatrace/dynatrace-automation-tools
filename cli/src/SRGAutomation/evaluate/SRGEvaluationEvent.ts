@@ -5,7 +5,7 @@ class SRGEvaluationEvent {
 
   "timeframe.to": string;
 
-  execution_context: any;
+  "execution_context": ExecutionContext;
 
   "tag.service": string;
 
@@ -29,7 +29,7 @@ class SRGEvaluationEvent {
 
     this["timeframe.from"] = timeframe.Start;
     this["timeframe.to"] = timeframe.End;
-    this.execution_context = new ExecutionContext(
+    this["execution_context"] = new ExecutionContext(
       eventId,
       options["buildId"],
       options["version"]
@@ -55,7 +55,7 @@ class SRGEvaluationEvent {
     } else {
       if (startTime === "" || endTime === "") {
         throw new Error(
-          "Either start time or end time or timespan must be provided"
+          "Either (start time and end time) or timespan must be provided"
         );
       }
     }
@@ -79,6 +79,7 @@ class ExecutionContext {
 
 class TimeFrame {
   Start: string;
+
   End: string;
 
   constructor(start: string, end: string) {

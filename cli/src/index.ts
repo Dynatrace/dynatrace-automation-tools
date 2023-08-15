@@ -4,11 +4,11 @@ import SRGCommand from "./SRGAutomation/SRGCommand";
 import { DTA_CLI_VERSION } from "./version";
 import EventCommand from "./Events/EventCommand";
 
-export function printBanner() {
+function printBanner() {
   console.log(figlet.textSync("DT automation"));
 }
 
-export function createCLIProgram(version: string) {
+function createCLIProgram(version: string) {
   const program = new Command();
   program
     .name("Dynatrace automation tools CLI")
@@ -17,13 +17,16 @@ export function createCLIProgram(version: string) {
   return program;
 }
 
-export function registerCommands(program: Command) {
+function registerCommands(program: Command) {
   //Register the commands here
   new SRGCommand(program);
   new EventCommand(program);
 }
 
-export async function initialize(version: string, args: string[]) {
+export async function initialize(
+  version: string,
+  args: string[]
+): Promise<Command> {
   printBanner();
   const program = createCLIProgram(version);
   registerCommands(program);

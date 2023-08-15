@@ -12,7 +12,6 @@ class SRGCommand implements BaseCommand {
     const srg = program
       .command("srg")
       .description("Site Reliability Guardian commands.");
-
     new SRGCommandEvaluate(srg);
   }
 }
