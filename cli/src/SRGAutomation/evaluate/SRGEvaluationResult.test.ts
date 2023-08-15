@@ -26,7 +26,7 @@ describe("SRGEvaluationResult", () => {
 
     const status = mod.printEvaluationResults(true, false);
 
-    expect(info).toHaveBeenCalledTimes(8);
+    expect(info).toHaveBeenCalledTimes(5);
     expect(status).toBe(false);
   });
 
@@ -39,7 +39,7 @@ describe("SRGEvaluationResult", () => {
 
     mod.printEvaluationResults(false, false);
     expect(error).toHaveBeenCalledTimes(1);
-    expect(info).toHaveBeenCalledTimes(8);
+    expect(info).toHaveBeenCalledTimes(5);
   });
   it("show log warn when validation status is warning", () => {
     const info = jest.spyOn(Logger, "info");
