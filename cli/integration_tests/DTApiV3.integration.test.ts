@@ -18,7 +18,7 @@ describe("DTApiV3", () => {
     // const f = async () => {
     //   const res = await api.EventSend({ demo: "demo" });
     // };
-
-    // expect(f).toThrowError();
+    expect(authOptions.options["<account_urn>"]).toBe(process.env.ACCOUNT_URN);
+    expect(process.env.ACCOUNT_URN).toBeDefined();
   });
 });
