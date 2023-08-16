@@ -1,9 +1,12 @@
 {
     "cSpell.words": [
         "bizevents",
+        "camelcase",
         "cicd",
         "DDTHH",
+        "dtaccount",
         "endtime",
         "timespan"
-    ]
+    ],
+    "jestrunner.jestCommand": "npm run test-integration",
 }

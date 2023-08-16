@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "tsc --watch",
         "test": "jest --coverage",
-        "test-integration": "export $(xargs < .env) && jest integration",
+        "test-integration": "jest integration",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
         "build": "npx tsc",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
@@ -46,6 +46,7 @@
         "@types/uuid": "^9.0.1",
         "@typescript-eslint/eslint-plugin": "^6.4.0",
         "@typescript-eslint/parser": "^6.4.0",
+        "dotenv": "^16.3.1",
         "eslint": "^8.47.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-prettier": "^5.0.0",

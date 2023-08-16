@@ -20,7 +20,7 @@ class AuthOptions {
       "<dynatrace_url_gen3>": "",
       "<client_id>": "",
       "<client_secret>": "",
-      "<sso_url>": "",
+      "<sso_url>": ""
     };
   }
 

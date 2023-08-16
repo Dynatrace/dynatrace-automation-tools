@@ -4,8 +4,9 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   transform: {
-    "^.+\\.ts?$": "ts-jest",
+    "^.+\\.ts?$": "ts-jest"
   },
+  setupFiles: ["dotenv/config"],
   testMatch: ["<rootDir>/**/?(*.)+(spec|test).ts"],
-  transformIgnorePatterns: ["<rootDir>/node_modules/"],
+  transformIgnorePatterns: ["<rootDir>/node_modules/"]
 };
