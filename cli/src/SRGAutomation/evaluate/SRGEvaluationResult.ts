@@ -25,17 +25,21 @@ class SRGEvaluationResult {
     let status = true;
     Logger.info("#############################################");
     Logger.info("Evaluation results:");
+    Logger.verbose("Stop on warning is " + stopOnWarning + ".");
+    Logger.verbose("Stop on failure is " + stopOnFailure + ".");
 
     if (this.status == "fail" || this.status == "error") {
       Logger.error("Status: " + this.status);
 
-      this.summarizeSLO();
-
-      Logger.verbose("Stop on warning is " + stopOnWarning + ".");
-      Logger.verbose("Stop on failure is " + stopOnFailure + ".");
-
       //TODO: validate if warning status now exist
-      if (stopOnFailure == true || stopOnWarning == true) {
+      if (stopOnFailure == true) {
+        Logger.verbose("Exiting with code 1.");
+        status = false;
+      }
+    } else if (this.status == "warning") {
+      Logger.warn("Status: " + this.status);
+
+      if (stopOnWarning == true) {
         Logger.verbose("Exiting with code 1.");
         status = false;
       }
