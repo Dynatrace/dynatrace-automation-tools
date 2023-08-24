@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Run tests
-        run: npm test -- --test-match='<rootDir>/src/**/?(*.)+(spec|test).ts'
+        run: npm test'
       - name: Run integration tests
         run: npm run test-integration
         env:
