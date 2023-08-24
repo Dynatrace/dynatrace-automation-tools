@@ -5,7 +5,7 @@
     "bin": "executables/index.js",
     "scripts": {
         "dev": "tsc --watch",
-        "test": "jest --collectCoverage",
+        "test": "jest --collectCoverage --",
         "test-integration": "jest integration",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
         "build": "npx tsc",
