@@ -5,12 +5,18 @@
     "bin": "executables/index.js",
     "scripts": {
         "dev": "tsc --watch",
-        "test": "jest",
-        "test-integration": "jest integration",
+        "test": "jest --projects jest.config.js",
+        "test-integration": "jest --projects jest.config.integration.js",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
         "build": "npx tsc",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
         "docker": "docker build -t dta . && docker run -it dta bash"
+    },
+    "jest": {
+        "projects": [
+            "<rootDir>/jest.config.js",
+            "<rootDir>/jest.config.integration.js"
+        ]
     },
     "pkg": {
         "scripts": "executables/**/*.js",
