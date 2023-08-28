@@ -13,11 +13,22 @@ describe("DTApiV3", () => {
     };
     authOptions.setOptionsValuesForAuth(authValues);
     const api = new DTApiV3(authOptions);
-    // const res = await api.EventSend({ demo: "demo" });
-    // console.log(res);
+    let res;
+
+    try {
+      res = await api.BizEventSend({
+        demo: "demo info",
+        id: "1",
+        "event.type": "com.bizevent.single",
+        "event.provider": "com.demo"
+      });
+    } catch (error: any) {
+      console.log(error);
+    }
+
+    expect(res).toBeDefined();
     console.log(process.env.ACCOUNT_URN);
     expect(process.env.ACCOUNT_URN).toBeDefined();
     expect(authOptions.options["<account_urn>"]).toBe(process.env.ACCOUNT_URN);
-    // expect(res).toBeDefined();
   });
 });

@@ -99,17 +99,22 @@ class DTApiV3 {
       return res.data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      Logger.verbose(e);
+      Logger.verbose(e.response);
 
-      if (e.response?.data[0]?.code == 400) {
-        const msg: string =
-          e.response?.data[0].error.constraintViolations[0].message;
-        Logger.error(msg);
-      } else {
-        Logger.error(e.response?.data[0]);
+      if (e.response.status == 400) {
+        if (
+          e.response?.data.error.constraintViolations != undefined &&
+          e.response?.data.error.constraintViolations.length > 0
+        ) {
+          e.response?.data.error.constraintViolations.forEach((detail: any) => {
+            Logger.error(detail);
+          });
+        } else {
+          Logger.error(e.response?.data[0]);
+        }
+
+        throw new Error("Failed to send event");
       }
-
-      throw new Error("Failed to send event");
     }
   };
 
