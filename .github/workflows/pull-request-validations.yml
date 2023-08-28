@@ -22,6 +22,6 @@ jobs:
       - name: Run tests
         run: npm run ci
       - name: Run integration tests
-        run: npm run test-integration
+        run: npm run ci:integration
         env:
           ACCOUNT_URN: "${{ secrets.ACCOUNT_URN }}"
