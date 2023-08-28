@@ -13,6 +13,9 @@ beforeAll(() => {
   jest.spyOn(console, "log").mockImplementation(() => {});
   process.argv = [""];
 });
+beforeEach(() => {
+  process.argv = [""];
+});
 afterAll(() => {
   jest.restoreAllMocks();
 });
