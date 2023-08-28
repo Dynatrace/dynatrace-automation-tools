@@ -22,7 +22,7 @@ describe("DTApiV3", () => {
         "event.type": "com.bizevent.single",
         "event.provider": "com.demo"
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log(error);
     }
 

@@ -39,7 +39,7 @@ class SRGCommandEvaluate implements BaseCommand {
       if (!success) {
         subcommand.error("Execution stop", {
           exitCode: 1,
-          code: "pipeline_execution_stop",
+          code: "pipeline_execution_stop"
         });
       }
     });

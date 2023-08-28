@@ -12,7 +12,7 @@ describe("SRGEvaluateManager", () => {
     const options = {
       service: "test",
       stage: "test",
-      delay: "0",
+      delay: "0"
     };
     SRGEvaluateManager.executeEvaluation(options, auth);
 

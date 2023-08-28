@@ -135,7 +135,7 @@ class EventDeployCommand implements BaseCommand {
       if (!success) {
         mainCommand.error("Execution stop", {
           exitCode: 1,
-          code: "pipeline_execution_stop",
+          code: "pipeline_execution_stop"
         });
       }
     });

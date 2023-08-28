@@ -9,7 +9,7 @@
         "test-integration": "jest --projects jest.config.integration.js",
         "ci": "jest --ci --projects jest.config.js",
         "ci:integration": "jest --ci --projects jest.config.integration.js",
-        "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+        "lint": "eslint --ignore-path .eslintignore --ext .ts .",
         "build": "npx tsc",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
         "docker": "docker build -t dta . && docker run -it dta bash"
