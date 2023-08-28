@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "tsc --watch",
         "test": "jest --projects jest.config.js",
-        "ci": "jest --ci --coverage",
+        "ci": "jest --ci --projects jest.config.js --coverage",
         "test-integration": "jest --projects jest.config.integration.js",
         "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
         "build": "npx tsc",
