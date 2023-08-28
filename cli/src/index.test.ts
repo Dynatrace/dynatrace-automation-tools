@@ -11,6 +11,7 @@ jest.mock("figlet");
 beforeAll(() => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   jest.spyOn(console, "log").mockImplementation(() => {});
+  process.argv = [""];
 });
 afterAll(() => {
   jest.restoreAllMocks();
