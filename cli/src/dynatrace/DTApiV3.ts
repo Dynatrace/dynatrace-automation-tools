@@ -84,7 +84,7 @@ class DTApiV3 {
     }
   };
 
-  BizEventQuery = async (query: DQLQuery): Promise<object | undefined> => {
+  BizEventQuery = async (query: DQLQuery): Promise<Array<unknown>> => {
     try {
       const client = await this.Auth.getGen3ClientWithScopeRequest(
         "storage:events:read storage:buckets:read storage:bizevents:read"
