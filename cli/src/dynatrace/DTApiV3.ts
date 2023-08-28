@@ -10,7 +10,7 @@ class DTApiV3 {
     this.Auth = auth;
   }
 
-  EventSend = async (event: object): Promise<any> => {
+  EventSend = async (event: object): Promise<object | undefined> => {
     try {
       const client = await this.Auth.getGen3ClientWithScopeRequest(
         "storage:events:write"
@@ -36,9 +36,11 @@ class DTApiV3 {
           e.response?.data.error.constraintViolations != undefined &&
           e.response?.data.error.constraintViolations.length > 0
         ) {
-          e.response?.data.error.constraintViolations.forEach((detail: any) => {
-            Logger.error(detail);
-          });
+          e.response?.data.error.constraintViolations.forEach(
+            (detail: object) => {
+              Logger.error(detail);
+            }
+          );
         } else {
           Logger.error(e.response?.data[0]);
         }
@@ -48,7 +50,7 @@ class DTApiV3 {
     }
   };
 
-  BizEventSend = async (event: object): Promise<any> => {
+  BizEventSend = async (event: object): Promise<object | undefined> => {
     try {
       const client = await this.Auth.getGen3ClientWithScopeRequest(
         "storage:events:write"
@@ -82,7 +84,7 @@ class DTApiV3 {
     }
   };
 
-  BizEventQuery = async (query: DQLQuery): Promise<any> => {
+  BizEventQuery = async (query: DQLQuery): Promise<object | undefined> => {
     try {
       const client = await this.Auth.getGen3ClientWithScopeRequest(
         "storage:events:read storage:buckets:read storage:bizevents:read"
