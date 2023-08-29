@@ -23,14 +23,14 @@ describe("Evaluation event init", () => {
   it("should set timeframe.from to the start time", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
-      endTime: endTime,
+      endTime: endTime
     });
     expect(event["timeframe.from"]).toBe(startTime);
   });
   it("should set timeframe.to to the end time", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
-      endTime: endTime,
+      endTime: endTime
     });
     expect(event["timeframe.to"]).toBe(endTime);
   });
@@ -38,7 +38,7 @@ describe("Evaluation event init", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
-      service: "demoservice",
+      service: "demoservice"
     });
     expect(event["tag.service"]).toBe("demoservice");
   });
@@ -46,7 +46,7 @@ describe("Evaluation event init", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
-      application: "test",
+      application: "test"
     });
     expect(event["tag.application"]).toBe("test");
   });
@@ -54,7 +54,7 @@ describe("Evaluation event init", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
-      stage: "test-stage",
+      stage: "test-stage"
     });
     expect(event["tag.stage"]).toBe("test-stage");
   });
@@ -62,14 +62,14 @@ describe("Evaluation event init", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
-      provider: "test-provider",
+      provider: "test-provider"
     });
     expect(event["event.provider"]).toBe("test-provider");
   });
   it("should set execution_context.id to the event id", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
-      endTime: endTime,
+      endTime: endTime
     });
     expect(event.execution_context.id).toBe(event["event.id"]);
   });
@@ -77,7 +77,7 @@ describe("Evaluation event init", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
-      buildId: "test123",
+      buildId: "test123"
     });
     expect(event.execution_context.buildId).toBe("test123");
   });
@@ -85,7 +85,7 @@ describe("Evaluation event init", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
-      version: "a1",
+      version: "a1"
     });
     expect(event.execution_context.version).toBe("a1");
   });

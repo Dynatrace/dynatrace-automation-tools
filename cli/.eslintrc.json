@@ -19,6 +19,10 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
         "no-unused-vars": 1,
         "camelcase": "warn",
         "padding-line-between-statements": [

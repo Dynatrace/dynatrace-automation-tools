@@ -3,7 +3,7 @@ import DQLQuery from "../../dynatrace/DQLQuery";
 import DTApiV3 from "../../dynatrace/DTApiV3";
 import SRGEvaluationEvent from "./SRGEvaluationEvent";
 import { setTimeout } from "timers/promises";
-import SRGEvaluationResult from "./SRGEvaluationResult";
+import SRGEvaluationResult, { EvalResultPayload } from "./SRGEvaluationResult";
 class SRGEvaluate {
   private api: DTApiV3;
 
@@ -60,7 +60,8 @@ class SRGEvaluate {
       Logger.verbose(result);
 
       if (result?.length > 0) {
-        return new SRGEvaluationResult(result[0], dynatraceUrl);
+        const resultPayload = result[0] as EvalResultPayload;
+        return new SRGEvaluationResult(resultPayload, dynatraceUrl);
       }
 
       Logger.info("No results yet. Waiting 5 seconds...");

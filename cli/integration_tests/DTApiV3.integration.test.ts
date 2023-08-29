@@ -8,17 +8,27 @@ describe("DTApiV3", () => {
       "<account_urn>": process.env.ACCOUNT_URN ?? "",
       "<dynatrace_url_gen3>": process.env.DYNATRACE_URL_GEN3 ?? "",
       "<client_id>": process.env.DYNATRACE_CLIENT_ID ?? "",
-      //"<client_secret>": process.env.DYNATRACE_SECRET ?? "",
-      "<client_secret>": "dummy",
-      "<sso_url>": process.env.DYNATRACE_SSO_URL ?? "",
+      "<client_secret>": process.env.DYNATRACE_SECRET ?? "",
+      "<sso_url>": process.env.DYNATRACE_SSO_URL ?? ""
     };
     authOptions.setOptionsValuesForAuth(authValues);
     const api = new DTApiV3(authOptions);
+    let res;
 
-    // const f = async () => {
-    //   const res = await api.EventSend({ demo: "demo" });
-    // };
+    try {
+      res = await api.BizEventSend({
+        demo: "demo info",
+        id: "1",
+        "event.type": "com.bizevent.single",
+        "event.provider": "com.demo"
+      });
+    } catch (error: unknown) {
+      console.log(error);
+    }
 
-    // expect(f).toThrowError();
+    expect(res).toBeDefined();
+    console.log(process.env.ACCOUNT_URN);
+    expect(process.env.ACCOUNT_URN).toBeDefined();
+    expect(authOptions.options["<account_urn>"]).toBe(process.env.ACCOUNT_URN);
   });
 });

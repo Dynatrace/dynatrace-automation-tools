@@ -12,7 +12,7 @@ describe("EventDeploy", () => {
   it("should have required properties mapped", () => {
     const event = new EventDeployPayload({
       name: "test",
-      entitySelector: "test-selector",
+      entitySelector: "test-selector"
     });
     expect(event.title).toBe("test");
     expect(event.entitySelector).toBe("test-selector");

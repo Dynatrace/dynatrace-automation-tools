@@ -9,7 +9,7 @@ const levels = {
   info: 2,
   http: 3,
   debug: 4,
-  verbose: 5,
+  verbose: 5
 };
 
 // Define different colors for each level.
@@ -21,7 +21,7 @@ const colors = {
   info: "green",
   http: "magenta",
   debug: "white",
-  verbose: "blue",
+  verbose: "blue"
 };
 
 // Tell winston that you want to link the colors
@@ -50,7 +50,7 @@ const getTransports = () => {
     transports.push(
       new winston.transports.File({
         filename: "logs/logs.log",
-        level: process.env.LOG_LEVEL || "error",
+        level: process.env.LOG_LEVEL || "error"
       })
     );
   }
@@ -65,7 +65,7 @@ const Logger = winston.createLogger({
   level: process.env.LOG_LEVEL || "info",
   levels,
   format,
-  transports,
+  transports
 });
 
 export default Logger;

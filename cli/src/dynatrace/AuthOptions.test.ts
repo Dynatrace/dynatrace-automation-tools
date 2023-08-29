@@ -20,7 +20,7 @@ describe("AuthOptions", () => {
       "<dynatrace_url_gen3>": "b",
       "<client_id>": "c",
       "<client_secret>": "d",
-      "<sso_url>": "u",
+      "<sso_url>": "u"
     };
     auth.setOptionsValuesForAuth(opts);
     expect(auth.options).toEqual(opts);

@@ -31,13 +31,13 @@ class DTOAuth {
       client_id: this.ClientId,
       client_secret: this.ClientSecret,
       scope: scope,
-      resource: this.AccountUUID,
+      resource: this.AccountUUID
     };
     let res = null;
 
     try {
       res = await this.axiosApiInstance.post(this.SSOUrl, data, {
-        headers: { "content-type": "application/x-www-form-urlencoded" },
+        headers: { "content-type": "application/x-www-form-urlencoded" }
       });
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

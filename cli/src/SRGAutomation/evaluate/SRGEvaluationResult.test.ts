@@ -8,7 +8,7 @@ const demo = {
   "validation.status": "success",
   "validation.summary": "this is a summary ",
   "guardian.id": "12",
-  "validation.id": "1",
+  "validation.id": "1"
 };
 describe("SRGEvaluationResult", () => {
   it("should be defined", () => {

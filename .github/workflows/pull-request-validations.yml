@@ -1,0 +1,33 @@
+name: pull-request
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: cli
+    steps:
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Lint
+        run: npm run lint
+      - name: Run tests
+        run: npm run ci
+      - name: Run integration tests
+        run: npm run ci:integration
+        env:
+          ACCOUNT_URN: "${{ secrets.ACCOUNT_URN }}"
+          DYNATRACE_CLIENT_ID: "${{ secrets.DYNATRACE_CLIENT_ID }}"
+          DYNATRACE_SECRET: "${{ secrets.DYNATRACE_SECRET }}"
+          DYNATRACE_SSO_URL: "${{ secrets.DYNATRACE_SSO_URL }}"
+          DYNATRACE_URL_GEN3: "${{ secrets.DYNATRACE_URL_GEN3 }}"
