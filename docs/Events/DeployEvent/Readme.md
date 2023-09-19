@@ -34,7 +34,7 @@ The optional values for this command are:
 
 | Command                   | Environment variable       | Description                                                                                                                    |
 | ------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| --version                 | DT_RELEASE_VERSION         | Deployment version. i.e. 1.0.0. default: ""                                                                                    |
+| --release-version         | DT_RELEASE_VERSION         | Deployment version. i.e. 1.0.0. default: ""                                                                                    |
 | --project                 | DT_PROJECT                 | Project name. i.e. simple-node-project. default: ""                                                                            |
 | --source                  | DT_SOURCE                  | Source name. i.e. Jenkins, Gitlab, etc. default: ""                                                                            |
 | --release-stage           | DT_RELEASE_STAGE           | Release stage for the application. i.e. dev, staging, etc. default: ""                                                         |
