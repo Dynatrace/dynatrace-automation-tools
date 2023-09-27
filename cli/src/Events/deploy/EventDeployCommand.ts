@@ -38,7 +38,7 @@ class EventDeployCommand implements BaseCommand {
       )
       .addOption(
         new Option(
-          "--version [version]",
+          "--release-version [releaseVersion]",
           "Deployment version. i.e. 1.0.0 or v1.0.0"
         )
           .env("DT_RELEASE_VERSION")

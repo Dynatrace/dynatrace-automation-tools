@@ -61,15 +61,17 @@
             "args": [
                 "event",
                 "send",
-                "deploy"
+                "deploy",
+                "--release-version",
+                "v7.0.0",
             ],
             "outputCapture": "std",
             "env": {
                 "LOG_LEVEL": "verbose",
                 "LOG_FILE": "true",
-                "EVENT_DEPLOY_NAME": "demo-simple-app",
-                "EVENT_ENTITY_SELECTOR": "type(PROCESS_GROUP_INSTANCE),tag(app:simplenodeservice)",
-                "EVENT_DEPLOY_VERSION": "v1.0.9"
+                "DT_EVENT_DEPLOY_NAME": "demo-simple-app",
+                "DT_ENTITY_SELECTOR": "type(PROCESS_GROUP_INSTANCE),tag(app:simplenodeservice),tag(environment:staging)",
+                "DT_RELEASE_VERSION": "v6.0.0"
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [

@@ -67,7 +67,7 @@ export class EventProperties {
   constructor(options: { [key: string]: string }) {
     this["dt.event.deployment.name"] = options["name"];
     this["dt.event.deployment.version"] = this.returnUndefinedIfBlank(
-      options["version"]
+      options["releaseVersion"]
     );
     this["dt.event.deployment.project"] = this.returnUndefinedIfBlank(
       options["project"]

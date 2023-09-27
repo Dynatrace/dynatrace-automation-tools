@@ -14,4 +14,4 @@ Pre-requisites:
 
 ## Available sub-commands
 
-1. `dta event send deploy` (/docs/Events/DeployEvent/Readme.md) Sends deployment events
+1. `dta event send deploy` [Sends deployment events](/docs/Events/DeployEvent/Readme.md)
