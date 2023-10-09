@@ -1,9 +1,9 @@
 # GitLab integration
 
-You can copy and paste the following code in your GitLab pipeline to integrate a CI/CD process with quality gates.
+You can copy and paste the following code in your GitLab pipeline to integrate a CI/CD process with quality gates or use the [complete file here](./.gitlab-ci.yml)
 
 ```
-trigger_evaluation_and_receive_result:
+trigger_evaluation:
   image: dynatraceace/dt-automation-cli:latest
   stage: evaluate
   needs: ["run-tests"]
@@ -33,10 +33,10 @@ run-tests:
   after_script:
     - echo $(date -u +"%Y-%m-%dT%H:%M:%SZ") > srg.test.endtime
   stage: test
-    #image: Replace this with your testing tool in this example we use locust
+    # Replace this with your testing tool in this example we use locust
     image: locustio/locust
     script:
-        - echo locust --config locust.conf --locustfile $locustfile.py --host http://testing-dynatrace.com
+        - sleep 10s
     artifacts:
         paths:
         - srg.test.starttime

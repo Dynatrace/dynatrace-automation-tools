@@ -1,0 +1,36 @@
+stages:
+  - run-tests
+  - trigger_evaluation
+
+run-tests:
+  before_script:
+    - echo $(date -u +"%Y-%m-%dT%H:%M:%SZ") > srg.test.starttime
+  after_script:
+    - echo $(date -u +"%Y-%m-%dT%H:%M:%SZ") > srg.test.endtime
+  stage: run-tests
+  script:
+    - sleep 15s #this simulates the the load generation time for the demo
+  artifacts:
+    paths:
+      - srg.test.starttime
+      - srg.test.endtime
+
+trigger_evaluation:
+  image: dynatraceace/dt-automation-cli:latest
+  stage: trigger_evaluation
+  needs: ["run-tests"]
+  variables:
+    SRG_EVALUATION_SERVICE: "your-service-name" # This should match your DQL filter in your dynatrace workflow
+    SRG_EVALUATION_STAGE: "your-stage" # This should match your DQL filter in your dynatrace workflow
+    SRG_EVALUATION_STOP_ON_FAILURE: "true"
+    #these vars are set in the gitlab project settings and are used to authenticate to the dynatrace api using Oauth
+    DYNATRACE_URL_GEN3: $DYNATRACE_URL_GEN3
+    ACCOUNT_URN: $ACCOUNT_URN
+    DYNATRACE_CLIENT_ID: $DYNATRACE_CLIENT_ID
+    DYNATRACE_SECRET: $DYNATRACE_SECRET
+    DYNATRACE_SSO_URL: $DYNATRACE_SSO_URL
+  script:
+    - eval_start=$(cat srg.test.starttime)
+    - eval_end=$(cat srg.test.endtime)
+    - export LOG_LEVEL="verbose" # Enable for initial testing, once in production remove this line.
+    - dta srg evaluate --start-time=$eval_start --end-time=$eval_end
