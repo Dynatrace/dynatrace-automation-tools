@@ -2,6 +2,7 @@ import { Command, Option } from "commander";
 import DTOAuth from "../common/oauth";
 import Logger from "../common/logger";
 import axios, { AxiosInstance } from "axios";
+import { DTA_CLI_VERSION } from "./../version";
 //Abstracts the authentication options for the CLI. Common class since all Dynatrace API interactions would use the same authentication options.
 export type AuthOption = {
   "<account_urn>": string;
@@ -80,7 +81,17 @@ class AuthOptions {
     axiosApiInstance.defaults.headers.common["Content-Type"] =
       "application/json";
     axiosApiInstance.defaults.baseURL = this.options["<dynatrace_url_gen3>"];
+    axiosApiInstance.defaults.headers.common["User-Agent"] =
+      this.getUserAgent();
     return axiosApiInstance;
+  };
+  getUserAgent = (): string => {
+    return (
+      "Dynatrace Automation CLI/" +
+      DTA_CLI_VERSION +
+      " " +
+      (process.version + " " + process.arch)
+    );
   };
 }
 
