@@ -139,6 +139,13 @@ class SRGCommandEvaluate implements BaseCommand {
       .default("")
       .env("SRG_EVALUATION_BUILD_ID");
 
+      const wflowName = new Option(
+        "--wflowName [wflowName]",
+        "Workflow name. optional for multiple SRG evaluations in the same workflow"
+      )
+        .default("")
+        .env("SRG_WFLOW_NAME");
+
     options.push(application);
     options.push(service);
     options.push(stage);
