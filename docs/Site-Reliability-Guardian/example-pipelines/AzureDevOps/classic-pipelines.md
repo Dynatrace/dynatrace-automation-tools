@@ -29,7 +29,7 @@ Write-Host "start time $start"
 
 ```(PowerShell)
 Write-Host "Starting evaluation"
-$CLI_DOWNLOAD_URL="https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/v0.2.0/dta-win-x64.exe"
+$CLI_DOWNLOAD_URL="https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/v1.0.0/dta-win-x64.exe"
 $CLI_LOCAL_NAME="dta-win-x64.exe"
 
 if(!(Test-Path $CLI_LOCAL_NAME)){
@@ -70,7 +70,7 @@ echo "##vso[task.setvariable variable=end;isoutput=true]$end"
 
 ```(bash)
 #variables
-CLI_DOWNLOAD_URL=https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/v0.2.0/dta-linux-x64
+CLI_DOWNLOAD_URL=https://github.com/dynatrace-ace/dynatrace-automation-tools/releases/download/v1.0.0/dta-linux-x64
 CLI_LOCAL_NAME=dta
 
 if ! test -f "$CLI_LOCAL_NAME"; then
