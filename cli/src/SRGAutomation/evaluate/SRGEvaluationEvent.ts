@@ -6,6 +6,8 @@ class SRGEvaluationEvent {
   "timeframe.to": string;
 
   "execution_context": ExecutionContext;
+  
+  "tag.usecase": string;
 
   "tag.service": string;
 
@@ -34,6 +36,7 @@ class SRGEvaluationEvent {
       options["buildId"],
       options["version"]
     );
+    this["tag.usecase"] = options["usecase"];
     this["tag.service"] = options["service"];
     this["tag.application"] = options["application"];
     this["tag.stage"] = options["stage"];

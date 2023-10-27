@@ -80,7 +80,7 @@ class SRGEvaluate {
     throw new Error(
       "Failed to find evaluation result for service " +
         event["tag.service"] +
-        "in stage " +
+        " in stage " +
         event["tag.stage"] +
         " after 60 seconds. Check your configuration."
     );
