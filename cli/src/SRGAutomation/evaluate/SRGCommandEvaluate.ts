@@ -139,12 +139,12 @@ class SRGCommandEvaluate implements BaseCommand {
       .default("")
       .env("SRG_EVALUATION_BUILD_ID");
 
-      const wflowName = new Option(
-        "--wflowName [wflowName]",
-        "Workflow name. optional for multiple SRG evaluations in the same workflow"
-      )
-        .default("")
-        .env("SRG_WFLOW_NAME");
+    const usecase = new Option(
+      "--usecase [usecase]",
+      "Use case name. i.e. release_validation, auto_remediation, etc."
+    )
+      .default("")
+      .env("SRG_USECASE");
 
     options.push(application);
     options.push(service);
@@ -152,6 +152,7 @@ class SRGCommandEvaluate implements BaseCommand {
     options.push(provider);
     options.push(version);
     options.push(buildId);
+    options.push(usecase);
     return options;
   }
 
