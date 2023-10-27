@@ -55,13 +55,18 @@ class SRGEvaluate {
 
     //queries for 60 seconds for the event to be available
     for (let i = 0; i < 12; i++) {
-      const result = await this.api.BizEventQuery(query);
-      Logger.verbose("records retrieved: " + result?.length);
-      Logger.verbose(result);
+      const results = await this.api.BizEventQuery(query);
+      Logger.verbose("records retrieved: " + results?.length);
+      Logger.verbose(results);
 
-      if (result?.length > 0) {
-        const resultPayload = result[0] as EvalResultPayload;
-        return new SRGEvaluationResult(resultPayload, dynatraceUrl);
+      if (results?.length > 0) {
+        for (const result of results) {
+          const resultPayload = result as EvalResultPayload;
+          const evaluationResult = new SRGEvaluationResult(resultPayload, dynatraceUrl);
+          if (evaluationResult.status === "fail") {
+            return evaluationResult;
+          }
+        }
       }
 
       Logger.info("No results yet. Waiting 5 seconds...");
@@ -112,11 +117,14 @@ class SRGEvaluate {
 
   private getExpression(event: SRGEvaluationEvent) {
     const initialDql =
-      'fetch bizevents | filter event.type == "guardian.validation.finished" AND contains(execution_context,"' +
+      'fetch bizevents ' +
+      '| filter event.type == "guardian.validation.finished" ' +
+      '| filter validation.workflow.trigger_type == "Event" ' +
+      ' AND contains(execution_context,"' +
       event["event.id"] +
       '") ';
 
-    const finalDql = initialDql + " | sort timestamp desc | limit 1 ";
+    const finalDql = initialDql + " | sort timestamp desc ";
 
     return finalDql;
   }
