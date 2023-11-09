@@ -1,28 +1,30 @@
 # Jenkins integration
 
-For Jenkins, we are using a container definition to create an agent with the Dynatrace Automation CLI and then referencing that agent in the pipeline.
+For Jenkins, we are using a container definition to create an agent with the Dynatrace Automation CLI and then referencing that agent in the pipeline. You can take a look at the [complete file here](./example.Jenkinsfile)
+
+For more details about using Docker containers with Jenkins see [Using Docker with Pipeline](https://www.jenkins.io/doc/book/pipeline/docker/#using-docker-with-pipeline)
 
 To create an agent you need to specify the agent configuration (using Jenkins as Code as reference)
 
-```
-              - containers:
-                - args: "cat"
-                  command: "/bin/sh -c"
-                  image: "dynatraceace/dt-automation-cli:latest"
-                  livenessProbe:
-                    failureThreshold: 0
-                    initialDelaySeconds: 0
-                    periodSeconds: 0
-                    successThreshold: 0
-                    timeoutSeconds: 0
-                  name: "dta"
-                  ttyEnabled: true
-                  workingDir: "/home/jenkins/agent"
-                label: "dta-runner"
-                name: "dta-runner"
-                slaveConnectTimeout: 300
-                slaveConnectTimeoutStr: "300"
-                yamlMergeStrategy: "override"
+```(yaml)
+- containers:
+- args: "cat"
+    command: "/bin/sh -c"
+    image: "dynatraceace/dt-automation-cli:latest"
+    livenessProbe:
+    failureThreshold: 0
+    initialDelaySeconds: 0
+    periodSeconds: 0
+    successThreshold: 0
+    timeoutSeconds: 0
+    name: "dta"
+    ttyEnabled: true
+    workingDir: "/home/jenkins/agent"
+label: "dta-runner"
+name: "dta-runner"
+slaveConnectTimeout: 300
+slaveConnectTimeoutStr: "300"
+yamlMergeStrategy: "override"
 
 ```
 

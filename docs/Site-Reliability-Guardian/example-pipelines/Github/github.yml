@@ -1,0 +1,40 @@
+# Demo pipeline for SRG evaluation.
+name: demo-pipeline-srg
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    outputs:
+      startTime: ${{ steps.set-start-end-time.outputs.startTime }}
+      endTime: ${{ steps.set-start-end-time.outputs.endTime }}
+    steps:
+      - name: "Set start/end time for evaluation"
+        id: set-start-end-time
+        run: |
+          start=$(date -d '10 minute ago' --utc +%FT%TZ)
+          echo "startTime=$start" >> $GITHUB_OUTPUT
+          end=$(date --utc +%FT%TZ)
+          echo "endTime=$end" >> $GITHUB_OUTPUT
+
+  evaluation:
+    needs: test
+    runs-on: ubuntu-latest
+    container:
+      image: "dynatraceace/dt-automation-cli:latest"
+    steps:
+      - name: "Run SRG evaluation"
+        run: |
+          dta srg evaluate
+        env:
+          LOG_LEVEL: "verbose"
+          DYNATRACE_URL_GEN3: ${{ secrets.DYNATRACE_URL_GEN3 }}
+          ACCOUNT_URN: ${{ secrets.ACCOUNT_URN }}
+          DYNATRACE_CLIENT_ID: ${{ secrets.DYNATRACE_CLIENT_ID }}
+          DYNATRACE_SECRET: ${{ secrets.DYNATRACE_SECRET }}
+          DYNATRACE_SSO_URL: ${{ secrets.DYNATRACE_SSO_URL }}
+          SRG_EVALUATION_STOP_ON_FAILURE: "true"
+          SRG_EVALUATION_SERVICE: "demo"
+          SRG_EVALUATION_STAGE: "dev"
+          SRG_EVALUATION_START_TIME: "${{ needs.test.outputs.startTime }}"
+          SRG_EVALUATION_END_TIME: "${{ needs.test.outputs.endTime }}"

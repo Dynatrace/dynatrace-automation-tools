@@ -1,0 +1,24 @@
+trigger:
+  - main
+pool:
+  vmImage: "ubuntu-latest"
+container: dynatraceace/dt-automation-cli:latest
+steps:
+  - bash: |
+      start=$(date -d '1 hour ago' --utc +%FT%TZ)
+      #this assumes 1 hour for load test
+      end=$(date --utc +%FT%TZ)
+      echo "##vso[task.setvariable variable=start;isoutput=true]$start"
+      #execute load test here
+      echo "##vso[task.setvariable variable=end;isoutput=true]$end"
+    name: evalTime
+  - bash: |
+      export LOG_LEVEL="verbose"
+      dta srg evaluate --start-time=$(evalTime.start) --end-time=$(evalTime.end) --stage="your-stage" --service="your-service-name"
+    env:
+      DYNATRACE_URL_GEN3: $(DYNATRACE_URL_GEN3)
+      DYNATRACE_CLIENT_ID: $(DYNATRACE_CLIENT_ID)
+      DYNATRACE_SECRET: $(DYNATRACE_SECRET)
+      DYNATRACE_SSO_URL: $(DYNATRACE_SSO_URL)
+      ACCOUNT_URN: $(ACCOUNT_URN)
+    name: srg_evaluation
