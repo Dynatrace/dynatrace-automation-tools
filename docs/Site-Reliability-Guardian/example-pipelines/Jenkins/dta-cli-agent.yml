@@ -1,0 +1,18 @@
+- containers:
+    - args: "cat"
+      command: "/bin/sh -c"
+      image: "dynatraceace/dt-automation-cli:latest"
+      livenessProbe:
+        failureThreshold: 0
+        initialDelaySeconds: 0
+        periodSeconds: 0
+        successThreshold: 0
+        timeoutSeconds: 0
+      name: "dta"
+      ttyEnabled: true
+      workingDir: "/home/jenkins/agent"
+  label: "dta-runner"
+  name: "dta-runner"
+  slaveConnectTimeout: 300
+  slaveConnectTimeoutStr: "300"
+  yamlMergeStrategy: "override"

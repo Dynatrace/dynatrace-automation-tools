@@ -1,6 +1,6 @@
 # Azure DevOps integration using YAML pipelines
 
-To integrate the CLI with Azure DevOps you can use the yaml pipeline that references a docker container:
+To integrate the CLI with Azure DevOps you can use the `yaml` pipeline that references a docker container or use the [complete file here](./azdo.yaml)
 
 - Please check the Microsoft pre-requisites for this [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops)
 
