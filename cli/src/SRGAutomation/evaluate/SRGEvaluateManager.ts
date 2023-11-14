@@ -29,8 +29,10 @@ class SRGEvaluateManager {
         event,
         options["<dynatrace_url_gen3>"]
       );
-      const stopOnFailure = options["stopOnFailure"].toString() === "true";
-      const stopOnWarning = options["stopOnWarning"].toString() === "true";
+      const stopOnFailure =
+        options["stopOnFailure"].toString().toLowerCase() === "true";
+      const stopOnWarning =
+        options["stopOnWarning"].toString().toLowerCase() === "true";
       res = result.printEvaluationResults(stopOnFailure, stopOnWarning);
     } catch (err) {
       Logger.error("While executing SRG evaluation ", err);
