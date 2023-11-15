@@ -34,7 +34,8 @@ class SRGCommandEvaluate implements BaseCommand {
 
   addAction(subcommand: Command, auth: AuthOptions) {
     subcommand.action(async (options) => {
-      const success = await SRGEvaluateManager.executeEvaluation(options, auth);
+      const manager = new SRGEvaluateManager();
+      const success = await manager.executeEvaluation(options, auth);
 
       if (!success) {
         subcommand.error("Execution stop", {
@@ -68,9 +69,16 @@ class SRGCommandEvaluate implements BaseCommand {
       .default("90")
       .env("SRG_EVALUATION_DELAY");
 
+    const multipleSRG = new Option(
+      "--multiple-guardians [multipleGuardians]",
+      "Enables the evaluation of multiple guardians in a single or multiple workflows execution. Summary of the evaluation will be printed for each guardian."
+    )
+      .default("false")
+      .env("SRG_MULTIPLE_GUARDIANS");
     options.push(stopOnFailure);
     options.push(stopOnWarning);
     options.push(delayResults);
+    options.push(multipleSRG);
     return options;
   }
 

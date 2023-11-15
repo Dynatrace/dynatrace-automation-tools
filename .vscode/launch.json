@@ -44,6 +44,8 @@
                 "SRG_APP_VERSION": "v1.0.0",
                 "SRG_EVALUATION_PROVIDER": "local-vscode",
                 "SRG_EVALUATION_BUILD_ID": "1234567890",
+                "SRG_EVALUATION_DELAY": "0",
+                "SRG_MULTIPLE_GUARDIANS": "true",
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [
