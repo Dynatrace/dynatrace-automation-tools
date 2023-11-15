@@ -3,10 +3,7 @@ import AuthOptions, { AuthOption } from "../../dynatrace/AuthOptions";
 import DTApiV3 from "../../dynatrace/DTApiV3";
 import SRGEvaluate from "./SRGEvaluate";
 import SRGEvaluateMultipleSRG from "./SRGEvaluateMultipleSRG";
-import { setTimeout } from "timers/promises";
-import SRGEvaluationResult, {
-  EvaluationResultSummary
-} from "./SRGEvaluationResult";
+import { EvaluationResultSummary } from "./SRGEvaluationResult";
 
 class SRGEvaluateManager {
   constructor() {}
