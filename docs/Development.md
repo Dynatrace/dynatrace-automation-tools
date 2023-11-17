@@ -7,6 +7,7 @@ To run the solution as development mode:
 - Run `npm run build` to build the solution
 - To execute the CLI use `node dist/index.js`
 - To start the automatic compilation mode that detects when something changes run the command `npm run dev`
+- (Optional) If you don't have the ncc library, run `npm i -g @vercel/ncc` before running
 - To get the CLI executable version you can run `npm run pack`. This will output to the `executables` folder the different CLI versions. Make sure to run this command in a linux machine otherwise results might be different.
 - If you want to test the docker version first run `npm run pack` and then `docker build -t test-cli:latest .` . This will allow you to run the cli using the docker command
   `docker run -i -t test-cli:latest bash`
