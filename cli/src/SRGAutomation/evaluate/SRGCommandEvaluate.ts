@@ -70,7 +70,7 @@ class SRGCommandEvaluate implements BaseCommand {
       .env("SRG_EVALUATION_DELAY");
 
     const multipleSRG = new Option(
-      "--multiple-guardians [multipleGuardians]",
+      "-m --multiple-guardians [multipleGuardians]",
       "Enables the evaluation of multiple guardians in a single or multiple workflows execution. Summary of the evaluation will be printed for each guardian."
     )
       .default("false")
