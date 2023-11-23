@@ -85,7 +85,7 @@ describe("Evaluation event init", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
-      version: "a1"
+      releaseVersion: "a1"
     });
     expect(event.execution_context.version).toBe("a1");
   });

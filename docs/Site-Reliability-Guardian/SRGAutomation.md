@@ -45,7 +45,7 @@ The optional values are sent as part of the BizEvent into Dynatrace and can be u
 | --timespan        | SRG_EVALUATION_TIMESPAN        | Grab the last X minutes of data for the evaluation (default: "5"). This conflicts with start-time and end-time so only one can be set at once |
 | --application     | SRG_EVALUATION_APPLICATION     | This is the application or service name. default: ""                                                                                          |
 | --provider        | SRG_EVALUATION_PROVIDER        | Provider of the request. i.e. github, jenkins, jenkins-production-1 etc. default: "cicd"                                                      |
-| --version         | SRG_APP_VERSION                | Version of the app. i.e. v1.0.1. default: ""                                                                                                  |
+| --release-version | SRG_EVALUATION_VERSION         | Version of the app. i.e. v1.0.1. default: ""                                                                                                  |
 | --buildId         | SRG_EVALUATION_BUILD_ID        | Build ID. optional for reference in the evaluation. Can also be used for the Git commit ID. default: ""                                       |
 | --stop-on-failure | SRG_EVALUATION_STOP_ON_FAILURE | stop execution if evaluation fails. default: "true"                                                                                           |
 | --stop-on-warning | SRG_EVALUATION_STOP_ON_WARNING | stop execution if evaluation has a warning result. default: "false"                                                                           |
