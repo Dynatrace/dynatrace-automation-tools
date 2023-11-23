@@ -32,7 +32,7 @@ class SRGEvaluationEvent {
     this["execution_context"] = new ExecutionContext(
       eventId,
       options["buildId"],
-      options["version"]
+      options["releaseVersion"]
     );
     this["tag.service"] = options["service"];
     this["tag.application"] = options["application"];

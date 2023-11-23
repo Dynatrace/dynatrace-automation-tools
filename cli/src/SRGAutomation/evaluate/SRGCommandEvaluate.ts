@@ -127,8 +127,8 @@ class SRGCommandEvaluate implements BaseCommand {
       .default("cicd")
       .env("SRG_EVALUATION_PROVIDER");
     const version = new Option(
-      "--version [version]",
-      "Version of the app. v1.0.1 for example"
+      "--release-version [releaseVersion]",
+      "Version of the app. for example v1.0.1"
     )
       .default("")
       .env("SRG_APP_VERSION");
