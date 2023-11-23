@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       startTime: ${{ steps.set-start-end-time.outputs.startTime }}
       endTime: ${{ steps.set-start-end-time.outputs.endTime }}
