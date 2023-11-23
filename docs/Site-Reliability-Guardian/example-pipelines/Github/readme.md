@@ -26,6 +26,8 @@ You can use the Github workflow by running the evaluation job:
           SRG_EVALUATION_STAGE: "dev"
           SRG_EVALUATION_START_TIME: "${{ needs.test.outputs.startTime }}"
           SRG_EVALUATION_END_TIME: "${{ needs.test.outputs.endTime }}"
+          SRG_EVALUATION_VERSION: "1.0.0"
+          SRG_EVALUATION_BUILD_ID: "${{ github.run_id }}"
 
 ```
 
