@@ -7,11 +7,11 @@ class SRGEvaluationEvent {
 
   "execution_context": ExecutionContext;
 
-  "tag.service": string;
+  "service": string;
 
-  "tag.application": string;
+  "application": string;
 
-  "tag.stage": string;
+  "stage": string;
 
   "event.id": string;
 
@@ -34,9 +34,9 @@ class SRGEvaluationEvent {
       options["buildId"],
       options["releaseVersion"]
     );
-    this["tag.service"] = options["service"];
-    this["tag.application"] = options["application"];
-    this["tag.stage"] = options["stage"];
+    this["service"] = options["service"];
+    this["application"] = options["application"];
+    this["stage"] = options["stage"];
     this["event.id"] = eventId;
     this["event.provider"] = options["provider"];
     this["event.type"] = "guardian.validation.triggered";
