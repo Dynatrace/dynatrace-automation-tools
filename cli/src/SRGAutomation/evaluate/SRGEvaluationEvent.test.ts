@@ -34,29 +34,29 @@ describe("Evaluation event init", () => {
     });
     expect(event["timeframe.to"]).toBe(endTime);
   });
-  it("should set tag.service to the service name", () => {
+  it("should set service to the service name", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
       service: "demoservice"
     });
-    expect(event["tag.service"]).toBe("demoservice");
+    expect(event["service"]).toBe("demoservice");
   });
-  it("should set tag.application to the application name", () => {
+  it("should set application to the application name", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
       application: "test"
     });
-    expect(event["tag.application"]).toBe("test");
+    expect(event["application"]).toBe("test");
   });
-  it("should set tag.stage to the stage name", () => {
+  it("should set stage to the stage name", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
       endTime: endTime,
       stage: "test-stage"
     });
-    expect(event["tag.stage"]).toBe("test-stage");
+    expect(event["stage"]).toBe("test-stage");
   });
   it("should set event.provider to the provider name", () => {
     const event = new SRGEvaluationEvent({
