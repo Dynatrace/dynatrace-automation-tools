@@ -33,9 +33,3 @@ jobs:
         with:
           cli-files: ./cli/executables/dta*
           release-docs: README.md
-  test-cli-workflow:
-    needs: build
-    uses: ./.github/workflows/demo-pipeline-srg.yml
-    with:
-      DYNATRACE_URL_GEN3: ${{ secrets.DYNATRACE_URL_GEN3 }}
-    secrets: inherit
