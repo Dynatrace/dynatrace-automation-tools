@@ -3,7 +3,11 @@ import DQLQuery from "../../dynatrace/DQLQuery";
 import DTApiV3 from "../../dynatrace/DTApiV3";
 import SRGEvaluationEvent from "./SRGEvaluationEvent";
 import { setTimeout } from "timers/promises";
-import SRGEvaluationResult, { EvalResultPayload } from "./SRGEvaluationResult";
+import {
+  EvalResultPayload,
+  EvaluationResultSummary,
+  SRGEvaluationResult
+} from "./SRGEvaluationResult";
 class SRGEvaluate {
   private api: DTApiV3;
 
@@ -47,7 +51,7 @@ class SRGEvaluate {
   async waitForEvaluationResult(
     event: SRGEvaluationEvent,
     dynatraceUrl: string
-  ): Promise<SRGEvaluationResult> {
+  ): Promise<EvaluationResultSummary> {
     Logger.info("Waiting for evaluation results to be available");
     const query = this.getDQLQuery(event);
     Logger.verbose("Query used to find the event \n ");
@@ -61,7 +65,8 @@ class SRGEvaluate {
 
       if (result?.length > 0) {
         const resultPayload = result[0] as EvalResultPayload;
-        return new SRGEvaluationResult(resultPayload, dynatraceUrl);
+        const evalResult = new SRGEvaluationResult(resultPayload, dynatraceUrl);
+        return new EvaluationResultSummary([evalResult]);
       }
 
       Logger.info("No results yet. Waiting 5 seconds...");

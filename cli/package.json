@@ -12,7 +12,7 @@
         "lint": "eslint --ignore-path .eslintignore --ext .ts .",
         "build": "npx tsc",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
-        "docker": "docker build -t dta . && docker run -it dta bash"
+        "docker": "npm install && npm run pack && docker build -t dta . && docker run -it dta bash"
     },
     "jest": {
         "projects": [
