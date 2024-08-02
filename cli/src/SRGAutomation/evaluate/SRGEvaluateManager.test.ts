@@ -14,7 +14,8 @@ describe("SRGEvaluateManager", () => {
       stage: "test",
       delay: "0"
     };
-    SRGEvaluateManager.executeEvaluation(options, auth);
+    const evaluate = new SRGEvaluateManager();
+    evaluate.executeEvaluation(options, auth);
 
     expect(SRGEvaluate).toHaveBeenCalled();
     expect(auth.setOptionsValuesForAuth).toHaveBeenCalledWith(options);

@@ -1,4 +1,4 @@
-import SRGEvaluationResult from "./SRGEvaluationResult";
+import { SRGEvaluationResult } from "./SRGEvaluationResult";
 import Logger from "../../common/logger";
 
 afterEach(() => {
@@ -8,6 +8,7 @@ const demo = {
   "validation.status": "success",
   "validation.summary": "this is a summary ",
   "guardian.id": "12",
+  "guardian.name": "demo-guardian",
   "validation.id": "1"
 };
 describe("SRGEvaluationResult", () => {
@@ -15,7 +16,7 @@ describe("SRGEvaluationResult", () => {
     const info = jest.spyOn(Logger, "info");
     const mod = new SRGEvaluationResult(demo, "https://test.com");
 
-    mod.printEvaluationResults(false, false);
+    mod.summarizeSLO();
     expect(info).toHaveBeenCalledTimes(6);
   });
   it("should exit with code 1 when error", () => {
@@ -24,7 +25,7 @@ describe("SRGEvaluationResult", () => {
     failed["validation.status"] = "fail";
     const mod = new SRGEvaluationResult(failed, "https://test.com");
 
-    const status = mod.printEvaluationResults(true, false);
+    const status = mod.summarizeSLO();
 
     expect(info).toHaveBeenCalledTimes(5);
     expect(status).toBe(false);
@@ -37,7 +38,7 @@ describe("SRGEvaluationResult", () => {
     failed["validation.status"] = "fail";
     const mod = new SRGEvaluationResult(failed, "https://test.com");
 
-    mod.printEvaluationResults(false, false);
+    mod.summarizeSLO();
     expect(error).toHaveBeenCalledTimes(1);
     expect(info).toHaveBeenCalledTimes(5);
   });
@@ -47,7 +48,7 @@ describe("SRGEvaluationResult", () => {
     const warning = demo;
     warning["validation.status"] = "warning";
     const mod = new SRGEvaluationResult(warning, "https://test.com");
-    mod.printEvaluationResults(false, false);
+    mod.summarizeSLO();
     expect(warn).toHaveBeenCalledTimes(1);
     expect(info).toHaveBeenCalledTimes(5);
   });
@@ -56,7 +57,7 @@ describe("SRGEvaluationResult", () => {
     const warning = demo;
     warning["validation.status"] = "warning";
     const mod = new SRGEvaluationResult(warning, "https://test.com");
-    const status = mod.printEvaluationResults(false, true);
+    const status = mod.summarizeSLO();
     expect(info).toHaveBeenCalledTimes(5);
     expect(status).toBe(false);
   });

@@ -115,5 +115,74 @@ class DTApiV3 {
       throw new Error("Failed query business event");
     }
   };
+  WorkflowExecutionsByTime = async (
+    startTime: Date
+  ): Promise<Array<unknown>> => {
+    try {
+      const client = await this.Auth.getGen3ClientWithScopeRequest(
+        "automation:workflows:read"
+      );
+      const res = await client.get(
+        `platform/automation/v1/executions??adminAccess=false&startedAt__gte=` +
+          startTime.toISOString()
+      );
+
+      if (res.status != 200) {
+        Logger.error("Failed query workflow executions");
+        Logger.verbose(res);
+        throw new Error("Failed query workflow executions");
+      }
+
+      return res.data.results;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      Logger.verbose(e.response);
+
+      if (e.response?.data?.error.code == 400) {
+        const msg: string = e.response?.data.error.details.message;
+        Logger.error(msg);
+      } else {
+        Logger.error(e.response?.data[0]);
+      }
+
+      throw new Error("Failed query business event");
+    }
+  };
+  WorkflowExecutionsByTimeAndWfId = async (
+    startTime: Date,
+    workflowIds: string[]
+  ): Promise<Array<unknown>> => {
+    try {
+      const client = await this.Auth.getGen3ClientWithScopeRequest(
+        "automation:workflows:read"
+      );
+      const res = await client.get(
+        `platform/automation/v1/executions??adminAccess=false&startedAt__gte=` +
+          startTime.toISOString() +
+          "&workflow=" +
+          workflowIds.join(",")
+      );
+
+      if (res.status != 200) {
+        Logger.error("Failed query workflow executions");
+        Logger.verbose(res);
+        throw new Error("Failed query workflow executions");
+      }
+
+      return res.data.results;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      Logger.verbose(e.response);
+
+      if (e.response?.data?.error.code == 400) {
+        const msg: string = e.response?.data.error.details.message;
+        Logger.error(msg);
+      } else {
+        Logger.error(e.response?.data[0]);
+      }
+
+      throw new Error("Failed query business event");
+    }
+  };
 }
 export default DTApiV3;
