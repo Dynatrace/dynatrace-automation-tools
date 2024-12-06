@@ -33,13 +33,13 @@ describe("SRGCommandEvaluate", () => {
     mockProgram.command = jest.fn().mockReturnValue(new Command());
     new SRGCommandEvaluate(mockProgram);
 
-    //12 options are added
-    expect(addOption).toHaveBeenCalledTimes(12);
+    //13 options are added
+    expect(addOption).toHaveBeenCalledTimes(13);
     const timeOptions = getTimeframeOptions.mock.results[0];
     const descriptionOptions = getDescriptionOptions.mock.results[0];
     const additionalConfigOptions = getAdditionalConfigOptions.mock.results[0];
     expect(timeOptions.value).toHaveLength(3);
-    expect(descriptionOptions.value).toHaveLength(6);
+    expect(descriptionOptions.value).toHaveLength(7);
     expect(additionalConfigOptions.value).toHaveLength(3);
   });
   it("Evaluate command has action", async () => {

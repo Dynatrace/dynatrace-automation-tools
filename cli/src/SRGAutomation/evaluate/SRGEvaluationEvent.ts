@@ -19,6 +19,8 @@ class SRGEvaluationEvent {
 
   "event.type": string;
 
+  [key: `variables.${string}`]: string;
+
   constructor(options: { [key: string]: string }) {
     const eventId = crypto.randomUUID().toString();
     const timeframe = this.getTimeframe(
@@ -40,6 +42,12 @@ class SRGEvaluationEvent {
     this["event.id"] = eventId;
     this["event.provider"] = options["provider"];
     this["event.type"] = "guardian.validation.triggered";
+
+    options["variables"]?.split(",").forEach(variableExpression => {
+      this.validateVariableExpression(variableExpression)
+      const [name, value] = variableExpression.split("=");
+      this[`variables.${name}` as `variables.${string}`] = value;
+    }); 
   }
 
   getTimeframe(
@@ -61,6 +69,15 @@ class SRGEvaluationEvent {
     }
 
     return new TimeFrame(startTime, endTime);
+  }
+
+  validateVariableExpression(variableExpression: string): asserts variableExpression {
+    if (variableExpression == "") {
+      throw new Error("Empty variables expression is not allowed.");
+    }
+    if (variableExpression.split("=").length != 2) {
+      throw new Error(`Malformed variable expression [${variableExpression}]. The allowed format is 'name=value'`);
+    }
   }
 }
 class ExecutionContext {

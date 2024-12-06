@@ -58,6 +58,23 @@ describe("Evaluation event init", () => {
     });
     expect(event["stage"]).toBe("test-stage");
   });
+  it("should parse single variable input option and set the values in the event", () => {
+    const event = new SRGEvaluationEvent({
+      startTime: startTime,
+      endTime: endTime,
+      variables: "variable-name=variable-value"
+    });
+    expect(event["variables.variable-name"]).toBe("variable-value");
+  });
+  it("should parse multiple variables input option and set the values in the event", () => {
+    const event = new SRGEvaluationEvent({
+      startTime: startTime,
+      endTime: endTime,
+      variables: "variable-name-1=variable-value-1,variable-name-2=variable-value-2"
+    });
+    expect(event["variables.variable-name-1"]).toBe("variable-value-1");
+    expect(event["variables.variable-name-2"]).toBe("variable-value-2");
+  });  
   it("should set event.provider to the provider name", () => {
     const event = new SRGEvaluationEvent({
       startTime: startTime,
@@ -106,5 +123,77 @@ describe("Evaluation event init", () => {
     const date1 = new Date(event["timeframe.from"]);
     const date2 = new Date(event["timeframe.to"]);
     expect(date2.getTime()).toBeGreaterThan(date1.getTime());
+  });
+  it("should throw an error if variables input string is empty", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: ""
+      });
+    }).toThrow(Error(("Empty variables expression is not allowed.")));
+  });
+  it("should throw an error if variables input string is malformed, the last variable is an empty string", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1,"
+      });
+    }).toThrow(Error(("Empty variables expression is not allowed.")));
+  });
+  it("should throw an error if variables input string is malformed, one variable is an empty string", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1,,variable-name-3=variable-value-3"
+      });
+    }).toThrow(Error(("Empty variables expression is not allowed.")));
+  });
+  it("should throw an error if variables input string is malformed and it doesn't contain the proper separator", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1->variable-value-1"
+      });
+    }).toThrow(Error("Malformed variable expression [variable-name-1->variable-value-1]. The allowed format is 'name=value'"));
+  });
+  it("should throw an error if variables input string is malformed and one variable doesn't contain the proper separator", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1,variable-name-2->variable-value-2"
+      });
+    }).toThrow(Error("Malformed variable expression [variable-name-2->variable-value-2]. The allowed format is 'name=value'"));
+  });
+  it("should throw an error if variables input string is malformed and one variable doesn't contain the separator", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1,variable-name-2variable-value-2"
+      });
+    }).toThrow(Error("Malformed variable expression [variable-name-2variable-value-2]. The allowed format is 'name=value'"));
+  });
+  it("should throw an error if variables input string is malformed and contains multiple the separator", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1=another-value"
+      });
+    }).toThrow(Error("Malformed variable expression [variable-name-1=variable-value-1=another-value]. The allowed format is 'name=value'"));
+  });
+  it("should throw an error if variables input string is malformed and one variable contains multiple the separator", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1,name=multiple=value"
+      });
+    }).toThrow(Error("Malformed variable expression [name=multiple=value]. The allowed format is 'name=value'"));
   });
 });
