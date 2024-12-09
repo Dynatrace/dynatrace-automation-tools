@@ -131,7 +131,7 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: ""
       });
-    }).toThrow(Error(("Empty variables expression is not allowed.")));
+    }).toThrow(Error("Malformed variable expression. Empty variable expression is not allowed"));
   });
   it("should throw an error if variables input string is malformed, the last variable is an empty string", () => {
     expect(() => {
@@ -140,7 +140,7 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: "variable-name-1=variable-value-1,"
       });
-    }).toThrow(Error(("Empty variables expression is not allowed.")));
+    }).toThrow(Error(("Malformed variable expression. Empty variable expression is not allowed")));
   });
   it("should throw an error if variables input string is malformed, one variable is an empty string", () => {
     expect(() => {
@@ -149,7 +149,43 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: "variable-name-1=variable-value-1,,variable-name-3=variable-value-3"
       });
-    }).toThrow(Error(("Empty variables expression is not allowed.")));
+    }).toThrow(Error(("Malformed variable expression. Empty variable expression is not allowed")));
+  });
+  it("should throw an error if variables input string is malformed, variable has no name", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "=variable-value"
+      });
+    }).toThrow(Error(("Malformed variable expression '=variable-value'. Empty variable value or name is not allowed")));
+  });
+  it("should throw an error if variables input string is malformed, variable has no value", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name="
+      });
+    }).toThrow(Error(("Malformed variable expression 'variable-name='. Empty variable value or name is not allowed")));
+  });
+  it("should throw an error if variables input string is malformed, one variable has no name", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1,=variable-value"
+      });
+    }).toThrow(Error(("Malformed variable expression '=variable-value'. Empty variable value or name is not allowed")));
+  });
+  it("should throw an error if variables input string is malformed, one variable has no value", () => {
+    expect(() => {
+      new SRGEvaluationEvent({
+        startTime: startTime,
+        endTime: endTime,
+        variables: "variable-name-1=variable-value-1,variable-name="
+      });
+    }).toThrow(Error(("Malformed variable expression 'variable-name='. Empty variable value or name is not allowed")));
   });
   it("should throw an error if variables input string is malformed and it doesn't contain the proper separator", () => {
     expect(() => {
@@ -158,7 +194,7 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: "variable-name-1->variable-value-1"
       });
-    }).toThrow(Error("Malformed variable expression [variable-name-1->variable-value-1]. The allowed format is 'name=value'"));
+    }).toThrow(Error("Malformed variable expression 'variable-name-1->variable-value-1'. The allowed format is 'name=value'"));
   });
   it("should throw an error if variables input string is malformed and one variable doesn't contain the proper separator", () => {
     expect(() => {
@@ -167,7 +203,7 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: "variable-name-1=variable-value-1,variable-name-2->variable-value-2"
       });
-    }).toThrow(Error("Malformed variable expression [variable-name-2->variable-value-2]. The allowed format is 'name=value'"));
+    }).toThrow(Error("Malformed variable expression 'variable-name-2->variable-value-2'. The allowed format is 'name=value'"));
   });
   it("should throw an error if variables input string is malformed and one variable doesn't contain the separator", () => {
     expect(() => {
@@ -176,7 +212,7 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: "variable-name-1=variable-value-1,variable-name-2variable-value-2"
       });
-    }).toThrow(Error("Malformed variable expression [variable-name-2variable-value-2]. The allowed format is 'name=value'"));
+    }).toThrow(Error("Malformed variable expression 'variable-name-2variable-value-2'. The allowed format is 'name=value'"));
   });
   it("should throw an error if variables input string is malformed and contains multiple the separator", () => {
     expect(() => {
@@ -185,7 +221,7 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: "variable-name-1=variable-value-1=another-value"
       });
-    }).toThrow(Error("Malformed variable expression [variable-name-1=variable-value-1=another-value]. The allowed format is 'name=value'"));
+    }).toThrow(Error("Malformed variable expression 'variable-name-1=variable-value-1=another-value'. The allowed format is 'name=value'"));
   });
   it("should throw an error if variables input string is malformed and one variable contains multiple the separator", () => {
     expect(() => {
@@ -194,6 +230,6 @@ describe("Evaluation event init", () => {
         endTime: endTime,
         variables: "variable-name-1=variable-value-1,name=multiple=value"
       });
-    }).toThrow(Error("Malformed variable expression [name=multiple=value]. The allowed format is 'name=value'"));
+    }).toThrow(Error("Malformed variable expression 'name=multiple=value'. The allowed format is 'name=value'"));
   });
 });
