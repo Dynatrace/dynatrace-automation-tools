@@ -43,9 +43,8 @@ class SRGEvaluationEvent {
     this["event.provider"] = options["provider"];
     this["event.type"] = "guardian.validation.triggered";
 
-    options["variables"]?.split(",").forEach((variableExpression) => {
-      this.validateVariableExpression(variableExpression);
-      const [name, value] = variableExpression.split("=");
+    const srgContext = new SRGContext(options["variables"]);
+    Object.entries(srgContext.variables).forEach(([name, value]) => {
       this[`variables.${name}` as `variables.${string}`] = value;
     });
   }
@@ -69,6 +68,18 @@ class SRGEvaluationEvent {
     }
 
     return new TimeFrame(startTime, endTime);
+  }
+}
+class SRGContext {
+  variables: { [key: string]: string };
+
+  constructor(variablesInputString: string) {
+    this.variables = {};
+    variablesInputString?.split(",").forEach((variableExpression) => {
+      this.validateVariableExpression(variableExpression);
+      const [name, value] = variableExpression.split("=");
+      this.variables[name] = value;
+    });
   }
 
   validateVariableExpression(
@@ -95,6 +106,7 @@ class SRGEvaluationEvent {
     }
   }
 }
+
 class ExecutionContext {
   id: string;
 
