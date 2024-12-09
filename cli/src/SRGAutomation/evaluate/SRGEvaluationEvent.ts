@@ -43,11 +43,11 @@ class SRGEvaluationEvent {
     this["event.provider"] = options["provider"];
     this["event.type"] = "guardian.validation.triggered";
 
-    options["variables"]?.split(",").forEach(variableExpression => {
-      this.validateVariableExpression(variableExpression)
+    options["variables"]?.split(",").forEach((variableExpression) => {
+      this.validateVariableExpression(variableExpression);
       const [name, value] = variableExpression.split("=");
       this[`variables.${name}` as `variables.${string}`] = value;
-    }); 
+    });
   }
 
   getTimeframe(
@@ -71,15 +71,27 @@ class SRGEvaluationEvent {
     return new TimeFrame(startTime, endTime);
   }
 
-  validateVariableExpression(variableExpression: string): asserts variableExpression {
+  validateVariableExpression(
+    variableExpression: string
+  ): asserts variableExpression {
     if (variableExpression == "") {
-      throw new Error("Malformed variable expression. Empty variable expression is not allowed");
+      throw new Error(
+        "Malformed variable expression. Empty variable expression is not allowed"
+      );
     }
+
     if (variableExpression.split("=").length != 2) {
-      throw new Error(`Malformed variable expression '${variableExpression}'. The allowed format is 'name=value'`);
+      throw new Error(
+        `Malformed variable expression '${variableExpression}'. The allowed format is 'name=value'`
+      );
     }
-    if (variableExpression.split("=").some(variable => variable.trim() === "")) {
-      throw new Error(`Malformed variable expression '${variableExpression}'. Empty variable value or name is not allowed`);
+
+    if (
+      variableExpression.split("=").some((variable) => variable.trim() === "")
+    ) {
+      throw new Error(
+        `Malformed variable expression '${variableExpression}'. Empty variable value or name is not allowed`
+      );
     }
   }
 }
