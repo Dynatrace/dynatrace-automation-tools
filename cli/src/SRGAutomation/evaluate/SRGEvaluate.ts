@@ -2,6 +2,8 @@ import Logger from "../../common/logger";
 import DQLQuery from "../../dynatrace/DQLQuery";
 import DTApiV3 from "../../dynatrace/DTApiV3";
 import SRGEvaluationEvent from "./SRGEvaluationEvent";
+import { SRGEvaluationTimeOptions } from "../../dynatrace/SRGEvaluationTimeOptions";
+import { SRGEvaluationDescriptionOptions } from "../../dynatrace/SRGEvaluationDescriptionOptions";
 import { setTimeout } from "timers/promises";
 import SRGEvaluationResult, { EvalResultPayload } from "./SRGEvaluationResult";
 class SRGEvaluate {
@@ -31,8 +33,11 @@ class SRGEvaluate {
     }
   }
 
-  getCloudEvent(options: { [key: string]: string }): SRGEvaluationEvent {
-    const data = new SRGEvaluationEvent(options);
+  getCloudEvent(
+    timeOptions: SRGEvaluationTimeOptions,
+    descriptionOptions: SRGEvaluationDescriptionOptions
+  ): SRGEvaluationEvent {
+    const data = new SRGEvaluationEvent(timeOptions, descriptionOptions);
     return data;
   }
 
