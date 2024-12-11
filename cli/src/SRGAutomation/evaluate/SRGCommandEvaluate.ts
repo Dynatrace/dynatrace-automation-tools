@@ -77,12 +77,12 @@ class SRGCommandEvaluate implements BaseCommand {
   getTimeframeOptions(): Option[] {
     const options: Option[] = [];
     const startTime = new Option(
-      "--start-time [starttime]",
+      "--start-time <starttime>",
       "Evaluation start time"
     )
       .conflicts("timespan")
       .env("SRG_EVALUATION_START_TIME");
-    const endTime = new Option("--end-time [endtime]", "Evaluation end time")
+    const endTime = new Option("--end-time <endtime>", "Evaluation end time")
       .conflicts("timespan")
       .env("SRG_EVALUATION_END_TIME");
     const timeSpan = new Option(
@@ -101,39 +101,39 @@ class SRGCommandEvaluate implements BaseCommand {
   getDescriptionOptions(): Option[] {
     const options: Option[] = [];
     const application = new Option(
-      "--application [application]",
+      "--application <application>",
       "Application name"
     )
       .default("")
       .env("SRG_EVALUATION_APPLICATION");
     const service = new Option(
-      "--service [service]",
+      "--service <service>",
       "Service name. i.e. backend-service, api-gateway, etc."
     )
       .env("SRG_EVALUATION_SERVICE")
       .makeOptionMandatory(true);
 
     const stage = new Option(
-      "--stage [stage]",
+      "--stage <stage>",
       "Evaluation stage, can be dev, test,quality-gate, prod, etc."
     )
       .env("SRG_EVALUATION_STAGE")
       .makeOptionMandatory(true);
 
     const provider = new Option(
-      "--provider [provider]",
+      "--provider <provider>",
       "Provider of the request. i.e. github, jenkins, jenkins-production-1 etc."
     )
       .default("cicd")
       .env("SRG_EVALUATION_PROVIDER");
     const version = new Option(
-      "--release-version [releaseVersion]",
+      "--release-version <releaseVersion>",
       "Version of the app. for example v1.0.1"
     )
       .default("")
       .env("SRG_EVALUATION_VERSION");
     const buildId = new Option(
-      "--buildId [buildId]",
+      "--buildId <buildId>",
       "Build ID. optional for reference in the evaluation. Can also be used for the Git commit ID"
     )
       .default("")
