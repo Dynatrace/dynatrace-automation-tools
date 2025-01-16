@@ -119,10 +119,10 @@ class SRGCommandEvaluate implements BaseCommand {
     )
       .env("SRG_EVALUATION_STAGE")
       .makeOptionMandatory(true);
-    const variables = new Option(
-      "--variables <key1=value1...>",
+    const extra_vars = new Option(
+      "--extra_vars <key1=value1...>",
       "Set SRG DQL variables as suggested. i.e. Image=backend-service Tag=1.0.0"
-    ).env("SRG_VARIABLES");
+    );
     const provider = new Option(
       "--provider [provider]",
       "Provider of the request. i.e. github, jenkins, jenkins-production-1 etc."
@@ -145,7 +145,7 @@ class SRGCommandEvaluate implements BaseCommand {
     options.push(application);
     options.push(service);
     options.push(stage);
-    options.push(variables);
+    options.push(extra_vars);
     options.push(provider);
     options.push(version);
     options.push(buildId);

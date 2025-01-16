@@ -1,5 +1,5 @@
 export type SRGEvaluationDescriptionOptions = {
-  variables?: string[];
+  extra_vars?: string[];
   buildId: string;
   releaseVersion: string;
   service: string;

@@ -50,6 +50,7 @@ The optional values are sent as part of the BizEvent into Dynatrace and can be u
 | --stop-on-failure | SRG_EVALUATION_STOP_ON_FAILURE | stop execution if evaluation fails. default: "true"                                                                                           |
 | --stop-on-warning | SRG_EVALUATION_STOP_ON_WARNING | stop execution if evaluation has a warning result. default: "false"                                                                           |
 | --delay           | SRG_EVALUATION_DELAY           | delay in seconds for data to be available in Dynatrace. default: 90                                                                           |
+| --variables | SRG_VARIABLES | Sends additional variables in the format var1=value1,var2=value2 |
 
 Each option can be set as an environment variable
 

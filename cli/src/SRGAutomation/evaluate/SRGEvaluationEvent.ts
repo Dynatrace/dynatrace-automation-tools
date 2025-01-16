@@ -21,7 +21,7 @@ class SRGEvaluationEvent {
 
   "event.type": string;
 
-  [key: `variables.${string}`]: string;
+  [key: `extra_vars.${string}`]: string;
 
   constructor(
     timeOption: SRGEvaluationTimeOptions,
@@ -48,9 +48,9 @@ class SRGEvaluationEvent {
     this["event.provider"] = descriptionOption["provider"];
     this["event.type"] = "guardian.validation.triggered";
 
-    const srgContext = new SRGContext(descriptionOption["variables"]);
-    Object.entries(srgContext.variables).forEach(([name, value]) => {
-      this[`variables.${name}` as `variables.${string}`] = value;
+    const srgContext = new SRGContext(descriptionOption["extra_vars"]);
+    Object.entries(srgContext.extra_vars).forEach(([name, value]) => {
+      this[`extra_vars.${name}` as `extra_vars.${string}`] = value;
     });
   }
 
@@ -84,14 +84,14 @@ class SRGEvaluationEvent {
   }
 }
 class SRGContext {
-  variables: { [key: string]: string };
+  extra_vars: { [key: string]: string };
 
-  constructor(variables: string[] = []) {
-    this.variables = {};
-    variables.forEach((variableExpression) => {
+  constructor(extra_vars: string[] = []) {
+    this.extra_vars = {};
+    extra_vars.forEach((variableExpression) => {
       this.validateVariableExpression(variableExpression);
       const [name, value] = variableExpression.split("=");
-      this.variables[name] = value;
+      this.extra_vars[name] = value;
     });
   }
 

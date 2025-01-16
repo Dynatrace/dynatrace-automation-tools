@@ -93,9 +93,9 @@ describe("Evaluation event init", () => {
         startTime: startTime,
         endTime: endTime
       },
-      { ...testDescriptionOption, variables: ["variable-name=variable-value"] }
+      { ...testDescriptionOption, extra_vars: ["variable-name=variable-value"] }
     );
-    expect(event["variables.variable-name"]).toBe("variable-value");
+    expect(event["extra_vars.variable-name"]).toBe("variable-value");
   });
   it("should parse multiple variables input option and set the values in the event", () => {
     const event = new SRGEvaluationEvent(
@@ -105,14 +105,14 @@ describe("Evaluation event init", () => {
       },
       {
         ...testDescriptionOption,
-        variables: [
+        extra_vars: [
           "variable-name-1=variable-value-1",
           "variable-name-2=variable-value-2"
         ]
       }
     );
-    expect(event["variables.variable-name-1"]).toBe("variable-value-1");
-    expect(event["variables.variable-name-2"]).toBe("variable-value-2");
+    expect(event["extra_vars.variable-name-1"]).toBe("variable-value-1");
+    expect(event["extra_vars.variable-name-2"]).toBe("variable-value-2");
   });
   it("should set event.provider to the provider name", () => {
     const event = new SRGEvaluationEvent(
@@ -176,7 +176,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: ["=variable-value"]
+          extra_vars: ["=variable-value"]
         }
       );
     }).toThrow(
@@ -194,7 +194,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: ["variable-name="]
+          extra_vars: ["variable-name="]
         }
       );
     }).toThrow(
@@ -212,7 +212,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: ["name=value", "=variable-value"]
+          extra_vars: ["name=value", "=variable-value"]
         }
       );
     }).toThrow(
@@ -230,7 +230,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: ["name=value", "variable-name="]
+          extra_vars: ["name=value", "variable-name="]
         }
       );
     }).toThrow(
@@ -248,7 +248,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: ["variable-name-1->variable-value-1"]
+          extra_vars: ["variable-name-1->variable-value-1"]
         }
       );
     }).toThrow(
@@ -266,7 +266,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: [
+          extra_vars: [
             "variable-name-1=variable-value-1",
             "variable-name-2->variable-value-2"
           ]
@@ -287,7 +287,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: [
+          extra_vars: [
             "variable-name-1=variable-value-1",
             "variable-name-2variable-value-2"
           ]
@@ -308,7 +308,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: ["variable-name-1=variable-value-1=another-value"]
+          extra_vars: ["variable-name-1=variable-value-1=another-value"]
         }
       );
     }).toThrow(
@@ -326,7 +326,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
-          variables: ["variable-name-1=variable-value-1", "name=multiple=value"]
+          extra_vars: ["variable-name-1=variable-value-1", "name=multiple=value"]
         }
       );
     }).toThrow(

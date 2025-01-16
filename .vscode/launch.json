@@ -33,17 +33,21 @@
             "program": "${workspaceFolder}/cli/dist/index.js",
             "args": [
                 "srg",
-                "evaluate"
+                "evaluate",
+                "--extra_vars",
+                "demo1=test"
             ],
             "outputCapture": "std",
             "env": {
                 "LOG_LEVEL": "verbose",
                 "LOG_FILE": "true",
                 "SRG_EVALUATION_STAGE": "dev",
-                "SRG_EVALUATION_SERVICE": "demo",
-                "SRG_APP_VERSION": "v1.0.0",
+                "SRG_EVALUATION_SERVICE": "astroshop",
+                "SRG_EVALUATION_VERSION": "v1.0.0",
                 "SRG_EVALUATION_PROVIDER": "local-vscode",
                 "SRG_EVALUATION_BUILD_ID": "1234567890",
+                "SRG_EVALUATION_DELAY": "0",
+                "VERBOSE": "",
             },
             "envFile": "${workspaceFolder}/cli/.env",
             "outFiles": [
