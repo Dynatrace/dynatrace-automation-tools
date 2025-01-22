@@ -3,6 +3,8 @@ import DTApiV3 from "../src/dynatrace/DTApiV3";
 import AuthOptions from "../src/dynatrace/AuthOptions";
 import DQLQuery from "../src/dynatrace/DQLQuery";
 
+import { v4 as uuidv4 } from 'uuid';
+
 describe("SRGCommand", () => {
   const dynatraceURLGen3 = process.env.DYNATRACE_URL_GEN3 ?? "";
   const accountURN = process.env.ACCOUNT_URN ?? "";
@@ -41,7 +43,7 @@ describe("SRGCommand", () => {
     console.log("Log muted, test will take around 60s.");
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
     const mockStdout = jest.spyOn(process.stdout, "write").mockImplementation();
-    const randomBuildId = Math.random().toString();
+    const randomBuildId = uuidv4();
 
     await initialize("0.0.1", [
       "",
@@ -131,7 +133,7 @@ describe("SRGCommand", () => {
     console.log("Log muted, test will take around 60s.");
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
     const mockStdout = jest.spyOn(process.stdout, "write").mockImplementation();
-    const randomBuildId = Math.random().toString();
+    const randomBuildId = uuidv4();
 
     process.env.SRG_EVALUATION_SERVICE = service;
     process.env.SRG_EVALUATION_STAGE = stage;
