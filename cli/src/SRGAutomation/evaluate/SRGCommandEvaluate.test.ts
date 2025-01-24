@@ -49,4 +49,32 @@ describe("SRGCommandEvaluate", () => {
     new SRGCommandEvaluate(mockProgram);
     expect(mockProgram.command).toHaveBeenCalledTimes(1);
   });
+  it("Evaluate parsing function transforms space separated strings in array", async () => {
+    const mockProgram = new Command();
+    mockProgram.command = jest.fn().mockReturnValue(new Command());
+
+    const SRGCommandEvaluateInstance = new SRGCommandEvaluate(mockProgram);
+    const parsedInput = SRGCommandEvaluateInstance.parseExtraVarsVariadicInput(
+      "variadic input parts"
+    );
+    expect(parsedInput).toEqual(["variadic", "input", "parts"]);
+  });
+  it("Evaluate parsing function keeps previous inputs", async () => {
+    const mockProgram = new Command();
+    mockProgram.command = jest.fn().mockReturnValue(new Command());
+
+    const SRGCommandEvaluateInstance = new SRGCommandEvaluate(mockProgram);
+    const parsedInput = SRGCommandEvaluateInstance.parseExtraVarsVariadicInput(
+      "next input parts",
+      ["already", "parsed", "input"]
+    );
+    expect(parsedInput).toEqual([
+      "already",
+      "parsed",
+      "input",
+      "next",
+      "input",
+      "parts"
+    ]);
+  });
 });

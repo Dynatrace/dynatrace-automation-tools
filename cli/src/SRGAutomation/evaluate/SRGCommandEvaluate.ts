@@ -45,6 +45,10 @@ class SRGCommandEvaluate implements BaseCommand {
     });
   }
 
+  parseExtraVarsVariadicInput(value: string, previous: string[] = []) {
+    return previous.concat(value.split(" "));
+  }
+
   getAdditionalConfigOptions(): Option[] {
     const options: Option[] = [];
 
@@ -122,7 +126,9 @@ class SRGCommandEvaluate implements BaseCommand {
     const extra_vars = new Option(
       "--extra_vars <key1=value1...>",
       "Set SRG DQL variables as suggested. i.e. Image=backend-service Tag=1.0.0"
-    );
+    )
+      .argParser(this.parseExtraVarsVariadicInput)
+      .env("SRG_EVALUATION_VARIABLES");
     const provider = new Option(
       "--provider [provider]",
       "Provider of the request. i.e. github, jenkins, jenkins-production-1 etc."
