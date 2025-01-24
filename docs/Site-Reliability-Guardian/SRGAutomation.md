@@ -78,7 +78,7 @@ dta srg evaluate
 
 Then related event fields (`{{ event()["extra_vars.<var name>"] }}`) should be properly bound to SRG variables in the SRG task configuration in the triggered workflow
 
-<img src="./assets/srg-variables-binding.png">
+<img src="./assets/srg-variables-binding.png" width="450" height="400">
 
 ## Result event
 
