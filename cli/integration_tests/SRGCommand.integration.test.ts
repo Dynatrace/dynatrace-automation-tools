@@ -138,7 +138,7 @@ describe("SRGCommand", () => {
     process.env.SRG_EVALUATION_END_TIME = endTime;
     // process.env.SRG_EVALUATION_TIMESPAN
     process.env.SRG_EVALUATION_APPLICATION = application;
-    process.env.SRG_EVALUATION_VARIABLES = `${extra_var1} ${extra_var2}`;
+    process.env.SRG_EVALUATION_EXTRA_VARS = `${extra_var1} ${extra_var2}`;
     process.env.SRG_EVALUATION_PROVIDER = provider;
     process.env.SRG_EVALUATION_VERSION = releaseVersion;
     process.env.SRG_EVALUATION_BUILD_ID = randomBuildId;

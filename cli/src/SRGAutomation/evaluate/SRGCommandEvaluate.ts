@@ -128,7 +128,7 @@ class SRGCommandEvaluate implements BaseCommand {
       "Set SRG DQL variables as suggested. i.e. Image=backend-service Tag=1.0.0"
     )
       .argParser(this.parseExtraVarsVariadicInput)
-      .env("SRG_EVALUATION_VARIABLES");
+      .env("SRG_EVALUATION_EXTRA_VARS");
     const provider = new Option(
       "--provider [provider]",
       "Provider of the request. i.e. github, jenkins, jenkins-production-1 etc."
