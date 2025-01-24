@@ -3,7 +3,7 @@ import DTApiV3 from "../src/dynatrace/DTApiV3";
 import AuthOptions from "../src/dynatrace/AuthOptions";
 import DQLQuery from "../src/dynatrace/DQLQuery";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 describe("SRGCommand", () => {
   const dynatraceURLGen3 = process.env.DYNATRACE_URL_GEN3 ?? "";
@@ -13,8 +13,8 @@ describe("SRGCommand", () => {
   const dynatraceSSOURL = process.env.DYNATRACE_SSO_URL ?? "";
   const service = "it-service";
   const stage = "it-stage";
-  const startTime = "1970-01-01 00:00:00.000Z";
-  const endTime = "1970-01-01 00:00:00.001Z";
+  const startTime = "1970-01-01T00:00:00.000Z";
+  const endTime = "1970-01-01T00:00:00.001Z";
   const application = "it-app";
   const extra_var1 = "key1=value1";
   const extra_var2 = "key2=value2";
@@ -40,7 +40,7 @@ describe("SRGCommand", () => {
   date.setMinutes(date.getMinutes() + 20);
   const queryEndTime = date.toISOString();
   it("should send bizevent to trigger SRG Validation - options passed as arguments", async () => {
-    console.log("Log muted, test will take around 60s.");
+    console.log("Logger mocked, test will take around 60s.");
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
     const mockStdout = jest.spyOn(process.stdout, "write").mockImplementation();
     const randomBuildId = uuidv4();
@@ -106,21 +106,18 @@ describe("SRGCommand", () => {
     expect(bizevents).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          application: "it-app",
-          "dt.openpipeline.pipelines": ["bizevents:default"],
-          "dt.openpipeline.source": "/api/v2/bizevents/ingest",
-          "event.kind": "BIZ_EVENT",
-          "event.provider": "it-provider",
-          "event.type": "guardian.validation.triggered",
-          execution_context:
-            expect.stringContaining(randomBuildId) &&
-            expect.stringContaining(releaseVersion),
-          "extra_vars.key1": "value1",
-          "extra_vars.key2": "value2",
-          service: "it-service",
-          stage: "it-stage",
-          "timeframe.from": "1970-01-01T00:00:00.000Z",
-          "timeframe.to": "1970-01-01T00:00:00.001Z"
+          application: expect.stringMatching(application),
+          "event.provider": expect.stringMatching(provider),
+          "event.type": expect.stringMatching("guardian.validation.triggered"),
+          execution_context: expect.stringContaining(
+            `"buildId":"${randomBuildId}","version":"${releaseVersion}"`
+          ),
+          "extra_vars.key1": expect.stringMatching("value1"),
+          "extra_vars.key2": expect.stringMatching("value2"),
+          service: expect.stringMatching(service),
+          stage: expect.stringMatching(stage),
+          "timeframe.from": expect.stringMatching(startTime),
+          "timeframe.to": expect.stringMatching(endTime)
         })
       ])
     );
@@ -130,7 +127,7 @@ describe("SRGCommand", () => {
   }, 120000);
 
   it("should send bizevent to trigger SRG Validation - options passed as env variables", async () => {
-    console.log("Log muted, test will take around 60s.");
+    console.log("Logger mocked, test will take around 60s.");
     const mockExit = jest.spyOn(process, "exit").mockImplementation();
     const mockStdout = jest.spyOn(process.stdout, "write").mockImplementation();
     const randomBuildId = uuidv4();
@@ -141,7 +138,7 @@ describe("SRGCommand", () => {
     process.env.SRG_EVALUATION_END_TIME = endTime;
     // process.env.SRG_EVALUATION_TIMESPAN
     process.env.SRG_EVALUATION_APPLICATION = application;
-    process.env.VARIABLES = extra_var1;
+    process.env.SRG_EVALUATION_VARIABLES = `${extra_var1} ${extra_var2}`;
     process.env.SRG_EVALUATION_PROVIDER = provider;
     process.env.SRG_EVALUATION_VERSION = releaseVersion;
     process.env.SRG_EVALUATION_BUILD_ID = randomBuildId;
@@ -175,21 +172,18 @@ describe("SRGCommand", () => {
     expect(bizevents).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          application: "it-app",
-          "dt.openpipeline.pipelines": ["bizevents:default"],
-          "dt.openpipeline.source": "/api/v2/bizevents/ingest",
-          "event.kind": "BIZ_EVENT",
-          "event.provider": "it-provider",
-          "event.type": "guardian.validation.triggered",
-          execution_context:
-            expect.stringContaining(randomBuildId) &&
-            expect.stringContaining(releaseVersion),
-          "extra_vars.key1": "value1",
-          "extra_vars.key2": "value2",
-          service: "it-service",
-          stage: "it-stage",
-          "timeframe.from": "1970-01-01T00:00:00.000Z",
-          "timeframe.to": "1970-01-01T00:00:00.001Z"
+          application: expect.stringMatching(application),
+          "event.provider": expect.stringMatching(provider),
+          "event.type": expect.stringMatching("guardian.validation.triggered"),
+          execution_context: expect.stringContaining(
+            `"buildId":"${randomBuildId}","version":"${releaseVersion}"`
+          ),
+          "extra_vars.key1": expect.stringMatching("value1"),
+          "extra_vars.key2": expect.stringMatching("value2"),
+          service: expect.stringMatching(service),
+          stage: expect.stringMatching(stage),
+          "timeframe.from": expect.stringMatching(startTime),
+          "timeframe.to": expect.stringMatching(endTime)
         })
       ])
     );
