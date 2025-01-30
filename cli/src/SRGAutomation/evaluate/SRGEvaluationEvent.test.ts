@@ -326,6 +326,7 @@ describe("Evaluation event init", () => {
         },
         {
           ...testDescriptionOption,
+          //eslint-disable-next-line
           extra_vars: ["variable-name-1=variable-value-1", "name=multiple=value"]
         }
       );

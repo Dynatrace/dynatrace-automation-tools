@@ -34,8 +34,8 @@
             "args": [
                 "srg",
                 "evaluate",
-                "--extra_vars",
-                "demo1=test"
+                // "--extra_vars",
+                // "demo1=test"
             ],
             "outputCapture": "std",
             "env": {
@@ -47,6 +47,7 @@
                 "SRG_EVALUATION_PROVIDER": "local-vscode",
                 "SRG_EVALUATION_BUILD_ID": "1234567890",
                 "SRG_EVALUATION_DELAY": "0",
+                "SRG_EVALUATION_EXTRA_VARS": "var1=value1 var2=value2",
                 "VERBOSE": "",
             },
             "envFile": "${workspaceFolder}/cli/.env",
