@@ -1,4 +1,6 @@
 import * as crypto from "crypto";
+import { SRGEvaluationTimeOptions } from "../../dynatrace/SRGEvaluationTimeOptions";
+import { SRGEvaluationDescriptionOptions } from "../../dynatrace/SRGEvaluationDescriptionOptions";
 
 class SRGEvaluationEvent {
   "timeframe.from": string;
@@ -19,50 +21,99 @@ class SRGEvaluationEvent {
 
   "event.type": string;
 
-  constructor(options: { [key: string]: string }) {
+  [key: `extra_vars.${string}`]: string;
+
+  constructor(
+    timeOption: SRGEvaluationTimeOptions,
+    descriptionOption: SRGEvaluationDescriptionOptions
+  ) {
     const eventId = crypto.randomUUID().toString();
     const timeframe = this.getTimeframe(
-      options["startTime"],
-      options["endTime"],
-      options["timespan"]
+      timeOption["startTime"],
+      timeOption["endTime"],
+      timeOption["timespan"]
     );
 
     this["timeframe.from"] = timeframe.Start;
     this["timeframe.to"] = timeframe.End;
     this["execution_context"] = new ExecutionContext(
       eventId,
-      options["buildId"],
-      options["releaseVersion"]
+      descriptionOption["buildId"],
+      descriptionOption["releaseVersion"]
     );
-    this["service"] = options["service"];
-    this["application"] = options["application"];
-    this["stage"] = options["stage"];
+    this["service"] = descriptionOption["service"];
+    this["application"] = descriptionOption["application"];
+    this["stage"] = descriptionOption["stage"];
     this["event.id"] = eventId;
-    this["event.provider"] = options["provider"];
+    this["event.provider"] = descriptionOption["provider"];
     this["event.type"] = "guardian.validation.triggered";
+
+    const srgContext = new SRGContext(descriptionOption["extra_vars"]);
+    Object.entries(srgContext.extra_vars).forEach(([name, value]) => {
+      this[`extra_vars.${name}` as `extra_vars.${string}`] = value;
+    });
   }
 
   getTimeframe(
-    startTime: string,
-    endTime: string,
-    timeSpan: string
+    startTime?: string,
+    endTime?: string,
+    timeSpan?: string
   ): TimeFrame {
-    if (startTime == undefined && endTime === undefined && timeSpan !== "") {
+    if (
+      startTime == undefined &&
+      endTime === undefined &&
+      timeSpan !== "" &&
+      timeSpan !== undefined
+    ) {
       const date = new Date();
       date.setMinutes(date.getMinutes() - parseInt(timeSpan));
       startTime = date.toISOString();
       endTime = new Date().toISOString();
-    } else {
-      if (startTime === "" || endTime === "") {
-        throw new Error(
-          "Either (start time and end time) or timespan must be provided"
-        );
-      }
+    } else if (
+      startTime === "" ||
+      startTime === undefined ||
+      endTime === "" ||
+      endTime === undefined
+    ) {
+      throw new Error(
+        "Either (start time and end time) or timespan must be provided"
+      );
     }
 
     return new TimeFrame(startTime, endTime);
   }
 }
+class SRGContext {
+  extra_vars: { [key: string]: string };
+
+  constructor(extra_vars: string[] = []) {
+    this.extra_vars = {};
+    extra_vars.forEach((variableExpression) => {
+      this.validateVariableExpression(variableExpression);
+      const [name, value] = variableExpression.split("=");
+      this.extra_vars[name] = value;
+    });
+  }
+
+  validateVariableExpression(
+    variableExpression: string
+  ): asserts variableExpression {
+    if (variableExpression.split("=").length != 2) {
+      throw new Error(
+        `Malformed variable expression '${variableExpression}'. The allowed format is 'name=value'`
+      );
+    }
+
+    if (
+      variableExpression.split("=").some((variable) => variable.trim() === "")
+    ) {
+      throw new Error(
+        `Malformed variable expression '${variableExpression}'. Empty variable value or name is not allowed`
+      );
+    }
+  }
+}
+
 class ExecutionContext {
   id: string;
 

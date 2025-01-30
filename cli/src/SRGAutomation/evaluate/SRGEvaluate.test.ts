@@ -18,6 +18,15 @@ afterAll(() => {
   jest.useRealTimers();
 });
 
+const testDescriptionOption = {
+  buildId: "test",
+  releaseVersion: "test",
+  service: "test",
+  application: "test",
+  stage: "test",
+  provider: "test"
+};
+
 describe("SRGEvaluate", () => {
   process.env.LOG_LEVEL = "verbose";
 
@@ -26,7 +35,10 @@ describe("SRGEvaluate", () => {
     mockApi.BizEventSend = jest.fn();
     mockApi.BizEventQuery = jest.fn();
     const evaluate = new SRGEvaluate(mockApi);
-    const event = new SRGEvaluationEvent({});
+    const event = new SRGEvaluationEvent(
+      { timespan: "test" },
+      testDescriptionOption
+    );
 
     try {
       await evaluate.waitForEvaluationResult(event, "https://test.com");
@@ -44,7 +56,10 @@ describe("SRGEvaluate", () => {
     mockApi.BizEventSend = jest.fn();
     mockApi.BizEventQuery = jest.fn();
     const evaluate = new SRGEvaluate(mockApi);
-    const event = new SRGEvaluationEvent({});
+    const event = new SRGEvaluationEvent(
+      { timespan: "test" },
+      testDescriptionOption
+    );
     await evaluate.sendEvent(event);
     expect(mockApi.BizEventSend).toHaveBeenCalledTimes(1);
   });

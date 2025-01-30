@@ -50,6 +50,7 @@ The optional values are sent as part of the BizEvent into Dynatrace and can be u
 | --stop-on-failure | SRG_EVALUATION_STOP_ON_FAILURE | stop execution if evaluation fails. default: "true"                                                                                           |
 | --stop-on-warning | SRG_EVALUATION_STOP_ON_WARNING | stop execution if evaluation has a warning result. default: "false"                                                                           |
 | --delay           | SRG_EVALUATION_DELAY           | delay in seconds for data to be available in Dynatrace. default: 90                                                                           |
+| --extra_vars | SRG_EVALUATION_EXTRA_VARS | Sends additional variables in the format `var1=value1 var2=value2` |
 
 Each option can be set as an environment variable
 
@@ -64,6 +65,20 @@ To enable additional **LOGS** you can set the environment variables:
 
 - LOG_LEVEL=verbose
 - LOG_FILE=true
+
+#### SRG variables setting
+SRG variables can be set as variadic argument in the preferred way:
+
+i.e. command `dta srg evaluate --extra_vars var1=value1 var2=value2`
+i.e. environment variable
+```
+export SRG_EVALUATION_EXTRA_VARS="var1=value1 var2=value2"
+dta srg evaluate
+```
+
+Then related event fields (`{{ event()["extra_vars.<var name>"] }}`) should be properly bound to SRG variables in the SRG task configuration in the triggered workflow
+
+<img src="./assets/srg-variables-binding.png" width="450" height="400">
 
 ## Result event
 

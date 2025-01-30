@@ -8,7 +8,7 @@
         "test": "jest --projects jest.config.js",
         "test-integration": "jest --projects jest.config.integration.js",
         "ci": "jest --ci --projects jest.config.js",
-        "ci:integration": "jest --ci --projects jest.config.integration.js",
+        "ci:integration": "jest --ci -i --verbose --projects jest.config.integration.js",
         "lint": "eslint --ignore-path .eslintignore --ext .ts .",
         "build": "npx tsc",
         "pack": "npx tsc && ncc build dist/index.js -m -o executables && npx pkg package.json ",
