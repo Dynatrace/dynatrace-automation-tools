@@ -1,3 +1,7 @@
+⚠️ This repository has been archived and is no longer maintained.
+The code is available for historical reference or archival purposes.
+
+This tool can be used for similar use cases: https://github.com/dynatrace-oss/dtctl 
 # Dynatrace-automation-tools
 
 > Note: If you are reading this in Docker Hub, please check the full documentation in the Github Repo [Dynatrace Automation Tools](https://github.com/dynatrace-ace/dynatrace-automation-tools)
